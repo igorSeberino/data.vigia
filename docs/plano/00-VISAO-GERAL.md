@@ -186,8 +186,7 @@ data.vigia/
 ├── README.md                         # O RELATÓRIO (seções do PDF) — porta de entrada
 ├── CLAUDE.md                         # regras para o Claude de cada integrante
 ├── pyproject.toml                    # só configuração de ruff e pytest (sem build)
-├── requirements.txt                  # execução (Colab/local)
-├── requirements-dev.txt              # + pytest, ruff, jupyter, nbconvert, jupytext
+├── requirements.txt                  # dependências únicas (execução, testes, lint)
 ├── .gitignore  .gitattributes
 ├── .claude/                          # time de agentes (ver §11)
 │   ├── agents/revisor-dados.md       # revisão de conformidade, somente leitura
@@ -296,7 +295,7 @@ alternativa.
    - `cd data.vigia && uv venv --python 3.12 .venv`
    - Ativar: Windows Git Bash `source .venv/Scripts/activate`; PowerShell `.venv\Scripts\Activate.ps1`;
      macOS/Linux `source .venv/bin/activate`.
-   - `uv pip install -r requirements-dev.txt`
+   - `uv pip install -r requirements.txt`
    - `git config user.name "<nome da tabela §4>"` e `git config user.email "<e-mail da tabela §4>"`
    - `gh auth refresh -h github.com -s project` (para mover os cards do Project)
 2. **Validar**: abrir `claude` na raiz do repo (com o `.venv` ativo) e rodar `/setup`. Só seguir

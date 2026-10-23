@@ -36,6 +36,7 @@ Cada integrante assina e defende o que commita.
 Célula padrão de ambiente:
 
     # Ambiente: funciona localmente (pasta notebooks/) e no Google Colab
+    # (o Colab já traz pandas, scikit-learn e cia.; só falta o código do repositório)
     import subprocess
     import sys
     from pathlib import Path
@@ -44,9 +45,6 @@ Célula padrão de ambiente:
     if "google.colab" in sys.modules and not Path(REPO).exists():
         subprocess.run(
             ["git", "clone", "-q", f"https://github.com/igorSeberino/{REPO}.git"], check=True
-        )
-        subprocess.run(
-            [sys.executable, "-m", "pip", "install", "-q", "-r", f"{REPO}/requirements.txt"], check=True
         )
     RAIZ = next(
         p

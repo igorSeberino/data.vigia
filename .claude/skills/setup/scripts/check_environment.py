@@ -133,14 +133,14 @@ def checar_python() -> None:
         not faltando,
         "dependências",
         "ok" if not faltando else f"faltam: {', '.join(faltando)}",
-        "uv pip install -r requirements-dev.txt",
+        "uv pip install -r requirements.txt",
     )
     for ferramenta in ("ruff", "uv"):
         registrar(
             bool(shutil.which(ferramenta)),
             ferramenta,
             shutil.which(ferramenta) or "ausente",
-            "uv pip install -r requirements-dev.txt"
+            "uv pip install -r requirements.txt"
             if ferramenta == "ruff"
             else "winget install --id astral-sh.uv -e",
             obrigatorio=ferramenta == "ruff",

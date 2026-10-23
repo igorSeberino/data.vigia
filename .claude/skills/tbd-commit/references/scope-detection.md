@@ -17,7 +17,7 @@ Nada de lista fixa decorada: olhe os arquivos staged.
 | `docs/*.md` (fora do plano) | o tema: `dados`, `modelo-dados` |
 | `docs/plano/` | `plano` |
 | `.github/` | `ci` |
-| `requirements*.txt`, `pyproject.toml` | `deps` |
+| `requirements.txt`, `pyproject.toml` | `deps` |
 | `.claude/` | `claude` |
 
 - Módulo + seu teste no mesmo commit: escopo do módulo (é a mesma mudança).

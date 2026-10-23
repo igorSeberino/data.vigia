@@ -21,7 +21,7 @@ git config user.email "gabriellccarvalho.dev@gmail.com"
 gh auth refresh -h github.com -s project                  # para mover os cards do Project
 uv venv --python 3.12 .venv
 source .venv/Scripts/activate        # Windows Git Bash (macOS/Linux: source .venv/bin/activate)
-uv pip install -r requirements-dev.txt
+uv pip install -r requirements.txt
 claude                               # na sessão: /setup — só siga com tudo OK
 ```
 
