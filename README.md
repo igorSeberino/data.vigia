@@ -67,7 +67,22 @@ trabalho.
 
 ### 1.2 Definição do problema
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
-_Em construção._
+A manutenção de equipamentos segue três estratégias. Na corretiva, o equipamento é consertado
+depois que falha. Na preventiva, a intervenção ocorre em intervalos fixos de tempo ou de uso,
+falhe o equipamento ou não. Na preditiva, a intervenção é decidida pela condição real do
+equipamento, medida por dados (MOBLEY, 2002).
+
+Cada estratégia tem um custo. A falha não planejada para a linha, gera refugo e exige reparo
+urgente. A troca preventiva feita cedo demais desperdiça ferramenta ainda útil; feita tarde
+demais, não evita a falha. A manutenção preditiva busca o ponto de equilíbrio: intervir só
+quando os dados indicam risco.
+
+**Problema deste trabalho:** em uma máquina de usinagem monitorada por sensores (temperatura do
+ar, temperatura do processo, rotação, torque e desgaste da ferramenta), prever se um ciclo de
+processo vai falhar e decidir quando intervir com o menor custo esperado. Os dados são do
+conjunto AI4I 2020, publicado para reproduzir dados reais de manutenção preditiva
+(MATZKA, 2020; UCI MACHINE LEARNING REPOSITORY, 2020). Por ser um conjunto sintético, os
+resultados valem para a máquina simulada; essa limitação é discutida na seção 3.3.
 
 ### 1.3 Objetivos
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
