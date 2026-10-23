@@ -440,7 +440,7 @@ Depois, **ler o que foi feito** e conseguir explicar cada decisão.
 | Modelo serializado (`joblib`) | nenhum notebook nem seção consome; o notebook 05 usa as tabelas `04_*.csv` |
 | Implantação do modelo (API, CLP/MES, monitoramento) | R2 pede propor soluções, não implantar; vira trabalho futuro em §3.5 |
 | `LICENSE` de código | trabalho de uma entrega, sem reuso por terceiros; a atribuição CC BY dos dados fica no README (seção Dados) |
-| Cronograma com datas | o PDF não fixa prazos intermediários; a ordem vem do grafo da §5 |
+| Prazos intermediários por data | o PDF não fixa nenhum; a ordem vem do grafo da §5 |
 | `requirements-dev.txt`, ambientes dev/prod | não há deploy; um único `requirements.txt` |
 | `CODEOWNERS`, campos Area/Priority no Project, labels genéricas | o revisor vem da matriz da §5, a ordem vem do grafo e as labels `module:` já classificam |
 | Mínimo de commits por PR, roteiro de defesa | nenhuma fonte pede |
