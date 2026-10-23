@@ -24,7 +24,7 @@ insista: escreva o comando como recomendação.
 
 1. `CLAUDE.md` — regras que não se quebram.
 2. `docs/plano/00-VISAO-GERAL.md` — §2.1 (fatos do dataset), §3 (decisões D1–D17),
-   §7 (contrato de interface e arquivos trocados entre notebooks), §10 (dono de cada
+   §7 (contrato de interface e arquivos trocados entre notebooks), §9 (dono de cada
    seção do README).
 3. O arquivo de tarefas do autor da branch: `docs/plano/01-IGOR.md`,
    `02-GABRIEL.md`, `03-ADRIAN.md` ou `04-RENATO.md`. Descubra a tarefa pelo número

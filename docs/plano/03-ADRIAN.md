@@ -1,6 +1,6 @@
 # Tarefas do Adrian — T3 (análise exploratória) e T5 (introdução, objetivos e referências)
 
-> Leia antes: `00-VISAO-GERAL.md` (principalmente §2, §3, §8 e §10).
+> Leia antes: `00-VISAO-GERAL.md` (principalmente §2, §3, §8 e §9).
 > Identidade git: `Adrian Cesar Gonçalves <adriancg3006@gmail.com>` · login `adrian-cesar`.
 > Revisor do seu T3: **Gabriel**. Revisor do seu T5: **Igor**. Você revisa: **T2 (Gabriel)** e **T7 (Igor)**.
 
@@ -24,7 +24,7 @@ uv pip install -r requirements-dev.txt
 claude                               # na sessão: /setup — só siga com tudo OK
 ```
 
-Fluxo de cada tarefa (detalhe na §8 e §12 do plano mestre): `/tbd-start <issue>` →
+Fluxo de cada tarefa (detalhe na §8 e §11 do plano mestre): `/tbd-start <issue>` →
 implementação seguindo este arquivo → `/tbd-commit` a cada commit sugerido → `/tbd-pr` → merge →
 `/tbd-pr` de novo para finalizar.
 

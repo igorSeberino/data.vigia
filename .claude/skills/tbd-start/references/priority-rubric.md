@@ -5,7 +5,7 @@ com uma linha de justificativa no resumo final, para ele poder corrigir.
 
 - **3** — bloqueia outros integrantes ou afeta o resultado do trabalho: contrato de T1
   (`config`, `dados`, `preparacao`), vazamento de alvo, uso indevido do teste, número errado
-  no relatório, notebook que não executa, CI vermelho na `main`, prazo de entrega.
+  no relatório, notebook que não executa, CI vermelho na `main`.
 - **2** — entrega contida de médio porte: uma seção do README, um notebook novo ou refeito,
   refactor que toca vários arquivos de um mesmo módulo, figura/tabela que o relatório cita.
 - **1** — pequena ou mecânica: texto, link, nome, formatação, ajuste em skill/agente do `.claude/`.

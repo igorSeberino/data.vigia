@@ -31,8 +31,7 @@ livre dentro da Indústria 4.0** e fixa o que precisa existir:
 | 5. Entrega por link público GitHub ou Colab, documentado (notebook ou markdown) | repositório público + README como relatório + notebooks executados + badges "Abrir no Colab" |
 | Grupo de até 6 | 4 integrantes |
 
-O que o PDF **não** diz (e este plano decide): prazo, tema específico, formato de apresentação.
-Prazo: o cronograma (§9) está em dias relativos — o Igor ancora o D0 na data real.
+O que o PDF **não** diz (e este plano decide): tema específico, formato de apresentação.
 
 **"Modelagem de dados"** no enunciado é ambígua (pode ser modelo de dados relacional/dimensional
 **ou** modelo preditivo). O plano cobre **as duas leituras**: um modelo dimensional em SQLite
@@ -54,7 +53,7 @@ preventiva.**
 - Roda em qualquer notebook e no Colab em poucos minutos; dá para dividir em 4 frentes
   independentes.
 
-### 2.1 Fatos do dataset (verificados em 22/10/2026 baixando o arquivo oficial)
+### 2.1 Fatos do dataset (verificados baixando o arquivo oficial)
 
 | Fato | Valor |
 |---|---|
@@ -154,7 +153,7 @@ para cada um explicar o que fez.
 
 | Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de |
 |---|---|---|---|---|---|---|
-| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito em 23/10/2026** | Repo, CI, CLAUDE.md, templates, CODEOWNERS, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
+| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, CODEOWNERS, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
 | T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; `docs/dicionario-de-dados.md`; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 |
 | T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; `docs/modelo-de-dados.md` (diagrama ER); README §2.3.1, §3.1.1, §3.2.2 | Adrian | T1 |
 | T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 |
@@ -190,7 +189,7 @@ data.vigia/
 ├── requirements.txt                  # execução (Colab/local)
 ├── requirements-dev.txt              # + pytest, ruff, jupyter, nbconvert, jupytext
 ├── .gitignore  .gitattributes
-├── .claude/                          # time de agentes (ver §12)
+├── .claude/                          # time de agentes (ver §11)
 │   ├── agents/revisor-dados.md       # revisão de conformidade, somente leitura
 │   ├── skills/setup|tbd-start|tbd-commit|tbd-pr/
 │   ├── scripts/                      # projeto.py (Project @vigia), hooks
@@ -285,7 +284,7 @@ Arquivos trocados entre notebooks (versionados em `reports/tables/`):
 
 Trunk-Based Development, como no Ludens: `main` é a única branch longa; cada tarefa vira uma
 branch curta `{tipo}/{issue}-{slug-em-inglês}`, um PR pequeno, CI verde, 1 aprovação, merge.
-O time de agentes em `.claude/` (§12) executa cada passo; os comandos manuais ficam como
+O time de agentes em `.claude/` (§11) executa cada passo; os comandos manuais ficam como
 alternativa.
 
 1. **Ambiente** (uma vez):
@@ -331,23 +330,7 @@ sem número (templates em `.github/ISSUE_TEMPLATE/`).
 
 ---
 
-## 9. Cronograma (dias relativos — Igor fixa o D0)
-
-| Dia | Igor | Gabriel | Adrian | Renato |
-|---|---|---|---|---|
-| D0 | T0 inteiro; abre T1 | aceita convite, prepara ambiente | aceita convite, prepara ambiente; começa T5 | aceita convite, prepara ambiente |
-| D1 | T1 merge (Renato revisa) | — | T5 | revisa T1 |
-| D2–D3 | revisa T5; acompanha | T2; começa `custo.py` + testes (T6) | T3; termina T5 | T4 |
-| D4 | revisa T4 | revisa T3; merge T2 | revisa T2; merge T3 e T5 | merge T4 |
-| D5 | — | T6 (nb 05, depende do T4) | — | revisa T6 |
-| D6 | T7 | revisa T7 | revisa T7 | — |
-| D7 | **entrega** (folga) | | | |
-
-Se o prazo for menor, comprimir mantendo a ordem do grafo da §5.
-
----
-
-## 10. Estrutura do README (relatório) e dono de cada seção
+## 9. Estrutura do README (relatório) e dono de cada seção
 
 O T0 cria o README com estes títulos e um marcador `<!-- RESPONSÁVEL ... -->` em cada seção.
 Cada PR preenche **somente** as suas seções (troca o texto "_Em construção_" pelo conteúdo).
@@ -400,7 +383,7 @@ Regras de escrita do README:
 
 ---
 
-## 11. Definição de pronto (global)
+## 10. Definição de pronto (global)
 
 - [ ] Repositório **público**; `curl -s -o /dev/null -w "%{http_code}" https://github.com/igorSeberino/data.vigia` → `200` sem estar logado.
 - [ ] CI verde na `main` (ruff, pytest, 5 notebooks executam de ponta a ponta).
@@ -413,7 +396,7 @@ Regras de escrita do README:
 
 ---
 
-## 12. Time de agentes (adaptado do team.ludens)
+## 11. Time de agentes (adaptado do team.ludens)
 
 O plugin `team.ludens` do Gabriel foi adaptado pelo que este projeto **precisa de fato** e
 colocado direto em `.claude/` do repositório (o Claude Code carrega ao abrir a pasta; nada para
@@ -450,7 +433,7 @@ Depois, **ler o que foi feito** e conseguir explicar cada decisão (cada arquivo
 
 ---
 
-## 13. Estado do GitHub (criado em 23/10/2026)
+## 12. Estado do GitHub
 
 | Item | Onde |
 |---|---|

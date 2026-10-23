@@ -9,7 +9,7 @@ scikit-learn 1.9, ruff e pytest verdes). Pode copiar como está.
 
 ---
 
-## T0 — Estrutura do repositório — **feito em 23/10/2026**
+## T0 — Estrutura do repositório — **feito**
 
 Executado nesta máquina com a sua identidade (`Igor Seberino <igorseberino@gmail.com>`,
 configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
@@ -20,10 +20,10 @@ configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
   marcadores de responsável, `src/manutencao/__init__.py`, `tests/test_estrutura.py`,
   `data/raw/ai4i2020.csv` (SHA-256 conferido), CI (`.github/workflows/ci.yml`), templates de issue
   (tarefa, bug, débito técnico), `PULL_REQUEST_TEMPLATE.md`, `CODEOWNERS`, `.github/assets/logo.svg`,
-  este plano em `docs/plano/` e o time de agentes em `.claude/` (§12 do plano mestre).
+  este plano em `docs/plano/` e o time de agentes em `.claude/` (§11 do plano mestre).
 - **Configuração**: só "Create a merge commit"; branch apagada após merge; `main` protegida
   (PR obrigatório, 1 aprovação, check `ci`).
-- **Project** `@vigia`: https://github.com/users/igorSeberino/projects/2 (campos, visões e editores na §13).
+- **Project** `@vigia`: https://github.com/users/igorSeberino/projects/2 (campos, visões e editores na §12).
 - **Issues** #1–#7 (tarefas) e #8 (issue-mãe), com labels, Area, Priority e Status *Backlog*.
 - **Convites** enviados para `adrian-cesar`, `gabrielcarvallho`, `rcolinneto`.
 
@@ -35,7 +35,7 @@ configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
    > Quadro: https://github.com/users/igorSeberino/projects/2
    > 1) Aceitem o convite: https://github.com/igorSeberino/data.vigia/invitations
    > 2) Cada um tem um arquivo em `docs/plano/` (Gabriel 02, Adrian 03, Renato 04). Leiam o
-   >    `00-VISAO-GERAL.md` primeiro (seções 8 e 12 explicam o fluxo).
+   >    `00-VISAO-GERAL.md` primeiro (seções 8 e 11 explicam o fluxo).
    > 3) Configurem o git com o e-mail da seção 4 e rodem `gh auth refresh -h github.com -s project`.
    >    Abram o `claude` na pasta e rodem `/setup` — commit com e-mail errado não conta como contribuição.
    > 4) Cada um começa com `/tbd-start <número da sua issue>`. Gabriel (#2), Adrian (#3) e Renato (#4)
@@ -616,7 +616,7 @@ mais faz push na `main`.
 
 ### T7.6 Critérios de aceite
 
-- [ ] Todos os itens da "Definição de pronto" (§11 do plano mestre) marcados.
+- [ ] Todos os itens da "Definição de pronto" (§10 do plano mestre) marcados.
 
 ---
 

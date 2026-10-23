@@ -25,7 +25,7 @@ uv pip install -r requirements-dev.txt
 claude                               # na sessão: /setup — só siga com tudo OK
 ```
 
-Fluxo de cada tarefa (detalhe na §8 e §12 do plano mestre): `/tbd-start <issue>` →
+Fluxo de cada tarefa (detalhe na §8 e §11 do plano mestre): `/tbd-start <issue>` →
 implementação seguindo este arquivo → `/tbd-commit` a cada commit sugerido → `/tbd-pr` → merge →
 `/tbd-pr` de novo para finalizar.
 
