@@ -86,7 +86,22 @@ resultados valem para a máquina simulada; essa limitação é discutida na seç
 
 ### 1.3 Objetivos
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
-_Em construção._
+**Objetivo geral:** aplicar o ciclo de ciência de dados (coleta, preparação, modelagem de
+dados, análise e avaliação) para propor uma política de manutenção preditiva baseada em dados
+para a máquina do conjunto AI4I 2020.
+
+**Objetivos específicos:**
+
+1. Coletar, validar e preparar o conjunto de dados, documentando a qualidade e as
+   inconsistências.
+2. Construir um modelo de dados dimensional (esquema estrela) que permita consultas analíticas
+   sobre os ciclos e as falhas.
+3. Caracterizar estatisticamente as variáveis associadas à falha.
+4. Treinar e comparar modelos de classificação para prever a falha de um ciclo, com validação
+   adequada a dados desbalanceados.
+5. Estimar o impacto financeiro da manutenção preditiva frente às estratégias corretiva e
+   preventiva.
+6. Disponibilizar uma implementação em Python reprodutível e documentada.
 
 ## 2. Metodologia
 ### 2.1 Descrição dos dados (fontes, tipos, volume)
