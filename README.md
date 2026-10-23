@@ -13,7 +13,6 @@
 <p align="center">
   <a href="https://github.com/igorSeberino/data.vigia/actions/workflows/ci.yml"><img src="https://github.com/igorSeberino/data.vigia/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://doi.org/10.24432/C5HS5C"><img src="https://img.shields.io/badge/dados-AI4I%202020%20(UCI)-2BB3A3" alt="Dados: AI4I 2020 (UCI)"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/licen%C3%A7a-MIT-F5A524" alt="Licença MIT"></a>
 </p>
 
 O **vigia** prevê, a partir das leituras de sensores de uma máquina de usinagem (temperaturas,
@@ -154,7 +153,6 @@ Fluxo Trunk-Based com o time de agentes do Claude Code em [`.claude/`](.claude/R
 `/setup` → `/tbd-start <issue>` → implementação → `/tbd-commit` → `/tbd-pr`. Regras do projeto
 em [`CLAUDE.md`](CLAUDE.md); cada PR precisa de CI verde e aprovação de outro integrante.
 
-## Dados e licença
+## Dados
 Dados: *AI4I 2020 Predictive Maintenance Dataset*, UCI Machine Learning Repository,
 https://doi.org/10.24432/C5HS5C, licença CC BY 4.0 (cópia em `data/raw/ai4i2020.csv`).
-Código: licença MIT (ver `LICENSE`).

@@ -186,7 +186,6 @@ T0 ─► T5 ─┴────────────────────�
 data.vigia/
 ├── README.md                         # O RELATÓRIO (seções do PDF) — porta de entrada
 ├── CLAUDE.md                         # regras para o Claude de cada integrante
-├── LICENSE                           # MIT (código); dados: CC BY 4.0 (UCI)
 ├── pyproject.toml                    # só configuração de ruff e pytest (sem build)
 ├── requirements.txt                  # execução (Colab/local)
 ├── requirements-dev.txt              # + pytest, ruff, jupyter, nbconvert, jupytext
@@ -388,7 +387,7 @@ badges · disciplina · professor · integrantes · links dos notebooks
 ## 4. Referências                                                  (T5 Adrian; outros acrescentam via PR próprio)
 ## Contribuições                                                   (T7 Igor)
 ## Uso de IA                                                       (cada um acrescenta 1 linha no próprio PR)
-## Dados e licença                                                 (T0 Igor)
+## Dados                                                           (T0 Igor)
 ```
 
 Regras de escrita do README:

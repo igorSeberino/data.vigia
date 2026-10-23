@@ -15,7 +15,7 @@ Executado nesta máquina com a sua identidade (`Igor Seberino <igorseberino@gmai
 configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
 
 - **Repositório** https://github.com/igorSeberino/data.vigia — commit inicial com `pyproject.toml`,
-  `requirements*.txt`, `.gitignore`, `.gitattributes`, `LICENSE` (MIT), `CLAUDE.md`, README-esqueleto
+  `requirements*.txt`, `.gitignore`, `.gitattributes`, `CLAUDE.md`, README-esqueleto
   no padrão do `api.ludens` (logo, título, frase, badges) com todas as seções do relatório e os
   marcadores de responsável, `src/manutencao/__init__.py`, `tests/test_estrutura.py`,
   `data/raw/ai4i2020.csv` (SHA-256 conferido), CI (`.github/workflows/ci.yml`), templates de issue
