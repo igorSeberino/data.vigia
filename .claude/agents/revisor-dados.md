@@ -64,7 +64,7 @@ Rode, só leitura: `git diff main...HEAD --stat`, `git diff main...HEAD`,
 | 10 | Só as seções do README do autor foram alteradas (marcadores `<!-- RESPONSÁVEL -->`) | diff do README |
 | 11 | Toda citação nova (AUTOR, ano) existe em §4 | grep no README |
 | 12 | Commits com o e-mail do autor da tabela §4 do plano e mensagens Conventional Commits em português | `git log` acima |
-| 13 | Nenhum arquivo gerado indevido (`data/processed/`, `*.db`, `*.joblib`) | `git diff --stat` |
+| 13 | Nenhum arquivo gerado indevido (`data/processed/`, `*.db`) | `git diff --stat` |
 
 Fora do seu escopo: estilo genérico, micro-otimização, gosto pessoal. Se não houver
 regra aplicável, diga "sem precedente no plano" em vez de inventar uma.

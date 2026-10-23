@@ -9,27 +9,33 @@
 
 ---
 
-## 1. O enunciado é suficiente? Sim.
+## 1. Requisitos do enunciado
 
-O PDF (Prof. Claudinei Dias – "Aplicação de Ciência de Dados na Indústria 4.0") deixa o **tema
-livre dentro da Indústria 4.0** e fixa o que precisa existir:
+Fonte única: o PDF do enunciado ("Avaliação N2 – Ciência de Dados", Prof. Claudinei Dias (Ney),
+"Aplicação de Ciência de Dados na Indústria 4.0", 1 página). O tema é **livre dentro da
+Indústria 4.0**; o PDF fixa o que precisa existir. Toda tarefa, issue e artefato do repositório
+aponta para um R abaixo ou para uma decisão D (§3).
 
-| Exigência do PDF | Onde é atendida neste plano |
-|---|---|
-| 1. Introdução: Indústria 4.0 e importância | README §1.1 (Adrian, T5) |
-| 1. Definição de um problema real, coletar/preparar dados, construir modelos, analisar e propor soluções | README §1.2 + notebooks 01–05 |
-| 1. Objetivos do trabalho | README §1.3 (Adrian, T5) |
-| 2. Descrição dos dados (fontes, tipos, volume) | README §2.1 + `reports/tables/01_dicionario_dados.csv` (Igor, T1) |
-| 2. Coleta e preparação | notebook 01 + README §2.2 (Igor, T1) |
-| 2. Ferramentas e técnicas de modelagem de dados | README §2.3 (Igor tabela de ferramentas; Gabriel modelagem dimensional; Renato modelagem preditiva) |
-| 2. Métodos de análise de dados | README §2.4 (Adrian, Renato, Gabriel) |
-| 3. Implementação dos modelos de dados | notebooks 02 (SQL/estrela) e 04 (ML) + README §3.1 |
-| 3. Análise dos resultados | notebooks 02–05 + README §3.2 |
-| 3. Discussão sobre a eficácia | notebook 05 + README §3.3 |
-| 3. Implementação em Python | pacote `src/manutencao/` + notebooks + testes + CI, README §3.4 |
-| 4. Referências | README §4 (Adrian, T5) |
-| 5. Entrega por link público GitHub ou Colab, documentado (notebook ou markdown) | repositório público + README como relatório + notebooks executados + badges "Abrir no Colab" |
-| Grupo de até 6 | 4 integrantes |
+| R | Trecho do PDF | Onde | Onde é atendido |
+|---|---|---|---|
+| R1 | "Apresentação da Indústria 4.0 e sua importância no cenário atual." | 1. Introdução | README §1.1 (T5) |
+| R2 | "Deve identificar um problema real dentro do contexto da Indústria 4.0, coletar e preparar dados relevantes, construir modelos de dados e realizar análises para propor soluções baseadas em dados." | 1. Introdução | README §1.2 + notebooks 01–05 |
+| R3 | "Objetivos do trabalho." | 1. Introdução | README §1.3 (T5) |
+| R4 | "Descrição dos dados utilizados (fontes, tipos, volume)." | 2. Metodologia | README §2.1 + `reports/tables/01_dicionario_dados.csv` (T1) |
+| R5 | "Processos de coleta e preparação dos dados." | 2. Metodologia | notebook 01 + README §2.2 (T1) |
+| R6 | "Ferramentas e técnicas de modelagem de dados." | 2. Metodologia | README §2.3 (T1 ferramentas; T2 dimensional; T4 preditiva) |
+| R7 | "Métodos de análise de dados aplicados." | 2. Metodologia | README §2.4 (T3, T4, T6) |
+| R8 | "Implementação dos modelos de dados." | 3. Desenvolvimento | notebooks 02 (SQL/estrela) e 04 (ML) + README §3.1 (T2, T4) |
+| R9 | "Análise dos resultados obtidos." | 3. Desenvolvimento | notebooks 02–05 + README §3.2 (T2, T3, T4, T6) |
+| R10 | "Discussão sobre a eficácia das soluções propostas." | 3. Desenvolvimento | notebook 05 + README §3.3 e §3.5 (T4, T6, T7) |
+| R11 | "Implementação em Python." | 3. Desenvolvimento | `src/manutencao/` + notebooks + testes + CI + README §3.4 (T0–T7) |
+| R12 | "Listagem das fontes bibliográficas e recursos utilizados." | 4. Referências | README §4 (T5; demais acrescentam) |
+| R13 | "Deve ser por um link Google Colab ou GitHub (link público)" | 5. Entrega | repositório público no GitHub (D1) |
+| R14 | "Deve ser documentado (notebook ou markdown)" | 5. Entrega | README como relatório + notebooks executados com saída (D2) |
+| R15 | "Pode ser realizado em grupo (máximo 6 integrantes)." | Objetivo | 4 integrantes (§4) |
+
+Não é requisito à parte: a frase do Objetivo ("aplicar conceitos de ciência de dados, modelagem
+de dados e análise de dados...") está contida em R2.
 
 O que o PDF **não** diz (e este plano decide): tema específico, formato de apresentação.
 
@@ -116,6 +122,7 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 | D15 | Identificadores, docstrings, textos e commits em **português** | Padrão do grupo |
 | D16 | Merge de PR por **"Create a merge commit"** (nunca squash) | Preserva cada commit com o autor → contribuição visível por integrante |
 | D17 | `SEED = 42` em tudo que é aleatório | Reprodutibilidade |
+| D18 | Um arquivo por integrante em `docs/plano/` com código de referência, notebook célula por célula, testes e commits sugeridos | **Decisão do Igor**: deixar tudo mastigado para cada integrante executar sem travar. Por isso o plano é maior que o código. Alternativa descartada: plano só com assinaturas, valores e testes |
 
 ---
 
@@ -144,16 +151,16 @@ para cada um explicar o que fez.
 
 ## 5. Divisão do trabalho (tarefas T0–T7)
 
-| Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de |
-|---|---|---|---|---|---|---|
-| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
-| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 |
-| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; README §2.3.1, §3.1.1 (com o diagrama ER), §3.2.2 | Adrian | T1 |
-| T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 |
-| T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Igor | T1 |
-| T5 | [#5](https://github.com/igorSeberino/data.vigia/issues/5) | Adrian | `docs/5-intro-references` | README §1 (1.1, 1.2, 1.3) e §4 Referências (ABNT) | Igor | T0 |
-| T6 | [#6](https://github.com/igorSeberino/data.vigia/issues/6) | Gabriel | `feat/6-business-impact` | `custo.py` + testes; notebook 05; README §2.4.3, §3.2.4, §3.3.2 | Renato | T4 (código e testes podem começar após T1) |
-| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | §3.4, §3.5, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 |
+| Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de | Atende |
+|---|---|---|---|---|---|---|---|
+| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — | R11, R13, R14 |
+| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 | R4, R5, R6, R11 |
+| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; README §2.3.1, §3.1.1 (com o diagrama ER), §3.2.2 | Adrian | T1 | R2, R6, R8, R9 |
+| T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 | R7, R9 |
+| T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Igor | T1 | R6, R7, R8, R9, R10 |
+| T5 | [#5](https://github.com/igorSeberino/data.vigia/issues/5) | Adrian | `docs/5-intro-references` | README §1 (1.1, 1.2, 1.3) e §4 Referências (ABNT) | Igor | T0 | R1, R2, R3, R12 |
+| T6 | [#6](https://github.com/igorSeberino/data.vigia/issues/6) | Gabriel | `feat/6-business-impact` | `custo.py` + testes; notebook 05; README §2.4.3, §3.2.4, §3.3.2 | Renato | T4 (código e testes podem começar após T1) | R7, R9, R10 |
+| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | §3.4, §3.5, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 | R10, R11, R13, R14 |
 
 As sete issues são sub-issues da issue-mãe [#8](https://github.com/igorSeberino/data.vigia/issues/8)
 (barra de progresso no Project). Título do PR = título da issue; corpo termina com `Closes #<n>`.
@@ -417,4 +424,24 @@ Depois, **ler o que foi feito** e conseguir explicar cada decisão.
 | Project | https://github.com/users/igorSeberino/projects/2 — `@vigia`, público; campo Status (Backlog → In Progress → In Review → Done); visões Backlog, Board, My items; Adrian, Gabriel e Renato como editores |
 | Issues | #1–#7 (uma por tarefa, com responsável, revisor, escopo, critérios e branch) + #8 issue-mãe |
 | Labels | `module: dados`, `module: preparacao`, `module: modelo-dados`, `module: eda`, `module: modelagem`, `module: custo`, `débito técnico`, `bug` |
-| Convites | `adrian-cesar`, `gabrielcarvallho`, `rcolinneto` com permissão *write* (aceitar em /invitations) |
+| Convites | `adrian-cesar`, `gabrielcarvallho`, `rcolinneto` com permissão *write* (aceitar em /invitations; conferir com `gh api repos/igorSeberino/data.vigia/collaborators --jq '.[].login'`) |
+
+---
+
+## 13. Fora do escopo
+
+| Item | Motivo |
+|---|---|
+| Google Colab (badges, célula que clona o repo) | R13 aceita GitHub **ou** Colab; a entrega é pelo GitHub (D1) |
+| Release, tag e número de versão | ninguém consome versões; a entrega é o link (R13) |
+| Seções "Resumo" e "Contribuições" no README | o PDF não pede; a autoria aparece no histórico e em *contributors* |
+| Seção "Uso de IA" | o PDF não pede |
+| `docs/dicionario-de-dados.md` e `docs/modelo-de-dados.md` | duplicavam o README; o dicionário fica em `reports/tables/01_dicionario_dados.csv` e o diagrama ER no README §3.1.1 |
+| Modelo serializado (`joblib`) | nenhum notebook nem seção consome; o notebook 05 usa as tabelas `04_*.csv` |
+| Implantação do modelo (API, CLP/MES, monitoramento) | R2 pede propor soluções, não implantar; vira trabalho futuro em §3.5 |
+| `LICENSE` de código | trabalho de uma entrega, sem reuso por terceiros; a atribuição CC BY dos dados fica no README (seção Dados) |
+| Cronograma com datas | o PDF não fixa prazos intermediários; a ordem vem do grafo da §5 |
+| `requirements-dev.txt`, ambientes dev/prod | não há deploy; um único `requirements.txt` |
+| `CODEOWNERS`, campos Area/Priority no Project, labels genéricas | o revisor vem da matriz da §5, a ordem vem do grafo e as labels `module:` já classificam |
+| Mínimo de commits por PR, roteiro de defesa | nenhuma fonte pede |
+| `.gitkeep` em pastas futuras | a tarefa que usa a pasta cria a pasta |
