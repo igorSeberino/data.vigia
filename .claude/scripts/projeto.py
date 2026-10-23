@@ -3,7 +3,6 @@
 
 Uso (da raiz do repositório):
     python .claude/scripts/projeto.py status 3 "In Progress"
-    python .claude/scripts/projeto.py campos 9 --status Backlog --area dados --priority 2
     python .claude/scripts/projeto.py ver 3
 
 Adiciona a issue ao Project se ela ainda não estiver lá. Precisa do escopo ``project`` no
@@ -26,20 +25,6 @@ CAMPOS = {
             "In Review": "5ce53a89",
             "Done": "c873df1f",
         },
-    ),
-    "area": (
-        "PVTSSF_lAHOCjyo5c4BoYXkzhm4v84",
-        {
-            "dados": "231b6f66",
-            "análise": "cbe4ebd9",
-            "modelagem": "e6472304",
-            "docs": "7cdabe28",
-            "infra": "4dab1bcd",
-        },
-    ),
-    "priority": (
-        "PVTSSF_lAHOCjyo5c4BoYXkzhm4v9k",
-        {"3": "539f2bf4", "2": "d5fd53c9", "1": "52cc30df", "0": "81cedb2e"},
     ),
 }
 
@@ -124,21 +109,11 @@ if __name__ == "__main__":
     p_status = sub.add_parser("status")
     p_status.add_argument("numero", type=int)
     p_status.add_argument("valor", choices=list(CAMPOS["status"][1]))
-    p_campos = sub.add_parser("campos")
-    p_campos.add_argument("numero", type=int)
-    p_campos.add_argument("--status", choices=list(CAMPOS["status"][1]))
-    p_campos.add_argument("--area", choices=list(CAMPOS["area"][1]))
-    p_campos.add_argument("--priority", choices=list(CAMPOS["priority"][1]))
     p_ver = sub.add_parser("ver")
     p_ver.add_argument("numero", type=int)
     args = parser.parse_args()
 
     if args.acao == "ver":
         ver(args.numero)
-    elif args.acao == "status":
-        definir(garantir_item(args.numero), "status", args.valor)
     else:
-        item = garantir_item(args.numero)
-        for campo in ("status", "area", "priority"):
-            if getattr(args, campo):
-                definir(item, campo, getattr(args, campo))
+        definir(garantir_item(args.numero), "status", args.valor)

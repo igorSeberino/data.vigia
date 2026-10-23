@@ -22,7 +22,7 @@ O que existe:
 - **Configuração**: só "Create a merge commit"; branch apagada após merge; `main` protegida
   (PR obrigatório, 1 aprovação, check `ci`).
 - **Project** `@vigia`: https://github.com/users/igorSeberino/projects/2 (campos, visões e editores na §12).
-- **Issues** #1–#7 (tarefas) e #8 (issue-mãe), com labels, Area, Priority e Status *Backlog*.
+- **Issues** #1–#7 (tarefas) e #8 (issue-mãe), com labels e Status *Backlog*.
 - **Convites** enviados para `adrian-cesar`, `gabrielcarvallho`, `rcolinneto`.
 
 ### O que ainda é seu no T0

@@ -11,7 +11,7 @@ não há plugin para instalar nem marketplace para atualizar.
 | `skills/tbd-commit` | `/tbd-commit` | Conventional Commits em português, conferindo o e-mail do autor |
 | `skills/tbd-pr` | `/tbd-pr` | portões (ruff, pytest, notebook), revisão do `revisor-dados`, PR com revisor da matriz; depois do merge, finaliza e confere a autoria |
 | `agents/revisor-dados.md` | chamado pelo `/tbd-pr` (ou "use o revisor-dados para…") | revisão de conformidade somente leitura: vazamento de alvo, uso do teste, semente, números sem fonte, contrato entre notebooks |
-| `scripts/projeto.py` | usado pelas skills | move cards e define Area/Priority no Project @vigia |
+| `scripts/projeto.py` | usado pelas skills | move cards no Project @vigia |
 | `scripts/guard_mutations.py` | hook do revisor | impede o revisor de alterar o repositório |
 | `scripts/setup_reminder.py` | hook de início de sessão | lembra de rodar `/setup` |
 

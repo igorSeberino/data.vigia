@@ -29,7 +29,7 @@ As tarefas do trabalho já existem como issues #1–#7 (ver `docs/plano/00-VISAO
 6. Branch: o nome já está no corpo da issue ("Branch: `...`"). Use exatamente ele.
 7. `git switch main && git pull && git switch -c {branch}`
 8. Resuma: issue, card movido, branch criada, arquivo de tarefas a seguir
-   (`docs/plano/0X-NOME.md`), revisor do PR, e que o PR deve sair em até 2 dias.
+   (`docs/plano/0X-NOME.md`) e revisor do PR.
 
 ## B. Trabalho novo (bug, débito técnico, ajuste que surgiu)
 
@@ -42,11 +42,9 @@ As tarefas do trabalho já existem como issues #1–#7 (ver `docs/plano/00-VISAO
 5. Mostre título e corpo e **pergunte antes de criar**.
 6. `gh issue create --repo igorSeberino/data.vigia --title "..." --body "..."` e guarde o número.
 7. Labels (`gh issue edit {n} --add-label ...`): o `module: ...` do módulo tocado
-   (`dados`, `preparacao`, `modelo-dados`, `eda`, `modelagem`, `custo`), `relatório` se mexe no
-   README, `bug` / `débito técnico` conforme o tipo.
-8. Project: `python .claude/scripts/projeto.py campos {n} --status "In Progress" --area {area} --priority {p}`
-   - **Area**: `infra` se o tipo for `infra`; `docs` se for `docs` ou só README; senão pelo módulo —
-     `dados` (dados, preparacao, modelo-dados), `análise` (eda, custo), `modelagem` (modelagem).
-   - **Priority**: decida sozinho com `references/priority-rubric.md`.
+   (`dados`, `preparacao`, `modelo-dados`, `eda`, `modelagem`, `custo`), `bug` / `débito técnico`
+   conforme o tipo.
+8. Project: `python .claude/scripts/projeto.py status {n} "In Progress"` (adiciona a issue ao
+   Project se ainda não estiver lá).
 9. Branch: `references/branch-naming.md`. Depois `git switch main && git pull && git switch -c {branch}`.
-10. Resuma issue, labels, campos do Project (com uma linha justificando a Priority) e branch.
+10. Resuma issue, labels, card no Project e branch.

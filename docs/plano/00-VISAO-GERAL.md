@@ -394,11 +394,11 @@ Detalhes em `.claude/README.md`.
 | Peça | O que faz |
 |---|---|
 | `/setup` | além de git/gh/python, confere a **identidade do commit** contra a tabela §4, a permissão no repo, o venv, as dependências e o SHA-256 do CSV |
-| `/tbd-start <n>` | modo A: assume uma das issues planejadas (#1–#7), move o card e cria a branch já definida na issue; modo B: abre issue nova (bug/débito) com labels, Area e Priority |
+| `/tbd-start <n>` | modo A: assume uma das issues planejadas (#1–#7), move o card e cria a branch já definida na issue; modo B: abre issue nova (bug/débito) com labels e card no Project |
 | `/tbd-commit` | Conventional Commits em português, escopos pelos módulos de `src/manutencao/`, recusa e-mail errado |
 | `/tbd-pr` | portões ruff + pytest + execução do notebook + `revisor-dados`, PR com o revisor da matriz §5, card em *In Review*; depois do merge confere a autoria |
 | `revisor-dados` | revisão de conformidade somente leitura com 13 regras do projeto (vazamento, uso do teste, semente, números sem fonte, contrato §7, autoria) |
-| `.claude/scripts/projeto.py` | move cards e define Area/Priority no Project sem o agente precisar descobrir ids |
+| `.claude/scripts/projeto.py` | move cards no Project sem o agente precisar descobrir ids |
 
 Como cada um começa, com o `.venv` ativo, na raiz do repositório:
 
@@ -422,7 +422,7 @@ Depois, **ler o que foi feito** e conseguir explicar cada decisão (cada arquivo
 | Item | Onde |
 |---|---|
 | Repositório | https://github.com/igorSeberino/data.vigia (público, `main` protegida: PR + 1 aprovação + check `ci`; só merge commit) |
-| Project | https://github.com/users/igorSeberino/projects/2 — `@vigia`, público; campos Status (Backlog → In Progress → In Review → Done), Area (dados, análise, modelagem, docs, infra), Priority (3–0); visões Backlog, Board, My items; Adrian, Gabriel e Renato como editores |
+| Project | https://github.com/users/igorSeberino/projects/2 — `@vigia`, público; campo Status (Backlog → In Progress → In Review → Done); visões Backlog, Board, My items; Adrian, Gabriel e Renato como editores |
 | Issues | #1–#7 (uma por tarefa, com responsável, revisor, escopo, critérios e branch) + #8 issue-mãe |
-| Labels | `module: dados`, `module: preparacao`, `module: modelo-dados`, `module: eda`, `module: modelagem`, `module: custo`, `relatório`, `débito técnico`, `bug`, `documentation`, `enhancement` |
+| Labels | `module: dados`, `module: preparacao`, `module: modelo-dados`, `module: eda`, `module: modelagem`, `module: custo`, `débito técnico`, `bug` |
 | Convites | `adrian-cesar`, `gabrielcarvallho`, `rcolinneto` com permissão *write* (aceitar em /invitations) |
