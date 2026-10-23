@@ -4,10 +4,7 @@ __pycache__/
 .ipynb_checkpoints/
 .pytest_cache/
 .ruff_cache/
-data/processed/*
-!data/processed/.gitkeep
-models/*
-!models/.gitkeep
+data/processed/
 *.db
 .DS_Store
 Thumbs.db

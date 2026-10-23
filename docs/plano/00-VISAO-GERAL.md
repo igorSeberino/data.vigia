@@ -204,7 +204,6 @@ data.vigia/
 ├── reports/
 │   ├── figures/NN_*.png              # versionado (o README embute)
 │   └── tables/NN_*.csv               # versionado (o README cita)
-├── models/                           # modelo_final.joblib — gerado, ignorado
 ├── src/manutencao/
 │   ├── __init__.py                   # T0
 │   ├── config.py   util.py           # T1 Igor
@@ -233,7 +232,7 @@ precisar de algo novo, cria no próprio módulo.
 
 ```python
 from manutencao.config import (RAIZ, DIR_RAW, DIR_PROCESSED, DIR_FIGURAS, DIR_TABELAS,
-    DIR_MODELOS, CAMINHO_CSV, CAMINHO_DB, SEED, COL_ALVO, COLS_MODOS, COLS_VAZAMENTO,
+    CAMINHO_CSV, CAMINHO_DB, SEED, COL_ALVO, COLS_MODOS, COLS_VAZAMENTO,
     COLS_NUMERICAS_BRUTAS, COLS_ENGENHARIA, COL_TIPO, ORDEM_TIPO, ATRIBUTOS_BRUTO,
     ATRIBUTOS_ENGENHARIA, MODOS_FALHA)
 from manutencao.util import salvar_figura, salvar_tabela, configurar_graficos

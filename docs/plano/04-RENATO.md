@@ -370,14 +370,14 @@ def test_recall_por_modo(df):
 |---|---|---|
 | 1 | md | `# 04 · Modelagem preditiva` · autor Renato Colin Neto · fase CRISP-DM: modelagem e avaliação · desenho experimental resumido |
 | 2 | code | Célula padrão de ambiente |
-| 3 | code | imports: `joblib`, `numpy as np`, `pandas as pd`, `matplotlib.pyplot as plt`, `seaborn as sns`; `from sklearn.inspection import permutation_importance`; `from sklearn.metrics import ConfusionMatrixDisplay, PrecisionRecallDisplay, RocCurveDisplay`; `from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree`; `from manutencao.config import ATRIBUTOS_BRUTO, ATRIBUTOS_ENGENHARIA, DIR_MODELOS, DIR_TABELAS, SEED`; `from manutencao.preparacao import carregar_preparado, dividir_treino_teste, separar_x_y`; `from manutencao import modelagem as mo`; util; `configurar_graficos()` |
+| 3 | code | imports: `numpy as np`, `pandas as pd`, `matplotlib.pyplot as plt`, `seaborn as sns`; `from sklearn.inspection import permutation_importance`; `from sklearn.metrics import ConfusionMatrixDisplay, PrecisionRecallDisplay, RocCurveDisplay`; `from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree`; `from manutencao.config import ATRIBUTOS_BRUTO, ATRIBUTOS_ENGENHARIA, DIR_TABELAS, SEED`; `from manutencao.preparacao import carregar_preparado, dividir_treino_teste, separar_x_y`; `from manutencao import modelagem as mo`; util; `configurar_graficos()` |
 | 4 | code | `df = carregar_preparado()` · `treino, teste = dividir_treino_teste(df)` · `CONJUNTOS = {"bruto": ATRIBUTOS_BRUTO, "engenharia": ATRIBUTOS_ENGENHARIA}` · `X_tr, y_tr = separar_x_y(treino, ATRIBUTOS_ENGENHARIA)` · `X_te, y_te = separar_x_y(teste, ATRIBUTOS_ENGENHARIA)` · print dos tamanhos e prevalências |
 | 5 | md | Desenho experimental completo (as bullets acima) e por que o teste fica guardado |
 | 6 | code | `comp = mo.comparar_modelos(treino, CONJUNTOS)` · `salvar_tabela(comp, "04_comparacao_cv")` · exibir colunas `modelo, conjunto, pr_auc_media, pr_auc_dp, roc_auc_media, recall_media, precisao_media, f1_media, mcc_media, tempo_ajuste_s` |
 | 7 | code | Gráfico de barras agrupadas: `pr_auc_media` por modelo, uma cor por conjunto, barras de erro = `pr_auc_dp`, linha horizontal na prevalência → `salvar_figura(fig, "04_comparacao_modelos")` |
 | 8 | md | Interpretar: ganho de `engenharia` sobre `bruto` em cada modelo; ROC-AUC alta até em modelos fracos (por isso PR-AUC); qual modelo vence |
 | 9 | code | `melhor = comp.query("conjunto == 'engenharia' and modelo != 'dummy'").iloc[0]["modelo"]` · `busca = mo.ajustar_hiperparametros(melhor, ATRIBUTOS_ENGENHARIA, X_tr, y_tr)` · `top = pd.DataFrame(busca.cv_results_).sort_values("rank_test_score").head(10)[["params", "mean_test_score", "std_test_score"]]` · `salvar_tabela(top, "04_busca_hiperparametros")` · print `busca.best_params_`, `busca.best_score_` |
-| 10 | code | `final = busca.best_estimator_` · `DIR_MODELOS.mkdir(exist_ok=True)` · `joblib.dump(final, DIR_MODELOS / "modelo_final.joblib")` · `salvar_tabela(pd.DataFrame([{"modelo": melhor, "conjunto": "engenharia", "parametros": str(busca.best_params_), "pr_auc_cv": busca.best_score_}]), "04_modelo_escolhido")` |
+| 10 | code | `final = busca.best_estimator_` · `salvar_tabela(pd.DataFrame([{"modelo": melhor, "conjunto": "engenharia", "parametros": str(busca.best_params_), "pr_auc_cv": busca.best_score_}]), "04_modelo_escolhido")` |
 | 11 | md | Probabilidades *out-of-fold* (para o limiar de custo do notebook 05) |
 | 12 | code | `oof = mo.probabilidades_oof(final, X_tr, y_tr)` · `salvar_tabela(pd.DataFrame({"udi": treino["udi"], "falha": y_tr, "proba": oof}), "04_oof_treino")` |
 | 13 | md | **Avaliação final no teste (uma única vez)** |
@@ -393,8 +393,8 @@ def test_recall_por_modo(df):
 | 23 | md | **Conclusões** (6–8 bullets com números das tabelas `04_*`) |
 
 Executar `jupyter nbconvert --to notebook --execute --inplace notebooks/04_modelagem_preditiva.ipynb`
-e `ruff format notebooks/04_modelagem_preditiva.ipynb`. `models/modelo_final.joblib` **não** é
-commitado (está no `.gitignore`); as tabelas `04_*.csv` **são** (o notebook 05 depende delas).
+e `ruff format notebooks/04_modelagem_preditiva.ipynb`. As tabelas `04_*.csv`
+**são** commitadas (o notebook 05 depende delas).
 
 ### T4.4 README — o que escrever
 

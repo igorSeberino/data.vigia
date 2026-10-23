@@ -67,7 +67,6 @@ DIR_RAW = RAIZ / "data" / "raw"
 DIR_PROCESSED = RAIZ / "data" / "processed"
 DIR_FIGURAS = RAIZ / "reports" / "figures"
 DIR_TABELAS = RAIZ / "reports" / "tables"
-DIR_MODELOS = RAIZ / "models"
 
 CAMINHO_CSV = DIR_RAW / "ai4i2020.csv"
 CAMINHO_DB = DIR_PROCESSED / "industria40.db"
@@ -476,8 +475,7 @@ Commits sugeridos (nesta ordem, cada um com `ruff format . && ruff check . && py
 | 17 | code | Montar DataFrame `coluna, origem (original/derivada), tipo, unidade, papel (identificador/atributo/alvo/modo de falha — proibido como atributo), descricao` para as 17 colunas de `df` · `salvar_tabela(dic, "01_dicionario_dados")` · exibir |
 | 18 | md | **7. Divisão treino/teste** — 80/20 estratificada, SEED=42, única no projeto, teste reservado |
 | 19 | code | `treino, teste = dividir_treino_teste(df)` · tabela `conjunto, ciclos, falhas, prevalencia_pct` (treino, teste, total) · `salvar_tabela(..., "01_divisao_treino_teste")` |
-| 20 | code | `DIR_PROCESSED.mkdir(parents=True, exist_ok=True)` · `df.to_csv(DIR_PROCESSED / "ai4i_preparado.csv", index=False)` (arquivo ignorado pelo git, só para conferência) |
-| 21 | md | **Conclusões da etapa** — 5 a 7 bullets com números tirados das saídas acima |
+| 20 | md | **Conclusões da etapa** — 5 a 7 bullets com números tirados das saídas acima |
 
 Executar: `jupyter nbconvert --to notebook --execute --inplace notebooks/01_coleta_e_preparacao.ipynb`
 e depois `ruff format notebooks/01_coleta_e_preparacao.ipynb`.
