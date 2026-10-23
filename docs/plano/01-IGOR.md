@@ -1,8 +1,7 @@
 # Tarefas do Igor — T0 (estrutura), T1 (coleta e preparação), T7 (integração e entrega)
 
 > Leia antes: `00-VISAO-GERAL.md`. Identidade git deste repositório:
-> `Igor Seberino <igorseberino@gmail.com>` (**não** o e-mail global da TOTVS).
-> Login: `igorSeberino`. Clone em `C:\Users\igors\data.vigia` (fora do OneDrive) — já existe nesta máquina.
+> `Igor Seberino <igorseberino@gmail.com>` (configurado **local** no clone) · login `igorSeberino`.
 
 Todo o código abaixo foi executado e testado antes de entrar neste plano (Python 3.14, pandas 3.1,
 scikit-learn 1.9, ruff e pytest verdes). Pode copiar como está.
@@ -11,12 +10,11 @@ scikit-learn 1.9, ruff e pytest verdes). Pode copiar como está.
 
 ## T0 — Estrutura do repositório — **feito**
 
-Executado nesta máquina com a sua identidade (`Igor Seberino <igorseberino@gmail.com>`,
-configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
+O que existe:
 
 - **Repositório** https://github.com/igorSeberino/data.vigia — commit inicial com `pyproject.toml`,
   `requirements.txt`, `.gitignore`, `.gitattributes`, `CLAUDE.md`, README-esqueleto
-  no padrão do `api.ludens` (logo, título, frase, badges) com todas as seções do relatório e os
+  (logo, título, frase, badges) com todas as seções do relatório e os
   marcadores de responsável, `src/manutencao/__init__.py`, `tests/test_estrutura.py`,
   `data/raw/ai4i2020.csv` (SHA-256 conferido), CI (`.github/workflows/ci.yml`), templates de issue
   (tarefa, bug, débito técnico), `PULL_REQUEST_TEMPLATE.md`, `CODEOWNERS`, `.github/assets/logo.svg`,
@@ -48,7 +46,7 @@ configurada **local** no clone `C:\Users\igors\data.vigia`). O que existe agora:
 ## T1 — Coleta, validação e preparação (issue #1 · `feat/1-data-prep`)
 
 ```bash
-cd /c/Users/igors/data.vigia
+cd data.vigia
 uv venv --python 3.12 .venv && source .venv/Scripts/activate
 uv pip install -r requirements.txt
 claude      # depois: /setup  e  /tbd-start 1

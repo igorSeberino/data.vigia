@@ -1,6 +1,6 @@
 # Time de agentes do data.vigia
 
-Adaptação do [`team.ludens`](https://github.com/gcarvalhow/team.ludens) para este projeto.
+Baseado no [`team.ludens`](https://github.com/gcarvalhow/team.ludens), reduzido ao que este projeto usa.
 Fica no próprio repositório (`.claude/`): o Claude Code carrega sozinho ao abrir a pasta —
 não há plugin para instalar nem marketplace para atualizar.
 
@@ -15,12 +15,3 @@ não há plugin para instalar nem marketplace para atualizar.
 | `scripts/guard_mutations.py` | hook do revisor | impede o revisor de alterar o repositório |
 | `scripts/setup_reminder.py` | hook de início de sessão | lembra de rodar `/setup` |
 
-## O que ficou de fora do team.ludens, e por quê
-
-| Peça original | Decisão | Motivo |
-|---|---|---|
-| `product-thinking` + `feature-design` → `logic-design` → `feature-implementation-spec` | removido | o escopo é fixado pelo enunciado e as specs de implementação (com código) já estão em `docs/plano/`; um pipeline de produto só repetiria esse trabalho |
-| `tbd-scope` | removido | todas as tarefas já estão escopadas nas issues #1–#7; trabalho novo é pequeno e entra pelo modo B do `/tbd-start` |
-| `backend-architecture` / `frontend-architecture` | trocadas por `CLAUDE.md` + `docs/plano/` | o projeto tem um pacote Python e cinco notebooks; as regras cabem numa página e o plano já descreve a arquitetura |
-| `senior-dev` | virou `revisor-dados` | a revisão de conformidade é a parte que mais vale aqui: os erros caros são vazamento de alvo, olhar o teste e número inventado no relatório |
-| plugin/marketplace | virou pasta `.claude/` | um único repositório; nada para instalar ou versionar à parte |

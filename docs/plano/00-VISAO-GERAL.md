@@ -99,7 +99,7 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 
 | # | Decisão | Motivo |
 |---|---|---|
-| D1 | Repositório público `igorSeberino/data.vigia` (produto **vigia**; padrão `<superfície>.<produto>` do Ludens) + Project `@vigia` | Entrega exige link público; o Igor é o dono dos repos do grupo; "IA" e "N2" ficam fora do nome porque não são o assunto do trabalho |
+| D1 | Repositório público `igorSeberino/data.vigia` (produto **vigia**) + Project `@vigia` | Entrega exige link público; o Igor é o dono dos repos do grupo; "IA" e "N2" ficam fora do nome porque não são o assunto do trabalho |
 | D2 | **README.md é o relatório** (seções com os nomes do PDF) + notebooks executados com saída | PDF aceita "notebook ou markdown"; o professor abre o link e lê tudo sem rodar nada |
 | D3 | Código reutilizável em `src/manutencao/` (sem instalar pacote; notebooks fazem `sys.path.insert`) | Evita duplicação entre notebooks, permite testes; funciona no Colab sem reiniciar kernel |
 | D4 | CSV original versionado em `data/raw/ai4i2020.csv` + download com verificação SHA-256 como alternativa | Reprodutível mesmo se a UCI cair; licença CC BY 4.0 permite redistribuir com atribuição |
@@ -121,8 +121,7 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 
 ## 4. Integrantes, contas GitHub e identidade de commit
 
-Verificado no GitHub (colaboradores com permissão *write* em `igorSeberino/srec` e
-`igorSeberino/g1126-template-prato-cheio`, e e-mails dos commits que **aparecem atribuídos** à conta):
+E-mail de cada um = o que já aparece atribuído à conta no GitHub:
 
 | Integrante | Login GitHub | `user.name` | `user.email` (já vinculado à conta, comprovado por commits atribuídos) |
 |---|---|---|---|
@@ -131,17 +130,11 @@ Verificado no GitHub (colaboradores com permissão *write* em `igorSeberino/srec
 | Gabriel Carvalho | `gabrielcarvallho` | `Gabriel Carvalho` | `gabriellccarvalho.dev@gmail.com` |
 | Renato Colin Neto | **`rcolinneto`** | `Renato Colin Neto` | `renato.colin@catolicasc.edu.br` |
 
-Armadilhas encontradas:
-
-1. **Renato tem duas contas** (`RenatoColin`, antiga, sem commits recentes; `rcolinneto`, a que ele
-   usa). Convidar e atribuir **`rcolinneto`**. O próprio README do Prato Cheio já corrigiu isso uma vez.
-2. **O `git config --global user.email` do Igor nesta máquina é `igor.seberino@totvs.com.br`**, que
-   não aparece vinculado à conta (commits no `srec` com e-mail não vinculado ficaram sem autor no
-   GitHub). No repositório do trabalho, configurar **local**:
-   `git config user.email igorseberino@gmail.com`.
-3. Commit com e-mail não vinculado **não conta** como contribuição. Por isso todo arquivo de
-   tarefas começa com a verificação de identidade e termina conferindo
-   `gh api repos/igorSeberino/data.vigia/commits/<sha> --jq .author.login`.
+- Renato usa a conta **`rcolinneto`** (a antiga `RenatoColin` não é usada).
+- Configure o e-mail **local** no clone (`git config user.email ...`), não o global: commit com
+  e-mail não vinculado **não conta** como contribuição. Por isso todo arquivo de tarefas começa
+  com a verificação de identidade e termina conferindo
+  `gh api repos/igorSeberino/data.vigia/commits/<sha> --jq .author.login`.
 
 **Cada integrante implementa a própria parte, na própria máquina, com a própria conta.** Ninguém
 commita em nome de outro (nada de `--author` alheio): além de antiético, o professor pode pedir
@@ -281,7 +274,7 @@ Arquivos trocados entre notebooks (versionados em `reports/tables/`):
 
 ## 8. Fluxo de trabalho Git (vale para todos)
 
-Trunk-Based Development, como no Ludens: `main` é a única branch longa; cada tarefa vira uma
+Trunk-Based Development: `main` é a única branch longa; cada tarefa vira uma
 branch curta `{tipo}/{issue}-{slug-em-inglês}`, um PR pequeno, CI verde, 1 aprovação, merge.
 O time de agentes em `.claude/` (§11) executa cada passo; os comandos manuais ficam como
 alternativa.
@@ -395,25 +388,19 @@ Regras de escrita do README:
 
 ---
 
-## 11. Time de agentes (adaptado do team.ludens)
+## 11. Time de agentes
 
-O plugin `team.ludens` do Gabriel foi adaptado pelo que este projeto **precisa de fato** e
-colocado direto em `.claude/` do repositório (o Claude Code carrega ao abrir a pasta; nada para
-instalar). Detalhes em `.claude/README.md`.
+Fica em `.claude/` do repositório (o Claude Code carrega ao abrir a pasta; nada para instalar).
+Detalhes em `.claude/README.md`.
 
-| Peça | Origem no team.ludens | O que faz aqui |
-|---|---|---|
-| `/setup` | `setup` | além de git/gh/python, confere a **identidade do commit** contra a tabela §4, a permissão no repo, o venv, as dependências e o SHA-256 do CSV |
-| `/tbd-start <n>` | `tbd-start` | modo A: assume uma das issues planejadas (#1–#7), move o card e cria a branch já definida na issue; modo B: abre issue nova (bug/débito) com labels, Area e Priority |
-| `/tbd-commit` | `tbd-commit` | Conventional Commits em português, escopos pelos módulos de `src/manutencao/`, recusa e-mail errado |
-| `/tbd-pr` | `tbd-pr` | portões ruff + pytest + execução do notebook + `revisor-dados`, PR com o revisor da matriz §5, card em *In Review*; depois do merge confere a autoria |
-| `revisor-dados` | `senior-dev` | revisão de conformidade somente leitura com 13 regras do projeto (vazamento, uso do teste, semente, números sem fonte, contrato §7, autoria) |
-| `.claude/scripts/projeto.py` | — (novo) | move cards e define Area/Priority no Project sem o agente precisar descobrir ids |
-
-Ficaram de fora, por não terem necessidade real aqui: `product-thinking` e o pipeline
-`feature-design → logic-design → feature-implementation-spec` (o escopo vem do enunciado e as
-specs com código já estão neste plano), `tbd-scope` (as tarefas já estão escopadas) e as skills
-de arquitetura backend/frontend (as regras cabem no `CLAUDE.md`).
+| Peça | O que faz |
+|---|---|
+| `/setup` | além de git/gh/python, confere a **identidade do commit** contra a tabela §4, a permissão no repo, o venv, as dependências e o SHA-256 do CSV |
+| `/tbd-start <n>` | modo A: assume uma das issues planejadas (#1–#7), move o card e cria a branch já definida na issue; modo B: abre issue nova (bug/débito) com labels, Area e Priority |
+| `/tbd-commit` | Conventional Commits em português, escopos pelos módulos de `src/manutencao/`, recusa e-mail errado |
+| `/tbd-pr` | portões ruff + pytest + execução do notebook + `revisor-dados`, PR com o revisor da matriz §5, card em *In Review*; depois do merge confere a autoria |
+| `revisor-dados` | revisão de conformidade somente leitura com 13 regras do projeto (vazamento, uso do teste, semente, números sem fonte, contrato §7, autoria) |
+| `.claude/scripts/projeto.py` | move cards e define Area/Priority no Project sem o agente precisar descobrir ids |
 
 Como cada um começa, com o `.venv` ativo, na raiz do repositório:
 
