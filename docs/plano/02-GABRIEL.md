@@ -53,7 +53,7 @@ implementação seguindo este arquivo → `/tbd-commit` a cada commit sugerido �
 - Um ciclo pode ter mais de um modo de falha (24 ciclos) → relação N:N → **tabela ponte**
   `ponte_ciclo_modo`.
 - Não há data/hora no dataset → **não existe dimensão de tempo** (limitação, citar).
-- SQLite: vem com o Python (`sqlite3`), zero instalação, roda no Colab.
+- SQLite: vem com o Python (`sqlite3`), zero instalação.
 
 ### T2.1 `src/manutencao/modelo_dados.py`
 
@@ -496,7 +496,7 @@ Conteúdo (nesta ordem):
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | md | `# 02 · Modelo de dados dimensional (SQLite)` · autor Gabriel Carvalho · fase CRISP-DM: preparação dos dados · objetivo · badge Colab |
+| 1 | md | `# 02 · Modelo de dados dimensional (SQLite)` · autor Gabriel Carvalho · fase CRISP-DM: preparação dos dados · objetivo |
 | 2 | code | Célula padrão de ambiente (CLAUDE.md) |
 | 3 | code | `import matplotlib.pyplot as plt`, `import seaborn as sns`, `import pandas as pd` · `from manutencao.config import CAMINHO_DB` · `from manutencao.preparacao import carregar_preparado` · `from manutencao import modelo_dados as md` · `from manutencao.util import configurar_graficos, salvar_figura, salvar_tabela` · `configurar_graficos()` |
 | 4 | md | Por que um modelo dimensional; grão; dimensão degenerada; ponte; sem dimensão de tempo. Diagrama Mermaid (mesmo do doc) |
@@ -766,7 +766,7 @@ def test_limiar_otimo_separa_classes():
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | md | `# 05 · Impacto no negócio` · autor Gabriel Carvalho · fase CRISP-DM: avaliação · objetivo · badge Colab |
+| 1 | md | `# 05 · Impacto no negócio` · autor Gabriel Carvalho · fase CRISP-DM: avaliação · objetivo |
 | 2 | code | Célula padrão de ambiente |
 | 3 | code | imports: `numpy as np`, `pandas as pd`, `matplotlib.pyplot as plt`, `seaborn as sns`; `from manutencao.config import DIR_TABELAS`; `from manutencao.preparacao import carregar_preparado, dividir_treino_teste`; `from manutencao import custo as cu`; util; `configurar_graficos()` |
 | 4 | md | Modelo de custo (a tabela acima) e as hipóteses, com o aviso de que são hipotéticas |

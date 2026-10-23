@@ -458,7 +458,7 @@ Commits sugeridos (nesta ordem, cada um com `ruff format . && ruff check . && py
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | md | `# 01 · Coleta e preparação dos dados` · autor Igor Seberino · fase CRISP-DM: *entendimento e preparação dos dados* · objetivo da etapa em 3 linhas · badge Colab deste notebook |
+| 1 | md | `# 01 · Coleta e preparação dos dados` · autor Igor Seberino · fase CRISP-DM: *entendimento e preparação dos dados* · objetivo da etapa em 3 linhas |
 | 2 | code | Célula padrão de ambiente (CLAUDE.md) |
 | 3 | code | `import pandas as pd` · imports de `manutencao.config`, `manutencao.dados`, `manutencao.preparacao`, `manutencao.util` · `configurar_graficos()` · `pd.set_option("display.max_columns", 30)` |
 | 4 | md | **1. Fonte**: UCI id 601, Matzka (2020), DOI 10.24432/C5HS5C, CC BY 4.0, dataset sintético que reproduz dados reais de manutenção de uma máquina de usinagem. Explicar que o CSV está versionado e que `baixar_csv()` refaz o download conferindo SHA-256 |
@@ -507,7 +507,7 @@ Título, fonte e licença; a mesma tabela do passo 17 em Markdown (17 linhas); u
   estratificada). Citar `reports/tables/01_*.csv`.
 - **§2.3 (abertura) Ferramentas**: tabela `Ferramenta | Uso no trabalho`: Python 3.12; pandas e
   NumPy (manipulação); SQLite/`sqlite3` (modelo dimensional); scikit-learn (modelos, validação);
-  SciPy (testes estatísticos); matplotlib e seaborn (gráficos); Jupyter e Google Colab
+  SciPy (testes estatísticos); matplotlib e seaborn (gráficos); Jupyter
   (notebooks); pytest e ruff (qualidade); GitHub Actions (CI que executa testes e notebooks);
   uv (ambiente). Uma frase dizendo que a estrutura segue CRISP-DM (SHEARER, 2000) e o mapeamento
   fase → notebook: entendimento do negócio (README §1), entendimento dos dados (01, 03),
@@ -563,7 +563,7 @@ corrigir sozinho a seção do colega.
 - [ ] Todas as figuras referenciadas existem (`grep -o "reports/figures/[^)]*" README.md | xargs ls`).
 - [ ] Toda citação (AUTOR, ano) do texto está em §4, e toda referência de §4 é citada.
 - [ ] Os nomes das seções 1–4 batem com o PDF.
-- [ ] Links dos notebooks e badges Colab abrem.
+- [ ] Links dos notebooks abrem.
 
 ### T7.3 O que escrever
 
@@ -571,8 +571,8 @@ corrigir sozinho a seção do colega.
   modelos, análise de custo), principal resultado técnico e financeiro (números das tabelas
   `04_metricas_teste.csv` e `05_estrategias_teste.csv`), principal limitação (dataset sintético).
 - **§3.4 Implementação em Python**: diagrama em texto da estrutura (árvore da §6 do plano,
-  resumida); tabela módulo → responsabilidade → autor; como executar localmente (uv, comandos) e
-  no Colab (badges); reprodutibilidade (CSV versionado + SHA-256, SEED=42, divisão única, CI que
+  resumida); tabela módulo → responsabilidade → autor; como executar localmente (uv, comandos);
+  reprodutibilidade (CSV versionado + SHA-256, SEED=42, divisão única, CI que
   executa os 5 notebooks a cada PR); qualidade (quantidade de testes pelo `pytest -q`, ruff).
 - **§3.5 Considerações finais**: retomar cada objetivo específico de §1.3 e dizer se foi
   atingido e com qual evidência; limitações (sintético, sem série temporal por máquina, custos
@@ -586,31 +586,20 @@ corrigir sozinho a seção do colega.
   gh api repos/igorSeberino/data.vigia/contributors --jq '.[] | "\(.login)\t\(.contributions)"'
   ```
 
-### T7.4 Colab
-
-Abrir cada badge no Colab (deslogado do GitHub não importa, o repo é público), "Ambiente de
-execução → Executar tudo", e conferir que roda até o fim. Se algum falhar só no Colab, abrir issue
-para o dono.
-
-### T7.5 PR, release e envio
+### T7.4 PR e envio
 
 ```bash
 # /tbd-pr  (PR "docs: integração final do relatório e entrega", Closes #7, revisores gabrielcarvallho e adrian-cesar)
 # após aprovação + CI verde + merge (e /tbd-pr de novo):
 gh issue close 8 -R igorSeberino/data.vigia -c "Todas as sub-issues entregues."
-git switch main && git pull
-gh release create v1.0.0 -R igorSeberino/data.vigia --target main \
-  --title "Entrega N2 – Ciência de Dados" \
-  --notes "Versão entregue ao Prof. Claudinei Dias. Relatório no README; notebooks em notebooks/."
 curl -s -o /dev/null -w "%{http_code}\n" https://github.com/igorSeberino/data.vigia   # 200
 gh api repos/igorSeberino/data.vigia/contributors --jq '.[].login'                     # 4 logins
 ```
 
-Enviar ao professor: `https://github.com/igorSeberino/data.vigia` (e, se o
-ambiente de entrega pedir Colab, o link do badge do notebook 01). Depois da entrega, ninguém
+Enviar ao professor: `https://github.com/igorSeberino/data.vigia`. Depois da entrega, ninguém
 mais faz push na `main`.
 
-### T7.6 Critérios de aceite
+### T7.5 Critérios de aceite
 
 - [ ] Todos os itens da "Definição de pronto" (§10 do plano mestre) marcados.
 

@@ -50,7 +50,7 @@ preventiva.**
   antes/depois da hora).
 - Dataset público, sem login, licença CC BY 4.0, pequeno (522 KB), limpo e documentado:
   **AI4I 2020 Predictive Maintenance Dataset** (UCI Machine Learning Repository, id 601).
-- Roda em qualquer notebook e no Colab em poucos minutos; dá para dividir em 4 frentes
+- Roda em qualquer máquina em poucos minutos; dá para dividir em 4 frentes
   independentes.
 
 ### 2.1 Fatos do dataset (verificados baixando o arquivo oficial)
@@ -101,18 +101,18 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 |---|---|---|
 | D1 | Repositório público `igorSeberino/data.vigia` (produto **vigia**) + Project `@vigia` | Entrega exige link público; o Igor é o dono dos repos do grupo; "N2" fica fora do nome porque não é o assunto do trabalho |
 | D2 | **README.md é o relatório** (seções com os nomes do PDF) + notebooks executados com saída | PDF aceita "notebook ou markdown"; o professor abre o link e lê tudo sem rodar nada |
-| D3 | Código reutilizável em `src/manutencao/` (sem instalar pacote; notebooks fazem `sys.path.insert`) | Evita duplicação entre notebooks, permite testes; funciona no Colab sem reiniciar kernel |
+| D3 | Código reutilizável em `src/manutencao/` (sem instalar pacote; notebooks fazem `sys.path.insert`) | Evita duplicação entre notebooks e permite testes |
 | D4 | CSV original versionado em `data/raw/ai4i2020.csv` + download com verificação SHA-256 como alternativa | Reprodutível mesmo se a UCI cair; licença CC BY 4.0 permite redistribuir com atribuição |
 | D5 | Alvo = `Machine failure` **como publicado** (sem re-rotular as 9 + 18 inconsistências) | Comparabilidade com a literatura; inconsistências documentadas como ruído de rótulo |
 | D6 | Colunas proibidas como atributo: `udi`, `id_produto`, `falha_twf`, `falha_hdf`, `falha_pwf`, `falha_osf`, `falha_rnf` | Vazamento de alvo (os modos *são* a falha) e identificadores |
 | D7 | Divisão treino/teste 80/20 estratificada, `random_state=42`, feita **só** por `preparacao.dividir_treino_teste()` | Todos usam a mesma divisão; teste é tocado uma única vez (notebook 04, ao final) |
 | D8 | Métrica principal: **PR-AUC (average precision)**; também ROC-AUC, recall, precisão, F1, MCC, acurácia balanceada | Classe positiva = 3,39 %; acurácia engana (Saito & Rehmsmeier, 2015; Chicco & Jurman, 2020) |
-| D9 | Modelos: Dummy, Regressão Logística, Árvore de Decisão, Random Forest, HistGradientBoosting (só scikit-learn) | Sem dependência extra (xgboost/lightgbm) e roda igual no Colab |
+| D9 | Modelos: Dummy, Regressão Logística, Árvore de Decisão, Random Forest, HistGradientBoosting (só scikit-learn) | Sem dependência extra (xgboost/lightgbm) |
 | D10 | Dois conjuntos de atributos: **bruto** (6) e **engenharia** (bruto + 3 físicos) | Ablação mostra o valor do conhecimento do domínio |
 | D11 | Limiar de decisão escolhido por **custo**, nas predições *out-of-fold* do treino, e só aplicado ao teste | Evita otimizar no teste |
 | D12 | Custos de negócio são **hipóteses explícitas** (R$ 500 intervenção, R$ 5.000 falha) + análise de sensibilidade (razão 2–50) | Não existe custo real no dataset; o que importa é a razão |
 | D13 | Modelo dimensional em **SQLite** (biblioteca padrão), esquema estrela com dimensão degenerada e tabela ponte | Zero instalação; `Product ID` é único por linha → dimensão degenerada (Kimball) |
-| D14 | Python 3.12, `uv` para ambiente; dependências com limite inferior, compatíveis com o Colab | Colab já traz pandas/numpy/sklearn/matplotlib/seaborn/scipy |
+| D14 | Python 3.12, `uv` para ambiente; dependências com limite inferior | Mesma versão do CI (`ci.yml`); `uv` cria o venv e instala tudo em um comando |
 | D15 | Identificadores, docstrings, textos e commits em **português** | Padrão do grupo |
 | D16 | Merge de PR por **"Create a merge commit"** (nunca squash) | Preserva cada commit com o autor → contribuição visível por integrante |
 | D17 | `SEED = 42` em tudo que é aleatório | Reprodutibilidade |
@@ -153,7 +153,7 @@ para cada um explicar o que fez.
 | T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Igor | T1 |
 | T5 | [#5](https://github.com/igorSeberino/data.vigia/issues/5) | Adrian | `docs/5-intro-references` | README §1 (1.1, 1.2, 1.3) e §4 Referências (ABNT) | Igor | T0 |
 | T6 | [#6](https://github.com/igorSeberino/data.vigia/issues/6) | Gabriel | `feat/6-business-impact` | `custo.py` + testes; notebook 05; README §2.4.3, §3.2.4, §3.3.2 | Renato | T4 (código e testes podem começar após T1) |
-| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | Resumo, §3.4, §3.5, Contribuições, revisão de consistência, badges, release `v1.0.0`, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 |
+| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | Resumo, §3.4, §3.5, Contribuições, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 |
 
 As sete issues são sub-issues da issue-mãe [#8](https://github.com/igorSeberino/data.vigia/issues/8)
 (barra de progresso no Project). Título do PR = título da issue; corpo termina com `Closes #<n>`.
@@ -378,11 +378,10 @@ Regras de escrita do README:
 - [ ] Repositório **público**; `curl -s -o /dev/null -w "%{http_code}" https://github.com/igorSeberino/data.vigia` → `200` sem estar logado.
 - [ ] CI verde na `main` (ruff, pytest, 5 notebooks executam de ponta a ponta).
 - [ ] Os 5 notebooks commitados **com saída**; abrem no GitHub com gráficos visíveis.
-- [ ] Badges "Abrir no Colab" funcionam (abrir cada um e rodar "Executar tudo" no Colab ao menos uma vez — T7).
 - [ ] README cobre todas as seções da tabela §1, sem nenhum "_Em construção_" restante.
 - [ ] `gh api repos/igorSeberino/data.vigia/contributors --jq '.[].login'` lista os 4 logins.
 - [ ] Cada integrante tem ≥ 1 PR próprio mergeado e ≥ 1 revisão com comentário.
-- [ ] Tag/release `v1.0.0` criada; link enviado ao professor.
+- [ ] Link enviado ao professor.
 
 ---
 

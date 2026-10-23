@@ -35,22 +35,11 @@ Cada integrante assina e defende o que commita.
 
 Célula padrão de ambiente:
 
-    # Ambiente: funciona localmente (pasta notebooks/) e no Google Colab
-    # (o Colab já traz pandas, scikit-learn e cia.; só falta o código do repositório)
-    import subprocess
+    # Ambiente: coloca src/ no sys.path (o notebook roda a partir de notebooks/ ou da raiz)
     import sys
     from pathlib import Path
 
-    REPO = "data.vigia"
-    if "google.colab" in sys.modules and not Path(REPO).exists():
-        subprocess.run(
-            ["git", "clone", "-q", f"https://github.com/igorSeberino/{REPO}.git"], check=True
-        )
-    RAIZ = next(
-        p
-        for p in (Path.cwd(), Path.cwd().parent, Path(REPO).resolve())
-        if (p / "pyproject.toml").exists()
-    )
+    RAIZ = next(p for p in (Path.cwd(), Path.cwd().parent) if (p / "pyproject.toml").exists())
     sys.path.insert(0, str(RAIZ / "src"))
 
 ## Fluxo de trabalho (time de agentes em `.claude/`)

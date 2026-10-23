@@ -1,4 +1,4 @@
-# Dependências do projeto (execução dos notebooks, testes e lint). O Colab já traz as de execução.
+# Dependências do projeto (execução dos notebooks, testes e lint).
 numpy>=1.26
 pandas>=2.2
 scipy>=1.11

@@ -30,13 +30,13 @@ Este README é o relatório completo do trabalho. Backlog e andamento no Project
 [**@vigia**](https://github.com/users/igorSeberino/projects/2); plano e divisão de tarefas em
 [`docs/plano/`](docs/plano/).
 
-| Notebook | Conteúdo | Colab |
-|---|---|---|
-| [01 – Coleta e preparação](notebooks/01_coleta_e_preparacao.ipynb) | origem, validação, atributos físicos, divisão | [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/igorSeberino/data.vigia/blob/main/notebooks/01_coleta_e_preparacao.ipynb) |
-| [02 – Modelo de dados (SQL)](notebooks/02_modelo_de_dados_sql.ipynb) | esquema estrela em SQLite e consultas | [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/igorSeberino/data.vigia/blob/main/notebooks/02_modelo_de_dados_sql.ipynb) |
-| [03 – Análise exploratória](notebooks/03_analise_exploratoria.ipynb) | distribuições, testes estatísticos, regras físicas | [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/igorSeberino/data.vigia/blob/main/notebooks/03_analise_exploratoria.ipynb) |
-| [04 – Modelagem preditiva](notebooks/04_modelagem_preditiva.ipynb) | comparação, ajuste e avaliação dos modelos | [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/igorSeberino/data.vigia/blob/main/notebooks/04_modelagem_preditiva.ipynb) |
-| [05 – Impacto no negócio](notebooks/05_impacto_no_negocio.ipynb) | custo, limiar ótimo, estratégias de manutenção | [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/igorSeberino/data.vigia/blob/main/notebooks/05_impacto_no_negocio.ipynb) |
+| Notebook | Conteúdo |
+|---|---|
+| [01 – Coleta e preparação](notebooks/01_coleta_e_preparacao.ipynb) | origem, validação, atributos físicos, divisão |
+| [02 – Modelo de dados (SQL)](notebooks/02_modelo_de_dados_sql.ipynb) | esquema estrela em SQLite e consultas |
+| [03 – Análise exploratória](notebooks/03_analise_exploratoria.ipynb) | distribuições, testes estatísticos, regras físicas |
+| [04 – Modelagem preditiva](notebooks/04_modelagem_preditiva.ipynb) | comparação, ajuste e avaliação dos modelos |
+| [05 – Impacto no negócio](notebooks/05_impacto_no_negocio.ipynb) | custo, limiar ótimo, estratégias de manutenção |
 
 ## Resumo
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->

@@ -368,7 +368,7 @@ def test_recall_por_modo(df):
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | md | `# 04 · Modelagem preditiva` · autor Renato Colin Neto · fase CRISP-DM: modelagem e avaliação · desenho experimental resumido · badge Colab |
+| 1 | md | `# 04 · Modelagem preditiva` · autor Renato Colin Neto · fase CRISP-DM: modelagem e avaliação · desenho experimental resumido |
 | 2 | code | Célula padrão de ambiente |
 | 3 | code | imports: `joblib`, `numpy as np`, `pandas as pd`, `matplotlib.pyplot as plt`, `seaborn as sns`; `from sklearn.inspection import permutation_importance`; `from sklearn.metrics import ConfusionMatrixDisplay, PrecisionRecallDisplay, RocCurveDisplay`; `from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree`; `from manutencao.config import ATRIBUTOS_BRUTO, ATRIBUTOS_ENGENHARIA, DIR_MODELOS, DIR_TABELAS, SEED`; `from manutencao.preparacao import carregar_preparado, dividir_treino_teste, separar_x_y`; `from manutencao import modelagem as mo`; util; `configurar_graficos()` |
 | 4 | code | `df = carregar_preparado()` · `treino, teste = dividir_treino_teste(df)` · `CONJUNTOS = {"bruto": ATRIBUTOS_BRUTO, "engenharia": ATRIBUTOS_ENGENHARIA}` · `X_tr, y_tr = separar_x_y(treino, ATRIBUTOS_ENGENHARIA)` · `X_te, y_te = separar_x_y(teste, ATRIBUTOS_ENGENHARIA)` · print dos tamanhos e prevalências |

@@ -412,7 +412,7 @@ def test_qui_quadrado_tipo_falha(df):
 
 | # | Tipo | Conteúdo |
 |---|---|---|
-| 1 | md | `# 03 · Análise exploratória` · autor Adrian Cesar Gonçalves · fase CRISP-DM: entendimento dos dados · perguntas que a EDA responde (as 5 acima) · badge Colab |
+| 1 | md | `# 03 · Análise exploratória` · autor Adrian Cesar Gonçalves · fase CRISP-DM: entendimento dos dados · perguntas que a EDA responde (as 5 acima) |
 | 2 | code | Célula padrão de ambiente |
 | 3 | code | imports: `pandas as pd`, `matplotlib.pyplot as plt`; `from manutencao.config import COLS_NUMERICAS_BRUTAS, COLS_ENGENHARIA, COLS_MODOS`; `from manutencao.preparacao import carregar_preparado`; `from manutencao import eda`; util; `configurar_graficos()` · `df = carregar_preparado()` · `NUMERICAS = COLS_NUMERICAS_BRUTAS + COLS_ENGENHARIA` |
 | 4 | md | Nota metodológica (EDA no conjunto completo, por quê) |
