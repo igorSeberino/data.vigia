@@ -64,6 +64,7 @@ preventiva.**
 | Citação da base | AI4I 2020 Predictive Maintenance Dataset [Dataset]. (2020). UCI Machine Learning Repository. https://doi.org/10.24432/C5HS5C |
 | Linhas × colunas | 10.000 × 14 |
 | **Armadilha** | o cabeçalho tem **BOM UTF-8** (`\ufeffUDI`) → ler com `encoding="utf-8-sig"` |
+| **Armadilha 2** | o CSV oficial tem fim de linha **CRLF**; com `* text=auto eol=lf` o git converte e o SHA-256 muda no clone. Por isso o `.gitattributes` marca `data/raw/*.csv -text` (conferido: clone novo tem o hash oficial) |
 | Colunas originais | `UDI, Product ID, Type, Air temperature [K], Process temperature [K], Rotational speed [rpm], Torque [Nm], Tool wear [min], Machine failure, TWF, HDF, PWF, OSF, RNF` |
 | Valores ausentes | 0 · linhas duplicadas: 0 |
 | `Type` | L = 6.000 · M = 2.997 · H = 1.003 |
@@ -245,30 +246,14 @@ Implementado no T1 (código completo em `01-IGOR.md`). **Ninguém altera estas a
 precisar de algo novo, cria no próprio módulo.
 
 ```python
-from manutencao.config import (
-    RAIZ,
-    DIR_RAW,
-    DIR_PROCESSED,
-    DIR_FIGURAS,
-    DIR_TABELAS,
-    DIR_MODELOS,
-    CAMINHO_CSV,
-    CAMINHO_DB,
-    SEED,
-    COL_ALVO,
-    COLS_MODOS,
-    COLS_VAZAMENTO,
-    COLS_NUMERICAS_BRUTAS,
-    COLS_ENGENHARIA,
-    COL_TIPO,
-    ORDEM_TIPO,
-    ATRIBUTOS_BRUTO,
-    ATRIBUTOS_ENGENHARIA,
-    MODOS_FALHA,
-)
+from manutencao.config import (RAIZ, DIR_RAW, DIR_PROCESSED, DIR_FIGURAS, DIR_TABELAS,
+    DIR_MODELOS, CAMINHO_CSV, CAMINHO_DB, SEED, COL_ALVO, COLS_MODOS, COLS_VAZAMENTO,
+    COLS_NUMERICAS_BRUTAS, COLS_ENGENHARIA, COL_TIPO, ORDEM_TIPO, ATRIBUTOS_BRUTO,
+    ATRIBUTOS_ENGENHARIA, MODOS_FALHA)
 from manutencao.util import salvar_figura, salvar_tabela, configurar_graficos
 from manutencao.dados import carregar_bruto, validar, inconsistencias_rotulo
-from manutencao.preparacao import preparar, carregar_preparado, dividir_treino_teste, separar_x_y
+from manutencao.preparacao import (preparar, carregar_preparado,
+    dividir_treino_teste, separar_x_y)
 ```
 
 | Nome | Valor/assinatura |
