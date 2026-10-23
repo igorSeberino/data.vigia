@@ -141,11 +141,6 @@ _Em construção._
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
 _Em construção._
 
-## Uso de IA
-<!-- Cada integrante acrescenta uma linha no próprio PR -->
-| Integrante | Tarefa | Ferramenta | O que a IA fez | O que o integrante fez/conferiu |
-|---|---|---|---|---|
-
 ## Contribuindo
 
 Fluxo Trunk-Based com o time de agentes do Claude Code em [`.claude/`](.claude/README.md):

@@ -15,7 +15,4 @@
 - [ ] Commits com o meu e-mail vinculado (aparecem com o meu login)
 - [ ] Code review — aprovado por ≥ 1 outro integrante; CI verde
 
-## Uso de IA
-<!-- o que veio do Claude, o que eu mudei/conferi e como verifiquei -->
-
 Closes #{número}

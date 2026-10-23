@@ -418,7 +418,6 @@ commitado (está no `.gitignore`); as tabelas `04_*.csv` **são** (o notebook 05
   direto para uma fábrica real; sem série temporal (cada ciclo é independente; não estima vida
   útil restante); rótulos inconsistentes (9 + 18); o que faria diferente com dados reais.
 - §4: acrescentar referências que você citar e que não estejam na lista do Adrian.
-- Linha na tabela **Uso de IA**.
 
 ### T4.5 Commits sugeridos
 

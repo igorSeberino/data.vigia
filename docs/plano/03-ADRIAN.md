@@ -138,7 +138,6 @@ Commits sugeridos:
 2. `docs(readme): definição do problema (seção 1.2)`
 3. `docs(readme): objetivo geral e específicos (seção 1.3)`
 4. `docs(readme): referências em ABNT (seção 4)`
-5. `docs(readme): uso de IA no T5`
 
 PR: `/tbd-pr` — título = título da issue #5, `Closes #5`, revisor `igorSeberino`. Por ser só
 texto, pode pedir para pular a execução de notebook (o skill registra o pulo no PR).
@@ -452,7 +451,6 @@ e `ruff format notebooks/03_analise_exploratoria.ipynb`.
 - **§3.2.1 O que a exploração mostrou**: 5–7 achados com números (`03_*.csv`) e figuras
   embutidas: `03_balanceamento.png`, `03_distribuicoes.png`, `03_regra_hdf.png`,
   `03_regra_pwf.png`, `03_regra_osf.png`.
-- Linha na tabela **Uso de IA**.
 
 ### T3.5 Commits sugeridos
 

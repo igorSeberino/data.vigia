@@ -512,7 +512,6 @@ Título, fonte e licença; a mesma tabela do passo 17 em Markdown (17 linhas); u
   uv (ambiente). Uma frase dizendo que a estrutura segue CRISP-DM (SHEARER, 2000) e o mapeamento
   fase → notebook: entendimento do negócio (README §1), entendimento dos dados (01, 03),
   preparação (01, 02), modelagem (04), avaliação (04, 05), implantação (fora do escopo; ver §3.5).
-- Linha na tabela **Uso de IA**.
 
 ### T1.5 PR
 
@@ -586,7 +585,6 @@ corrigir sozinho a seção do colega.
   gh pr list -R igorSeberino/data.vigia --state merged --json number,title,author,url --jq '.[] | "\(.number)\t\(.author.login)\t\(.title)\t\(.url)"'
   gh api repos/igorSeberino/data.vigia/contributors --jq '.[] | "\(.login)\t\(.contributions)"'
   ```
-- Linha na tabela **Uso de IA**.
 
 ### T7.4 Colab
 

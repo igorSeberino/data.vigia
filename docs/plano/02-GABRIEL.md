@@ -533,7 +533,6 @@ e `ruff format notebooks/02_modelo_de_dados_sql.ipynb`. O arquivo `data/processe
 - **§3.2.2 Consultas analíticas**: 4–6 achados, cada um com o número e o arquivo de origem;
   embutir `02_heatmap_tipo_faixa.png` e `02_taxa_falha_por_faixa_desgaste.png`.
 - **§4**: acrescentar KIMBALL; ROSS (2013) se o Adrian ainda não tiver colocado (combinar com ele).
-- Linha na tabela **Uso de IA**.
 
 ### T2.6 Commits sugeridos
 
@@ -796,7 +795,6 @@ def test_limiar_otimo_separa_classes():
   que a preventiva por desgaste não consegue pegar (HDF/PWF não dependem de desgaste); riscos
   (custos hipotéticos, dataset sintético, falhas aleatórias continuam acontecendo); o que seria
   preciso para implantar (custos reais, piloto em uma máquina, monitoramento).
-- Linha na tabela **Uso de IA**.
 
 ### T6.5 Commits sugeridos
 

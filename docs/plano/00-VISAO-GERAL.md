@@ -189,7 +189,7 @@ data.vigia/
 ├── .github/
 │   ├── workflows/ci.yml              # ruff + pytest + executa os 5 notebooks
 │   ├── ISSUE_TEMPLATE/               # tarefa, bug, débito técnico
-│   ├── PULL_REQUEST_TEMPLATE.md      # O quê / Por quê / Notas / DoD / Uso de IA
+│   ├── PULL_REQUEST_TEMPLATE.md      # O quê / Por quê / Notas / DoD
 │   ├── CODEOWNERS                    # dono de cada módulo/notebook
 │   └── assets/logo.svg
 ├── data/
@@ -361,7 +361,6 @@ badges · disciplina · professor · integrantes · links dos notebooks
 ### 3.5 Considerações finais                                       (T7 Igor)
 ## 4. Referências                                                  (T5 Adrian; outros acrescentam via PR próprio)
 ## Contribuições                                                   (T7 Igor)
-## Uso de IA                                                       (cada um acrescenta 1 linha no próprio PR)
 ## Dados                                                           (T0 Igor)
 ```
 

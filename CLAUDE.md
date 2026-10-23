@@ -63,6 +63,6 @@ Célula padrão de ambiente:
 - Branch: `{tipo}/{número}-{slug-em-inglês}` (ex.: `feat/3-eda`); nunca commitar na `main`.
 - Identificadores de código, docstrings, commits, issues e documentação em português;
   só o slug da branch é em inglês.
-- PR com o template preenchido (inclusive **Uso de IA**), CI verde e aprovação do revisor da
+- PR com o template preenchido, CI verde e aprovação do revisor da
   matriz (§5 do plano). Merge com "Create a merge commit" (nunca squash).
 - Nunca commitar em nome de outra pessoa (`--author`) nem implementar a issue de outro integrante.
