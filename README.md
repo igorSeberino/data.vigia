@@ -41,7 +41,29 @@ Este README é o relatório completo do trabalho. Backlog e andamento no Project
 ## 1. Introdução
 ### 1.1 A Indústria 4.0 e sua importância
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
-_Em construção._
+O termo *Industrie 4.0* nasceu de uma iniciativa estratégica do governo alemão para manter a
+competitividade da sua indústria. Em 2013, o grupo de trabalho da iniciativa publicou as
+recomendações para implantá-la, descrevendo a fábrica do futuro como uma rede de máquinas,
+produtos e sistemas que trocam informação e se coordenam de forma autônoma (KAGERMANN;
+WAHLSTER; HELBIG, 2013). A ideia é tratada como a quarta revolução industrial, depois da
+mecanização, da produção em massa e da automação eletrônica.
+
+A base técnica dessa transformação são os sistemas ciberfísicos: equipamentos físicos com
+sensores e capacidade de processamento, ligados entre si pela Internet das Coisas industrial.
+Sobre essa base atuam o big data e a análise de dados, a computação em nuvem e a integração
+vertical (do chão de fábrica à gestão) e horizontal (entre empresas da cadeia) (LEE; BAGHERI;
+KAO, 2015).
+
+A importância da Indústria 4.0 está no ganho de produtividade, qualidade e flexibilidade e,
+principalmente, na troca de decisões tomadas por experiência por decisões orientadas por
+dados. No Brasil, a Confederação Nacional da Indústria aponta a adoção dessas tecnologias como
+condição para a competitividade da indústria nacional e propõe uma agenda com sete dimensões
+prioritárias, da formação de pessoas à infraestrutura de banda larga (CNI, 2016).
+
+A ciência de dados é o elo entre o sensor e a decisão: transforma leituras brutas em
+informação útil para a operação. Entre as suas aplicações industriais, a manutenção preditiva
+é uma das mais estudadas (ZONTA *et al.*, 2020; CARVALHO *et al.*, 2019), e é o tema deste
+trabalho.
 
 ### 1.2 Definição do problema
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
