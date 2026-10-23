@@ -24,3 +24,4 @@ Exemplos para trabalho novo:
 - `fix`, #12, "notebook 03 falha no Colab por fonte ausente" → `fix/12-colab-font`
 - `refactor`, #15, "extrair gráfico de barras repetido" → `refactor/15-bar-chart-helper`
 - `docs`, #16, "corrigir referência ABNT do Matzka" → `docs/16-matzka-reference`
+- `cleanup`, #17, "remover dependência sem uso" → `cleanup/17-unused-dependency`

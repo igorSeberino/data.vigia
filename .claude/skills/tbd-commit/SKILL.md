@@ -11,7 +11,8 @@ disallowed-tools: Bash(git add:*)
 2. **Estado** — `git status` e `git diff --staged`. Se nada estiver staged, mostre `git diff --stat`
    e pergunte o que incluir. **Nunca rode `git add`.**
 3. **Tipo** — pela branch: `feat/`→`feat`, `fix/`→`fix`, `refactor/`→`refactor`, `test/`→`test`,
-   `docs/`→`docs`, `infra/`→`chore`. Se o diff claramente não bate com o tipo da branch
+   `docs/`→`docs`, `infra/`→`chore`, `cleanup/`→`cleanup` (remoção de escopo, arquivo ou
+   regra que não serve mais). Se o diff claramente não bate com o tipo da branch
    (ex.: só testes numa `feat/`), use o tipo do diff (`test`) — é normal ter vários tipos numa branch.
 4. **Escopo** — `references/scope-detection.md`.
 5. **Mensagem** — `{tipo}({escopo}): {descrição no imperativo, minúscula, sem ponto final}`, em
