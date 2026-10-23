@@ -596,14 +596,3 @@ mais faz push na `main`.
   discussão de 3.3.1 menciona o caráter sintético e os modos estocásticos.
 - **T5 (Adrian)**: conferir que cada referência tem DOI/URL que abre; que o problema (1.2) e os
   objetivos (1.3) batem com o que os notebooks realmente fazem.
-
-## Roteiro de defesa (o que saber responder)
-
-1. Por que este dataset? (público, licença aberta, problema real de I4.0, documentado, cabe no Colab)
-2. Por que o CSV está no repositório e para que serve o SHA-256? (reprodutibilidade, integridade)
-3. Por que manter os rótulos inconsistentes? (D5: comparabilidade; documentado como ruído)
-4. De onde vêm os três atributos físicos e por que não é "trapaça"? (física do processo; regras
-   documentadas pela fonte; é conhecimento que o engenheiro de processo tem; a limitação é
-   discutida)
-5. Por que uma única função de divisão, estratificada? (classe rara; todos avaliam no mesmo teste)
-6. Como o CI garante que o relatório não está "maquiado"? (executa os 5 notebooks do zero a cada PR)

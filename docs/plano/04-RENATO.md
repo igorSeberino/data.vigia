@@ -450,14 +450,3 @@ grupo assim que mergear (o T6 depende das tabelas `04_oof_treino.csv` e `04_pred
 Conferir que o limiar e o limite de desgaste são escolhidos com `04_oof_treino.csv` e com o
 treino (nunca com o teste); que o `merge` por `udi` usa `validate="one_to_one"`; que o texto
 deixa claro que os custos são hipóteses; rodar `pytest -q`. Comentar pelo menos 1 ponto.
-
-## Roteiro de defesa
-
-1. Por que PR-AUC e não acurácia/ROC-AUC (exemplo: o Dummy tem 96,6 % de acurácia).
-2. O que é validação cruzada estratificada e por que o pré-processamento fica dentro do pipeline.
-3. Por que `class_weight` em vez de SMOTE.
-4. O que a ablação bruto × engenharia mostrou.
-5. Por que o modelo erra TWF e RNF e por que isso não é corrigível com este dataset.
-6. O que são probabilidades *out-of-fold* e para que o Gabriel usa.
-7. O que é importância por permutação e por que foi calculada no teste.
-8. Qual a principal limitação para levar o modelo para uma fábrica real.

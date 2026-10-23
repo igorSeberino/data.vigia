@@ -159,7 +159,6 @@ As sete issues são sub-issues da issue-mãe [#8](https://github.com/igorSeberin
 (barra de progresso no Project). Título do PR = título da issue; corpo termina com `Closes #<n>`.
 
 Revisões por pessoa: Igor (T4, T5) · Renato (T1, T6) · Gabriel (T3, T7) · Adrian (T2, T7).
-Commits por pessoa (mínimo): cada PR com **4 ou mais commits pequenos e coerentes** (ver §8).
 
 Grafo:
 
@@ -296,7 +295,7 @@ alternativa.
 4. **Implementar** seguindo o seu arquivo em `docs/plano/`. Em dúvida de abordagem, peça
    "use o revisor-dados no modo 1 para a issue <n>".
 5. **Commitar**: `/tbd-commit` a cada passo (lista de commits sugeridos em cada arquivo de
-   tarefa; mínimo 4 por PR). Manual: Conventional Commits em português,
+   tarefa). Manual: Conventional Commits em português,
    `feat(eda): ...`, `test(eda): ...`, `docs(readme): ...`.
 6. **Abrir PR**: `/tbd-pr` — roda `ruff check`, `ruff format --check`, `pytest -q`, executa o
    notebook, chama o `revisor-dados`, faz push, cria o PR com o título da issue e pede revisão ao
@@ -407,8 +406,7 @@ claude
 > No fim, /tbd-pr — e me mostre o texto do PR antes de criar.
 ```
 
-Depois, **ler o que foi feito** e conseguir explicar cada decisão (cada arquivo de tarefa tem um
-"Roteiro de defesa" no final).
+Depois, **ler o que foi feito** e conseguir explicar cada decisão.
 
 ---
 

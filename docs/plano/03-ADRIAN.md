@@ -480,13 +480,3 @@ PR: `/tbd-pr` — título = título da issue #3, `Closes #3`, revisor `gabrielca
   da §3.1.1 renderizado; conferir que a taxa de falha por tipo do notebook 02 é a mesma do seu notebook 03.
   Comentar pelo menos 1 ponto.
 - **T7 (Igor)**: conferir 1.1–1.3, 2.4.1, 3.2.1 e §4 depois da integração.
-
-## Roteiro de defesa
-
-1. O que é Indústria 4.0 e por que manutenção preditiva é uma aplicação central.
-2. Diferença entre manutenção corretiva, preventiva e preditiva.
-3. Por que Mann-Whitney e não teste t; o que é o rank-bisserial.
-4. Por que p-valor pequeno não basta (n = 10.000) e o papel do tamanho de efeito.
-5. O que é o V de Cramér e por que o do tipo é pequeno.
-6. O que os três gráficos de regra mostram e o que isso significa para os modelos.
-7. Por que a EDA no conjunto completo não contamina a avaliação.

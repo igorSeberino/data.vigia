@@ -821,13 +821,3 @@ PR: `/tbd-pr` — título = título da issue #6, `Closes #6`, revisor `rcolinnet
   (efeito pequeno mesmo com p < 0,05). Comentar pelo menos 1 ponto.
 - **T7 (Igor)**: conferir que os números de 3.2.2, 3.2.4 e 3.3.2 do README continuam batendo com
   as tabelas após a reexecução final.
-
-## Roteiro de defesa
-
-1. O que é grão, fato, dimensão, dimensão degenerada, ponte — e por que cada uma aqui.
-2. Por que não existe `dim_produto` nem `dim_tempo`.
-3. Como você garante que o banco está íntegro (6 verificações).
-4. O que a consulta `esforco_acima_do_limite` prova.
-5. Por que o limiar é escolhido nas predições OOF e não no teste.
-6. Por que a sensibilidade importa mais que o valor absoluto de R$.
-7. Por que a preventiva por desgaste perde para a preditiva (HDF e PWF não dependem de desgaste).
