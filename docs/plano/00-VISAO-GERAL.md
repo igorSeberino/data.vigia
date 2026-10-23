@@ -19,7 +19,7 @@ livre dentro da Indústria 4.0** e fixa o que precisa existir:
 | 1. Introdução: Indústria 4.0 e importância | README §1.1 (Adrian, T5) |
 | 1. Definição de um problema real, coletar/preparar dados, construir modelos, analisar e propor soluções | README §1.2 + notebooks 01–05 |
 | 1. Objetivos do trabalho | README §1.3 (Adrian, T5) |
-| 2. Descrição dos dados (fontes, tipos, volume) | README §2.1 + `docs/dicionario-de-dados.md` (Igor, T1) |
+| 2. Descrição dos dados (fontes, tipos, volume) | README §2.1 + `reports/tables/01_dicionario_dados.csv` (Igor, T1) |
 | 2. Coleta e preparação | notebook 01 + README §2.2 (Igor, T1) |
 | 2. Ferramentas e técnicas de modelagem de dados | README §2.3 (Igor tabela de ferramentas; Gabriel modelagem dimensional; Renato modelagem preditiva) |
 | 2. Métodos de análise de dados | README §2.4 (Adrian, Renato, Gabriel) |
@@ -147,13 +147,13 @@ para cada um explicar o que fez.
 | Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de |
 |---|---|---|---|---|---|---|
 | T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
-| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; `docs/dicionario-de-dados.md`; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 |
-| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; `docs/modelo-de-dados.md` (diagrama ER); README §2.3.1, §3.1.1, §3.2.2 | Adrian | T1 |
+| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 |
+| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; README §2.3.1, §3.1.1 (com o diagrama ER), §3.2.2 | Adrian | T1 |
 | T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 |
 | T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Igor | T1 |
 | T5 | [#5](https://github.com/igorSeberino/data.vigia/issues/5) | Adrian | `docs/5-intro-references` | README §1 (1.1, 1.2, 1.3) e §4 Referências (ABNT) | Igor | T0 |
 | T6 | [#6](https://github.com/igorSeberino/data.vigia/issues/6) | Gabriel | `feat/6-business-impact` | `custo.py` + testes; notebook 05; README §2.4.3, §3.2.4, §3.3.2 | Renato | T4 (código e testes podem começar após T1) |
-| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | Resumo, §3.4, §3.5, Contribuições, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 |
+| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | §3.4, §3.5, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 |
 
 As sete issues são sub-issues da issue-mãe [#8](https://github.com/igorSeberino/data.vigia/issues/8)
 (barra de progresso no Project). Título do PR = título da issue; corpo termina com `Closes #<n>`.
@@ -195,9 +195,7 @@ data.vigia/
 │   ├── raw/ai4i2020.csv              # versionado
 │   └── processed/                    # gerado, ignorado pelo git
 ├── docs/
-│   ├── plano/                        # ESTES arquivos de planejamento
-│   ├── dicionario-de-dados.md        # T1 Igor
-│   └── modelo-de-dados.md            # T2 Gabriel
+│   └── plano/                        # ESTES arquivos de planejamento
 ├── notebooks/
 │   ├── 01_coleta_e_preparacao.ipynb  # T1 Igor
 │   ├── 02_modelo_de_dados_sql.ipynb  # T2 Gabriel
@@ -329,7 +327,6 @@ Cada PR preenche **somente** as suas seções (troca o texto "_Em construção_"
 ```text
 # Manutenção Preditiva com Ciência de Dados na Indústria 4.0      (T0/T7 Igor)
 badges · disciplina · professor · integrantes · links dos notebooks
-## Resumo                                                          (T7 Igor)
 ## 1. Introdução
 ### 1.1 A Indústria 4.0 e sua importância                          (T5 Adrian)
 ### 1.2 Definição do problema                                      (T5 Adrian)
@@ -359,7 +356,6 @@ badges · disciplina · professor · integrantes · links dos notebooks
 ### 3.4 Implementação em Python                                    (T7 Igor)
 ### 3.5 Considerações finais                                       (T7 Igor)
 ## 4. Referências                                                  (T5 Adrian; outros acrescentam via PR próprio)
-## Contribuições                                                   (T7 Igor)
 ## Dados                                                           (T0 Igor)
 ```
 

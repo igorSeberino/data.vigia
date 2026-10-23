@@ -38,10 +38,6 @@ Este README é o relatório completo do trabalho. Backlog e andamento no Project
 | [04 – Modelagem preditiva](notebooks/04_modelagem_preditiva.ipynb) | comparação, ajuste e avaliação dos modelos |
 | [05 – Impacto no negócio](notebooks/05_impacto_no_negocio.ipynb) | custo, limiar ótimo, estratégias de manutenção |
 
-## Resumo
-<!-- RESPONSÁVEL: @igorSeberino · T7 -->
-_Em construção._
-
 ## 1. Introdução
 ### 1.1 A Indústria 4.0 e sua importância
 <!-- RESPONSÁVEL: @adrian-cesar · T5 -->
@@ -135,10 +131,6 @@ _Em construção._
 
 ## 4. Referências
 <!-- RESPONSÁVEL: @adrian-cesar · T5 (demais integrantes acrescentam as que citarem) -->
-_Em construção._
-
-## Contribuições
-<!-- RESPONSÁVEL: @igorSeberino · T7 -->
 _Em construção._
 
 ## Contribuindo

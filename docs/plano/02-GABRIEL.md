@@ -432,7 +432,7 @@ def test_todas_as_consultas_rodam(conn):
     assert all(len(r) > 0 for r in resultados.values())
 ```
 
-### T2.3 `docs/modelo-de-dados.md`
+### T2.3 Diagrama e descrição do modelo (vão no README §3.1.1)
 
 Conteúdo (nesta ordem):
 
@@ -526,7 +526,6 @@ e `ruff format notebooks/02_modelo_de_dados_sql.ipynb`. O arquivo `data/processe
 
 - **§2.3.1 Modelagem dimensional**: técnica (esquema estrela, Kimball), grão, dimensões, fato,
   dimensão degenerada, dimensão de faixas, tabela ponte, ausência de dimensão de tempo; SQLite.
-  Link para `docs/modelo-de-dados.md`.
 - **§3.1.1 Modelo dimensional (implementação)**: o diagrama Mermaid; volumes das tabelas
   (`02_volume_tabelas.csv`); verificações de integridade (`02_integridade.csv`); como o banco é
   gerado (`construir_banco`), por que é recriado a cada execução.
@@ -540,9 +539,8 @@ e `ruff format notebooks/02_modelo_de_dados_sql.ipynb`. O arquivo `data/processe
 2. `feat(modelo-dados): carga das dimensões, fato e ponte a partir do DataFrame preparado`
 3. `feat(modelo-dados): consultas analíticas e verificação de integridade`
 4. `test(modelo-dados): contagens, integridade e resultados das consultas`
-5. `docs(modelo-dados): diagrama ER e dicionário das tabelas`
-6. `feat(notebook): 02 modelo de dados executado`
-7. `docs(readme): seções 2.3.1, 3.1.1 e 3.2.2`
+5. `feat(notebook): 02 modelo de dados executado`
+6. `docs(readme): seções 2.3.1, 3.1.1 (diagrama ER) e 3.2.2`
 
 PR: `/tbd-pr` — título = título da issue #2, corpo pelo template com `Closes #2`, revisor
 `adrian-cesar` (o skill pede a revisão e move o card para *In Review*).
@@ -551,7 +549,7 @@ PR: `/tbd-pr` — título = título da issue #2, corpo pelo template com `Closes
 
 - [ ] `pytest -q` verde (os 7 testes do T2 + os anteriores).
 - [ ] Notebook 02 roda do início ao fim; 8 tabelas de consulta `02_*.csv` + `02_volume_tabelas.csv` + `02_integridade.csv`; 4 figuras.
-- [ ] `docs/modelo-de-dados.md` com Mermaid renderizando no GitHub.
+- [ ] Diagrama Mermaid do README §3.1.1 renderizando no GitHub.
 - [ ] Commits aparecem como `gabrielcarvallho`.
 
 ---
@@ -822,7 +820,7 @@ PR: `/tbd-pr` — título = título da issue #6, `Closes #6`, revisor `rcolinnet
   que as figuras têm título/eixos com unidade; que a conclusão sobre `tipo` usa o V de Cramér
   (efeito pequeno mesmo com p < 0,05). Comentar pelo menos 1 ponto.
 - **T7 (Igor)**: conferir que os números de 3.2.2, 3.2.4 e 3.3.2 do README continuam batendo com
-  as tabelas após a reexecução final, e que a tabela de Contribuições está certa para você.
+  as tabelas após a reexecução final.
 
 ## Roteiro de defesa
 

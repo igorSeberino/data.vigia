@@ -450,9 +450,8 @@ Commits sugeridos (nesta ordem, cada um com `ruff format . && ruff check . && py
 1. `feat(config): caminhos, constantes e nomes de colunas do projeto` (config.py, util.py)
 2. `feat(dados): leitura do CSV com BOM, download com SHA-256 e validação de qualidade` (dados.py, conftest.py, test_dados.py)
 3. `feat(preparacao): renomeação, tipagem, atributos físicos e divisão estratificada` (preparacao.py, test_preparacao.py)
-4. `docs(dados): dicionário de dados` (docs/dicionario-de-dados.md)
-5. `feat(notebook): 01 coleta e preparação executado` (notebook + reports/tables/01_*)
-6. `docs(readme): seções 2.1, 2.2 e tabela de ferramentas da 2.3`
+4. `feat(notebook): 01 coleta e preparação executado` (notebook + reports/tables/01_*)
+5. `docs(readme): seções 2.1, 2.2 e tabela de ferramentas da 2.3`
 
 ### T1.2 `notebooks/01_coleta_e_preparacao.ipynb` — célula por célula
 
@@ -487,20 +486,14 @@ Para criar o `.ipynb`: o Claude Code edita notebooks diretamente; alternativa ro
 um script no formato *percent* (`# %%` / `# %% [markdown]`) em uma pasta temporária e converter com
 `jupytext --to ipynb <script>.py -o notebooks/01_coleta_e_preparacao.ipynb`. **Não** commitar o script.
 
-### T1.3 `docs/dicionario-de-dados.md`
-
-Título, fonte e licença; a mesma tabela do passo 17 em Markdown (17 linhas); uma seção
-"Colunas proibidas como atributo" listando `COLS_VAZAMENTO` com o motivo de cada uma; uma seção
-"Inconsistências conhecidas" (9 + 18, divergência da UCI).
-
-### T1.4 README — o que escrever
+### T1.3 README — o que escrever
 
 - **§2.1 Descrição dos dados**: fonte (UCI, id 601; Matzka, 2020; DOI), licença, natureza
   (sintético que reflete dados industriais reais de uma máquina de usinagem), **volume**
   (10.000 ciclos × 14 colunas, 522 KB; 3 colunas derivadas → 17 após preparação), **tipos**
   (tabela resumida: identificadores, 1 categórica ordinal, 5 numéricas contínuas/inteiras com
   unidade, 1 alvo binário, 5 modos binários), distribuição do alvo (339 falhas, 3,39 %) e por tipo.
-  Link para `docs/dicionario-de-dados.md`.
+  Mostrar o dicionário (tabela do passo 17) e citar `reports/tables/01_dicionario_dados.csv`.
 - **§2.2 Coleta e preparação**: lista numerada do pipeline (download + SHA-256 → leitura com BOM →
   14 verificações de qualidade, todas aprovadas → inconsistências de rótulo e decisão D5 →
   renomeação/tipagem → 3 atributos físicos e prova de que reproduzem as regras → divisão 80/20
@@ -513,7 +506,7 @@ Título, fonte e licença; a mesma tabela do passo 17 em Markdown (17 linhas); u
   fase → notebook: entendimento do negócio (README §1), entendimento dos dados (01, 03),
   preparação (01, 02), modelagem (04), avaliação (04, 05), implantação (fora do escopo; ver §3.5).
 
-### T1.5 PR
+### T1.4 PR
 
 `/tbd-pr` (roda os portões e o `revisor-dados`, cria o PR com o título da issue #1, `Closes #1`,
 pede revisão ao `rcolinneto` e move o card para *In Review*). Manual, se precisar:
@@ -528,7 +521,7 @@ gh pr edit --add-reviewer rcolinneto
 
 Depois do merge: `/tbd-pr` de novo e avisar no grupo: "#1 mergeado, podem começar (git pull na main)".
 
-### T1.6 Critérios de aceite
+### T1.5 Critérios de aceite
 
 - [ ] `pytest -q` mostra todos os testes passando (13 do T1 + 1 do T0).
 - [ ] `validar()` com todas as linhas `ok = True`.
@@ -567,9 +560,6 @@ corrigir sozinho a seção do colega.
 
 ### T7.3 O que escrever
 
-- **Resumo** (150–200 palavras): problema, dados, o que foi feito (modelo dimensional, EDA,
-  modelos, análise de custo), principal resultado técnico e financeiro (números das tabelas
-  `04_metricas_teste.csv` e `05_estrategias_teste.csv`), principal limitação (dataset sintético).
 - **§3.4 Implementação em Python**: diagrama em texto da estrutura (árvore da §6 do plano,
   resumida); tabela módulo → responsabilidade → autor; como executar localmente (uv, comandos);
   reprodutibilidade (CSV versionado + SHA-256, SEED=42, divisão única, CI que
@@ -579,12 +569,6 @@ corrigir sozinho a seção do colega.
   hipotéticos, TWF/RNF estocásticos); trabalhos futuros (dados reais de sensores em série
   temporal, estimativa de vida útil remanescente — RUL, monitoramento de *drift*, implantação
   do modelo junto ao CLP/MES, retreino periódico).
-- **Contribuições**: tabela `Integrante | Tarefas | PRs (links) | Revisões feitas | Seções do README`.
-  Gerar os dados com:
-  ```bash
-  gh pr list -R igorSeberino/data.vigia --state merged --json number,title,author,url --jq '.[] | "\(.number)\t\(.author.login)\t\(.title)\t\(.url)"'
-  gh api repos/igorSeberino/data.vigia/contributors --jq '.[] | "\(.login)\t\(.contributions)"'
-  ```
 
 ### T7.4 PR e envio
 

@@ -476,11 +476,10 @@ PR: `/tbd-pr` — título = título da issue #3, `Closes #3`, revisor `gabrielca
 
 ## Suas revisões
 
-- **T2 (Gabriel)**: rodar `pytest -q`; abrir `docs/modelo-de-dados.md` no GitHub e ver o Mermaid
-  renderizado; conferir que a taxa de falha por tipo do notebook 02 é a mesma do seu notebook 03.
+- **T2 (Gabriel)**: rodar `pytest -q`; abrir o README da branch no GitHub e ver o Mermaid
+  da §3.1.1 renderizado; conferir que a taxa de falha por tipo do notebook 02 é a mesma do seu notebook 03.
   Comentar pelo menos 1 ponto.
-- **T7 (Igor)**: conferir 1.1–1.3, 2.4.1, 3.2.1 e §4 depois da integração, e a sua linha na
-  tabela de Contribuições.
+- **T7 (Igor)**: conferir 1.1–1.3, 2.4.1, 3.2.1 e §4 depois da integração.
 
 ## Roteiro de defesa
 
