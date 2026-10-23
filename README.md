@@ -21,8 +21,7 @@ isso economiza frente às manutenções corretiva e preventiva. O trabalho passa
 de ciência de dados: coleta e validação dos dados, modelo dimensional em SQLite, análise
 exploratória com testes estatísticos, modelos de classificação e análise de custo.
 
-> Projeto acadêmico — disciplina de Inteligência Artificial (avaliação de Ciência de Dados),
-> Prof. Claudinei Dias (Ney), Engenharia de Software, Centro Universitário Católica de Santa Catarina.
+> Projeto acadêmico — disciplina de Ciência de Dados, Prof. Claudinei Dias (Ney), Engenharia de Software, Centro Universitário Católica de Santa Catarina.
 
 **Integrantes:** Adrian Cesar Gonçalves (@adrian-cesar) · Gabriel Carvalho (@gabrielcarvallho) ·
 Igor Thiago Seberino (@igorSeberino) · Renato Colin Neto (@rcolinneto)

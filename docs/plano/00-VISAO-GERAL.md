@@ -1,6 +1,6 @@
 # data.vigia · Plano mestre (ponta a ponta)
 
-> Trabalho N2 de Ciência de Dados (disciplina de IA, Prof. Claudinei Dias). Repositório:
+> Trabalho N2 da disciplina de Ciência de Dados (Prof. Claudinei Dias). Repositório:
 > https://github.com/igorSeberino/data.vigia · Project: https://github.com/users/igorSeberino/projects/2
 
 > Documento-base do grupo. Todo integrante (e o Claude de cada um) lê este arquivo **antes** do
@@ -99,7 +99,7 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 
 | # | Decisão | Motivo |
 |---|---|---|
-| D1 | Repositório público `igorSeberino/data.vigia` (produto **vigia**) + Project `@vigia` | Entrega exige link público; o Igor é o dono dos repos do grupo; "IA" e "N2" ficam fora do nome porque não são o assunto do trabalho |
+| D1 | Repositório público `igorSeberino/data.vigia` (produto **vigia**) + Project `@vigia` | Entrega exige link público; o Igor é o dono dos repos do grupo; "N2" fica fora do nome porque não é o assunto do trabalho |
 | D2 | **README.md é o relatório** (seções com os nomes do PDF) + notebooks executados com saída | PDF aceita "notebook ou markdown"; o professor abre o link e lê tudo sem rodar nada |
 | D3 | Código reutilizável em `src/manutencao/` (sem instalar pacote; notebooks fazem `sys.path.insert`) | Evita duplicação entre notebooks, permite testes; funciona no Colab sem reiniciar kernel |
 | D4 | CSV original versionado em `data/raw/ai4i2020.csv` + download com verificação SHA-256 como alternativa | Reprodutível mesmo se a UCI cair; licença CC BY 4.0 permite redistribuir com atribuição |
