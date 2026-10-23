@@ -1,8 +1,0 @@
-blank_issues_enabled: true
-contact_links:
-  - name: Backlog e quadro do projeto
-    url: https://github.com/users/igorSeberino/projects/2
-    about: O backlog e a priorização vivem no GitHub Project @vigia.
-  - name: Plano do trabalho (escopo, divisão, decisões)
-    url: https://github.com/igorSeberino/data.vigia/tree/main/docs/plano
-    about: Fonte de verdade das tarefas e das regras.

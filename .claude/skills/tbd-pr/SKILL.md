@@ -33,7 +33,7 @@ O nome da branch é `{tipo}/{número}-{slug}`; se não for, aborte e oriente `/t
    texto) e registre o pulo em "Notas ao revisor".
 6. Confirme com o usuário e faça `git push -u origin {branch}` (com `--force-with-lease` só se o
    rebase reescreveu commits já enviados).
-7. Corpo: `templates/pr-body.md`, preenchido com `git log origin/main..HEAD --oneline` e
+7. Corpo: `.github/PULL_REQUEST_TEMPLATE.md` (com `Closes #{número}` no fim), preenchido com `git log origin/main..HEAD --oneline` e
    `git diff origin/main...HEAD --stat`. Título = **título exato da issue**.
 8. Mostre título e corpo e **pergunte antes de criar**.
 9. `gh pr create --repo igorSeberino/data.vigia --base main --title "..." --body "..."`

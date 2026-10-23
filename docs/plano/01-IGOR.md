@@ -17,7 +17,7 @@ O que existe:
   (logo, título, frase, badges) com todas as seções do relatório e os
   marcadores de responsável, `src/manutencao/__init__.py`, `tests/test_estrutura.py`,
   `data/raw/ai4i2020.csv` (SHA-256 conferido), CI (`.github/workflows/ci.yml`), templates de issue
-  (tarefa, bug, débito técnico), `PULL_REQUEST_TEMPLATE.md`, `CODEOWNERS`, `.github/assets/logo.svg`,
+  (bug, débito técnico), `PULL_REQUEST_TEMPLATE.md`, `.github/assets/logo.svg`,
   este plano em `docs/plano/` e o time de agentes em `.claude/` (§11 do plano mestre).
 - **Configuração**: só "Create a merge commit"; branch apagada após merge; `main` protegida
   (PR obrigatório, 1 aprovação, check `ci`).

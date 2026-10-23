@@ -146,7 +146,7 @@ para cada um explicar o que fez.
 
 | Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de |
 |---|---|---|---|---|---|---|
-| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, CODEOWNERS, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
+| T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — |
 | T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; `docs/dicionario-de-dados.md`; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 |
 | T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; `docs/modelo-de-dados.md` (diagrama ER); README §2.3.1, §3.1.1, §3.2.2 | Adrian | T1 |
 | T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 |
@@ -188,9 +188,8 @@ data.vigia/
 │   └── settings.json                 # permissões e hook de início de sessão
 ├── .github/
 │   ├── workflows/ci.yml              # ruff + pytest + executa os 5 notebooks
-│   ├── ISSUE_TEMPLATE/               # tarefa, bug, débito técnico
+│   ├── ISSUE_TEMPLATE/               # bug, débito técnico
 │   ├── PULL_REQUEST_TEMPLATE.md      # O quê / Por quê / Notas / DoD
-│   ├── CODEOWNERS                    # dono de cada módulo/notebook
 │   └── assets/logo.svg
 ├── data/
 │   ├── raw/ai4i2020.csv              # versionado
