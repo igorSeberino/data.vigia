@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-labelledby="t">
+  <title id="t">vigia — engrenagem com sinal de vibração</title>
+  <circle cx="120" cy="120" r="116" fill="#14202B"/>
+  <circle cx="120" cy="120" r="80" fill="none" stroke="#F5A524" stroke-width="20" stroke-dasharray="18.85 12.57"/>
+  <circle cx="120" cy="120" r="66" fill="#14202B" stroke="#F5A524" stroke-width="8"/>
+  <polyline points="36,120 86,120 98,98 112,150 128,78 142,136 152,120 204,120" fill="none" stroke="#2BB3A3" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="128" cy="78" r="7" fill="#F5A524"/>
+</svg>

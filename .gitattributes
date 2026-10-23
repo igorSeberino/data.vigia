@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.png binary
+*.ipynb text eol=lf
+*.csv text eol=lf
+data/raw/*.csv -text -diff linguist-vendored
+reports/tables/*.csv linguist-generated

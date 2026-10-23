@@ -1,0 +1,20 @@
+# Ownership do data.vigia (RACI em docs/plano/00-VISAO-GERAL.md §5).
+# O GitHub pede revisão do dono quando um PR toca o arquivo; a aprovação que vale para o merge
+# é a do revisor da matriz (§5).
+*                                   @igorSeberino
+/.github/                           @igorSeberino
+/.claude/                           @igorSeberino
+/src/manutencao/config.py           @igorSeberino
+/src/manutencao/util.py             @igorSeberino
+/src/manutencao/dados.py            @igorSeberino
+/src/manutencao/preparacao.py       @igorSeberino
+/src/manutencao/modelo_dados.py     @gabrielcarvallho
+/src/manutencao/custo.py            @gabrielcarvallho
+/src/manutencao/eda.py              @adrian-cesar
+/src/manutencao/modelagem.py        @rcolinneto
+/notebooks/01_*                     @igorSeberino
+/notebooks/02_*                     @gabrielcarvallho
+/notebooks/03_*                     @adrian-cesar
+/notebooks/04_*                     @rcolinneto
+/notebooks/05_*                     @gabrielcarvallho
+/docs/modelo-de-dados.md            @gabrielcarvallho
