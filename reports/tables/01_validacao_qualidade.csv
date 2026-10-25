@@ -1,0 +1,15 @@
+verificacao,esperado,obtido,ok
+colunas esperadas,"['desgaste_ferramenta_min', 'falha', 'falha_hdf', 'falha_osf', 'falha_pwf', 'falha_rnf', 'falha_twf', 'id_produto', 'rotacao_rpm', 'temp_ar_k', 'temp_processo_k', 'tipo', 'torque_nm', 'udi']","['desgaste_ferramenta_min', 'falha', 'falha_hdf', 'falha_osf', 'falha_pwf', 'falha_rnf', 'falha_twf', 'id_produto', 'rotacao_rpm', 'temp_ar_k', 'temp_processo_k', 'tipo', 'torque_nm', 'udi']",True
+quantidade de linhas,10000,10000,True
+valores ausentes,0,0,True
+linhas duplicadas,0,0,True
+udi único,True,True,True
+id_produto único,True,True,True
+"tipo em {L, M, H}",True,True,True
+1ª letra do id_produto = tipo,True,True,True
+temperaturas entre 290 e 320 K,True,True,True
+temp_processo > temp_ar,True,True,True
+rotação > 0,True,True,True
+torque >= 0,True,True,True
+desgaste >= 0,True,True,True
+flags binárias (0/1),True,True,True

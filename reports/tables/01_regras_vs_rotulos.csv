@@ -1,0 +1,4 @@
+modo,descricao,ciclos_pela_regra,ciclos_com_rotulo,coincidem
+HDF,Falha de dissipação de calor,115,115,True
+PWF,Falha de potência,95,95,True
+OSF,Sobrecarga (overstrain),98,98,True
