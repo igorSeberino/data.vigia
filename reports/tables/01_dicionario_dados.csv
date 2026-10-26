@@ -1,0 +1,18 @@
+coluna,origem,tipo,unidade,papel,descricao
+udi,original,int64,-,identificador — proibido como atributo,Identificador único do ciclo (1 a 10.000)
+id_produto,original,str,-,identificador — proibido como atributo,Identificador do produto: letra do tipo + número de série
+tipo,original,category,-,atributo,"Variante de qualidade do produto: L (baixa), M (média), H (alta)"
+temp_ar_k,original,float64,K,atributo,Temperatura do ar ambiente
+temp_processo_k,original,float64,K,atributo,Temperatura do processo
+rotacao_rpm,original,int64,rpm,atributo,Velocidade de rotação do eixo
+torque_nm,original,float64,N·m,atributo,Torque aplicado
+desgaste_ferramenta_min,original,int64,min,atributo,Tempo de uso acumulado da ferramenta
+falha,original,int64,-,alvo,1 se o ciclo terminou em falha da máquina
+falha_twf,original,int64,-,modo de falha — proibido como atributo,1 se ocorreu o modo TWF: desgaste da ferramenta
+falha_hdf,original,int64,-,modo de falha — proibido como atributo,1 se ocorreu o modo HDF: falha de dissipação de calor
+falha_pwf,original,int64,-,modo de falha — proibido como atributo,1 se ocorreu o modo PWF: falha de potência
+falha_osf,original,int64,-,modo de falha — proibido como atributo,1 se ocorreu o modo OSF: sobrecarga (overstrain)
+falha_rnf,original,int64,-,modo de falha — proibido como atributo,1 se ocorreu o modo RNF: falha aleatória
+dif_temperatura_k,derivada,float64,K,atributo,temp_processo_k − temp_ar_k (dissipação de calor)
+potencia_w,derivada,float64,W,atributo,torque_nm × rotacao_rpm × 2π/60 (potência mecânica)
+esforco_ferramenta_min_nm,derivada,float64,min·N·m,atributo,desgaste_ferramenta_min × torque_nm (sobrecarga da ferramenta)
