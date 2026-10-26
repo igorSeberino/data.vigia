@@ -117,7 +117,7 @@ _Em construção._
 _Em construção._
 
 #### 2.3.1 Modelagem dimensional (esquema estrela em SQLite)
-<!-- RESPONSÁVEL: @gabrielcarvallho · T2 -->
+<!-- RESPONSÁVEL: @igorSeberino · T2 -->
 _Em construção._
 
 #### 2.3.2 Modelagem preditiva (aprendizado supervisionado)
@@ -140,7 +140,7 @@ _Em construção._
 ## 3. Desenvolvimento
 ### 3.1 Implementação dos modelos de dados
 #### 3.1.1 Modelo dimensional
-<!-- RESPONSÁVEL: @gabrielcarvallho · T2 -->
+<!-- RESPONSÁVEL: @igorSeberino · T2 -->
 _Em construção._
 
 #### 3.1.2 Modelos preditivos
@@ -153,7 +153,7 @@ _Em construção._
 _Em construção._
 
 #### 3.2.2 Consultas analíticas no modelo dimensional
-<!-- RESPONSÁVEL: @gabrielcarvallho · T2 -->
+<!-- RESPONSÁVEL: @igorSeberino · T2 -->
 _Em construção._
 
 #### 3.2.3 Desempenho dos modelos

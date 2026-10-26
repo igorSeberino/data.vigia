@@ -3,7 +3,9 @@
 > Leia antes: `00-VISAO-GERAL.md` (principalmente §2.1, §3, §7 e §8).
 > Identidade git: `Renato Colin Neto <renato.colin@catolicasc.edu.br>` · login **`rcolinneto`**
 > (não a conta antiga `RenatoColin`).
-> Revisor do seu T4: **Igor**. Você revisa: **T1 (Igor)** e **T6 (Gabriel)**.
+> **Seu trabalho é amanhã, 27/10 (D19).** Revisor do seu T4: **Gabriel**.
+> Você revisa: **T6 (Gabriel)** e **T7 (Igor)**. Abra o PR do T4 cedo: o notebook 05 do Gabriel
+> depende das suas tabelas `04_*.csv`.
 
 O código de referência abaixo foi executado e testado antes de entrar no plano (ruff e pytest
 verdes; o pipeline completo roda em cerca de 75 s num notebook comum).
@@ -450,3 +452,8 @@ grupo assim que mergear (o T6 depende das tabelas `04_oof_treino.csv` e `04_pred
 Conferir que o limiar e o limite de desgaste são escolhidos com `04_oof_treino.csv` e com o
 treino (nunca com o teste); que o `merge` por `udi` usa `validate="one_to_one"`; que o texto
 deixa claro que os custos são hipóteses; rodar `pytest -q`. Comentar pelo menos 1 ponto.
+
+## Sua revisão do T7 (Igor)
+
+Conferir que os números de 2.3.2, 2.4.2, 3.1.2, 3.2.3 e 3.3.1 do README continuam batendo com as
+tabelas `04_*` após a reexecução final.

@@ -2,7 +2,8 @@
 
 > Leia antes: `00-VISAO-GERAL.md` (principalmente §2, §3, §8 e §9).
 > Identidade git: `Adrian Cesar Gonçalves <adriancg3006@gmail.com>` · login `adrian-cesar`.
-> Revisor do seu T3: **Gabriel**. Revisor do seu T5: **Igor**. Você revisa: **T2 (Gabriel)** e **T7 (Igor)**.
+> **Tudo seu é hoje, 26/10 (D19).** Revisor do seu T3: **Igor**. T5: feito.
+> Você revisa: **T1 (Igor, PR #12 — primeiro, porque o T3 depende dele)** e **T2 (Igor)**.
 
 O código de referência abaixo foi executado e testado antes de entrar no plano (ruff e pytest
 verdes, resultados conferidos no dataset real).
@@ -476,7 +477,8 @@ PR: `/tbd-pr` — título = título da issue #3, `Closes #3`, revisor `gabrielca
 
 ## Suas revisões
 
-- **T2 (Gabriel)**: rodar `pytest -q`; abrir o README da branch no GitHub e ver o Mermaid
+- **T1 (Igor)**: rodar `pytest -q`; conferir que `separar_x_y` recusa os atributos proibidos e que
+  `dividir_treino_teste` usa SEED=42 e estratificação. Aprovar logo: T2 e T3 dependem do merge.
+- **T2 (Igor)**: rodar `pytest -q`; abrir o README da branch no GitHub e ver o Mermaid
   da §3.1.1 renderizado; conferir que a taxa de falha por tipo do notebook 02 é a mesma do seu notebook 03.
   Comentar pelo menos 1 ponto.
-- **T7 (Igor)**: conferir 1.1–1.3, 2.4.1, 3.2.1 e §4 depois da integração.
