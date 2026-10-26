@@ -41,13 +41,13 @@ O nome da branch é `{tipo}/{número}-{slug}`; se não for, aborte e oriente `/t
 
     | Issue | Revisor |
     |---|---|
-    | #1 | `rcolinneto` |
+    | #1 | `adrian-cesar` |
     | #2 | `adrian-cesar` |
-    | #3 | `gabrielcarvallho` |
-    | #4 | `igorSeberino` |
+    | #3 | `igorSeberino` |
+    | #4 | `gabrielcarvallho` |
     | #5 | `igorSeberino` |
     | #6 | `rcolinneto` |
-    | #7 | `gabrielcarvallho,adrian-cesar` |
+    | #7 | `gabrielcarvallho,rcolinneto` |
     | outra | quem o usuário indicar |
 
     `gh pr edit {pr} --repo igorSeberino/data.vigia --add-reviewer {revisor}`

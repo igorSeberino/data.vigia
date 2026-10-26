@@ -2,7 +2,9 @@
 
 > Leia antes: `00-VISAO-GERAL.md` (principalmente §3, §7 e §8).
 > Identidade git: `Gabriel Carvalho <gabriellccarvalho.dev@gmail.com>` · login `gabrielcarvallho`.
-> Revisor do seu T2: **Adrian**. Revisor do seu T6: **Renato**. Você revisa: **T3 (Adrian)** e **T7 (Igor)**.
+> **Replanejado (D19):** o T2 passou para o **Igor** (feito hoje, 26/10, revisado pelo Adrian);
+> a seção T2 abaixo fica como roteiro dele. O seu trabalho é **amanhã, 27/10**: o **T6**, revisado
+> pelo **Renato**. Você revisa: **T4 (Renato)** e **T7 (Igor)**.
 
 O código de referência abaixo foi executado e testado antes de entrar no plano (ruff e pytest
 verdes, resultados conferidos com o dataset real). Pode usar como está; se mudar algo, os testes
@@ -32,6 +34,8 @@ implementação seguindo este arquivo → `/tbd-commit` a cada commit sugerido �
 ---
 
 ## T2 — Modelo dimensional em SQLite (issue #2 · `feat/2-star-schema`)
+
+> Executado pelo **Igor** (D19). Onde está "você", leia "Igor".
 
 ```bash
 /tbd-start 2      # assume a issue #2, card em In Progress, branch feat/2-star-schema
@@ -550,7 +554,7 @@ PR: `/tbd-pr` — título = título da issue #2, corpo pelo template com `Closes
 - [ ] `pytest -q` verde (os 7 testes do T2 + os anteriores).
 - [ ] Notebook 02 roda do início ao fim; 8 tabelas de consulta `02_*.csv` + `02_volume_tabelas.csv` + `02_integridade.csv`; 4 figuras.
 - [ ] Diagrama Mermaid do README §3.1.1 renderizando no GitHub.
-- [ ] Commits aparecem como `gabrielcarvallho`.
+- [ ] Commits aparecem como `igorSeberino`.
 
 ---
 
@@ -816,8 +820,9 @@ PR: `/tbd-pr` — título = título da issue #6, `Closes #6`, revisor `rcolinnet
 
 ## Suas revisões
 
-- **T3 (Adrian)**: rodar `pytest -q`; conferir que nenhuma função de `eda.py` começa com `test`;
-  que as figuras têm título/eixos com unidade; que a conclusão sobre `tipo` usa o V de Cramér
-  (efeito pequeno mesmo com p < 0,05). Comentar pelo menos 1 ponto.
+- **T4 (Renato)**: conferir que o teste só é usado depois da escolha do modelo; que
+  `04_oof_treino.csv` e `04_predicoes_teste.csv` têm as colunas do contrato (§7) — o seu
+  notebook 05 depende delas; que a discussão de 3.3.1 menciona o caráter sintético e os modos
+  estocásticos; rodar `pytest -q`. Comentar pelo menos 1 ponto.
 - **T7 (Igor)**: conferir que os números de 3.2.2, 3.2.4 e 3.3.2 do README continuam batendo com
   as tabelas após a reexecução final.

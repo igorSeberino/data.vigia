@@ -1,7 +1,12 @@
-# Tarefas do Igor — T0 (estrutura), T1 (coleta e preparação), T7 (integração e entrega)
+# Tarefas do Igor — T0 (estrutura), T1 (coleta e preparação), T2 (modelo dimensional), T7 (integração e entrega)
 
 > Leia antes: `00-VISAO-GERAL.md`. Identidade git deste repositório:
 > `Igor Seberino <igorseberino@gmail.com>` (configurado **local** no clone) · login `igorSeberino`.
+> Revisor do T1 e do T2: **Adrian** (hoje, 26/10). Revisor do T7: **Gabriel** ou **Renato** (amanhã, 27/10).
+> Você revisa: **T3 (Adrian)** e T5 (feito). Agenda: §5 do plano mestre (D19).
+>
+> **T2** passou do Gabriel para você (D19): siga a seção *T2* de `02-GABRIEL.md` inteira
+> (código, testes, notebook 02, README §2.3.1, §3.1.1 e §3.2.2); só a identidade do commit é a sua.
 
 Todo o código abaixo foi executado e testado antes de entrar neste plano (Python 3.14, pandas 3.1,
 scikit-learn 1.9, ruff e pytest verdes). Pode copiar como está.
@@ -571,7 +576,7 @@ corrigir sozinho a seção do colega.
 ### T7.4 PR e envio
 
 ```bash
-# /tbd-pr  (PR "docs: integração final do relatório e entrega", Closes #7, revisores gabrielcarvallho e adrian-cesar)
+# /tbd-pr  (PR "docs: integração final do relatório e entrega", Closes #7, revisores gabrielcarvallho e rcolinneto)
 # após aprovação + CI verde + merge (e /tbd-pr de novo):
 gh issue close 8 -R igorSeberino/data.vigia -c "Todas as sub-issues entregues."
 curl -s -o /dev/null -w "%{http_code}\n" https://github.com/igorSeberino/data.vigia   # 200
@@ -589,8 +594,8 @@ mais faz push na `main`.
 
 ## Revisões que o Igor faz
 
-- **T4 (Renato)**: conferir que o teste só é usado depois da escolha do modelo; que
-  `04_oof_treino.csv` e `04_predicoes_teste.csv` têm as colunas do contrato (§7); que a
-  discussão de 3.3.1 menciona o caráter sintético e os modos estocásticos.
+- **T3 (Adrian)**: rodar `pytest -q`; conferir que nenhuma função de `eda.py` começa com `test`;
+  que as figuras têm título/eixos com unidade; que a conclusão sobre `tipo` usa o V de Cramér
+  (efeito pequeno mesmo com p < 0,05). Comentar pelo menos 1 ponto.
 - **T5 (Adrian)**: conferir que cada referência tem DOI/URL que abre; que o problema (1.2) e os
   objetivos (1.3) batem com o que os notebooks realmente fazem.

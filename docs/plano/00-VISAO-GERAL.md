@@ -123,6 +123,7 @@ realista está ligado à parcela de falhas aleatórias. Também é a principal *
 | D16 | Merge de PR por **"Create a merge commit"** (nunca squash) | Preserva cada commit com o autor → contribuição visível por integrante |
 | D17 | `SEED = 42` em tudo que é aleatório | Reprodutibilidade |
 | D18 | Um arquivo por integrante em `docs/plano/` com código de referência, notebook célula por célula, testes e commits sugeridos | **Decisão do Igor**: deixar tudo mastigado para cada integrante executar sem travar. Por isso o plano é maior que o código. Alternativa descartada: plano só com assinaturas, valores e testes |
+| D19 | Replanejamento por disponibilidade: **hoje (26/10)** Igor e Adrian fazem T1, T2 e T3 e revisam um ao outro; **amanhã (27/10)** Renato faz T4 e Gabriel faz T6, revisando um ao outro; T7 (Igor) fecha depois do T6. O T2 passa do Gabriel para o Igor | Adrian só está disponível hoje; Gabriel e Renato, só amanhã. Revisor tem que estar disponível no mesmo dia do PR, senão o merge trava (`main` exige 1 aprovação) |
 
 ---
 
@@ -154,18 +155,25 @@ para cada um explicar o que fez.
 | Tarefa | Issue | Responsável | Branch | Entrega | Revisor (aprova o PR) | Depende de | Atende |
 |---|---|---|---|---|---|---|---|
 | T0 | — (commit inicial) | Igor | direto na `main`, antes da proteção — **feito** | Repo, CI, CLAUDE.md, templates, README-esqueleto, plano em `docs/plano/`, time de agentes em `.claude/`, Project, labels, issues, convites, proteção da `main` | — | — | R11, R13, R14 |
-| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Renato | T0 | R4, R5, R6, R11 |
-| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Gabriel | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; README §2.3.1, §3.1.1 (com o diagrama ER), §3.2.2 | Adrian | T1 | R2, R6, R8, R9 |
-| T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Gabriel | T1 | R7, R9 |
-| T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Igor | T1 | R6, R7, R8, R9, R10 |
+| T1 | [#1](https://github.com/igorSeberino/data.vigia/issues/1) | Igor | `feat/1-data-prep` | `config.py`, `util.py`, `dados.py`, `preparacao.py` + testes; notebook 01; README §2.1, §2.2, §2.3 (tabela de ferramentas) | Adrian | T0 | R4, R5, R6, R11 |
+| T2 | [#2](https://github.com/igorSeberino/data.vigia/issues/2) | Igor | `feat/2-star-schema` | `modelo_dados.py` + testes; notebook 02; README §2.3.1, §3.1.1 (com o diagrama ER), §3.2.2 | Adrian | T1 | R2, R6, R8, R9 |
+| T3 | [#3](https://github.com/igorSeberino/data.vigia/issues/3) | Adrian | `feat/3-eda` | `eda.py` + testes; notebook 03; README §2.4.1, §3.2.1 | Igor | T1 | R7, R9 |
+| T4 | [#4](https://github.com/igorSeberino/data.vigia/issues/4) | Renato | `feat/4-predictive-models` | `modelagem.py` + testes; notebook 04; README §2.3.2, §2.4.2, §3.1.2, §3.2.3, §3.3.1 | Gabriel | T1 | R6, R7, R8, R9, R10 |
 | T5 | [#5](https://github.com/igorSeberino/data.vigia/issues/5) | Adrian | `docs/5-intro-references` | README §1 (1.1, 1.2, 1.3) e §4 Referências (ABNT) | Igor | T0 | R1, R2, R3, R12 |
 | T6 | [#6](https://github.com/igorSeberino/data.vigia/issues/6) | Gabriel | `feat/6-business-impact` | `custo.py` + testes; notebook 05; README §2.4.3, §3.2.4, §3.3.2 | Renato | T4 (código e testes podem começar após T1) | R7, R9, R10 |
-| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | §3.4, §3.5, revisão de consistência, envio do link | Gabriel **e** Adrian (basta 1 aprovação; os dois revisam) | T2–T6 | R10, R11, R13, R14 |
+| T7 | [#7](https://github.com/igorSeberino/data.vigia/issues/7) | Igor | `docs/7-final-report` | §3.4, §3.5, revisão de consistência, envio do link | Gabriel **e** Renato (basta 1 aprovação; os dois revisam) | T2–T6 | R10, R11, R13, R14 |
 
 As sete issues são sub-issues da issue-mãe [#8](https://github.com/igorSeberino/data.vigia/issues/8)
 (barra de progresso no Project). Título do PR = título da issue; corpo termina com `Closes #<n>`.
 
-Revisões por pessoa: Igor (T4, T5) · Renato (T1, T6) · Gabriel (T3, T7) · Adrian (T2, T7).
+Revisões por pessoa: Igor (T3, T5) · Adrian (T1, T2) · Gabriel (T4, T7) · Renato (T6, T7).
+
+Agenda por disponibilidade (D19):
+
+| Dia | Quem | Ordem |
+|---|---|---|
+| Hoje, 26/10 | Igor e Adrian | 1) Adrian aprova o PR do T1 (#12) e o Igor faz o merge · 2) em paralelo: Igor faz o T2 (#2), Adrian faz o T3 (#3) · 3) Igor revisa o T3, Adrian revisa o T2 — os dois PRs mergeados **hoje** |
+| Amanhã, 27/10 | Gabriel e Renato | 1) em paralelo: Renato faz o T4 (#4); Gabriel começa o T6 (#6) pelo `custo.py` e testes · 2) Gabriel revisa e aprova o T4 · 3) Gabriel faz `git pull --rebase origin main` e executa o notebook 05 · 4) Renato revisa o T6 · 5) Igor abre o T7 (#7); Gabriel ou Renato aprova |
 
 Grafo:
 
@@ -204,7 +212,7 @@ data.vigia/
 │   └── plano/                        # ESTES arquivos de planejamento
 ├── notebooks/
 │   ├── 01_coleta_e_preparacao.ipynb  # T1 Igor
-│   ├── 02_modelo_de_dados_sql.ipynb  # T2 Gabriel
+│   ├── 02_modelo_de_dados_sql.ipynb  # T2 Igor
 │   ├── 03_analise_exploratoria.ipynb # T3 Adrian
 │   ├── 04_modelagem_preditiva.ipynb  # T4 Renato
 │   └── 05_impacto_no_negocio.ipynb   # T6 Gabriel
@@ -215,7 +223,7 @@ data.vigia/
 │   ├── __init__.py                   # T0
 │   ├── config.py   util.py           # T1 Igor
 │   ├── dados.py    preparacao.py     # T1 Igor
-│   ├── modelo_dados.py               # T2 Gabriel
+│   ├── modelo_dados.py               # T2 Igor
 │   ├── eda.py                        # T3 Adrian
 │   ├── modelagem.py                  # T4 Renato
 │   └── custo.py                      # T6 Gabriel
@@ -340,7 +348,7 @@ badges · disciplina · professor · integrantes · links dos notebooks
 ### 2.1 Descrição dos dados (fontes, tipos, volume)                (T1 Igor)
 ### 2.2 Coleta e preparação dos dados                              (T1 Igor)
 ### 2.3 Ferramentas e técnicas de modelagem de dados               (T1 Igor: tabela de ferramentas)
-#### 2.3.1 Modelagem dimensional (esquema estrela em SQLite)       (T2 Gabriel)
+#### 2.3.1 Modelagem dimensional (esquema estrela em SQLite)       (T2 Igor)
 #### 2.3.2 Modelagem preditiva (aprendizado supervisionado)        (T4 Renato)
 ### 2.4 Métodos de análise de dados
 #### 2.4.1 Análise exploratória e testes estatísticos              (T3 Adrian)
@@ -348,11 +356,11 @@ badges · disciplina · professor · integrantes · links dos notebooks
 #### 2.4.3 Análise de custo e estratégias de manutenção            (T6 Gabriel)
 ## 3. Desenvolvimento
 ### 3.1 Implementação dos modelos de dados
-#### 3.1.1 Modelo dimensional                                      (T2 Gabriel)
+#### 3.1.1 Modelo dimensional                                      (T2 Igor)
 #### 3.1.2 Modelos preditivos                                      (T4 Renato)
 ### 3.2 Análise dos resultados
 #### 3.2.1 O que a exploração mostrou                              (T3 Adrian)
-#### 3.2.2 Consultas analíticas no modelo dimensional              (T2 Gabriel)
+#### 3.2.2 Consultas analíticas no modelo dimensional              (T2 Igor)
 #### 3.2.3 Desempenho dos modelos                                  (T4 Renato)
 #### 3.2.4 Impacto financeiro                                      (T6 Gabriel)
 ### 3.3 Discussão sobre a eficácia das soluções propostas
@@ -440,7 +448,7 @@ Depois, **ler o que foi feito** e conseguir explicar cada decisão.
 | Modelo serializado (`joblib`) | nenhum notebook nem seção consome; o notebook 05 usa as tabelas `04_*.csv` |
 | Implantação do modelo (API, CLP/MES, monitoramento) | R2 pede propor soluções, não implantar; vira trabalho futuro em §3.5 |
 | `LICENSE` de código | trabalho de uma entrega, sem reuso por terceiros; a atribuição CC BY dos dados fica no README (seção Dados) |
-| Prazos intermediários por data | o PDF não fixa nenhum; a ordem vem do grafo da §5 |
+| Prazos intermediários por data | o PDF não fixa nenhum; a ordem vem do grafo da §5 e a agenda da §5 vem só da disponibilidade de cada um (D19) |
 | `requirements-dev.txt`, ambientes dev/prod | não há deploy; um único `requirements.txt` |
 | `CODEOWNERS`, campos Area/Priority no Project, labels genéricas | o revisor vem da matriz da §5, a ordem vem do grafo e as labels `module:` já classificam |
 | Mínimo de commits por PR, roteiro de defesa | nenhuma fonte pede |
