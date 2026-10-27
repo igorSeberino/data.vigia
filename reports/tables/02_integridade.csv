@@ -1,0 +1,7 @@
+verificacao,esperado,obtido,ok
+linhas na fato = linhas do DataFrame,10000.0,10000.0,True
+falhas na fato = soma do alvo,339.0,339.0,True
+linhas na ponte = soma dos 5 modos,373.0,373.0,True
+violações de chave estrangeira,0.0,0.0,True
+ciclos sem tipo,0.0,0.0,True
+soma do torque confere,399869.1,399869.1,True

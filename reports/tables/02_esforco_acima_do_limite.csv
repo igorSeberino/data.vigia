@@ -1,0 +1,4 @@
+tipo,limite_esforco_min_nm,ciclos_acima,falhas_acima,ciclos_com_osf
+L,11000.0,87,87,87
+M,12000.0,9,9,9
+H,13000.0,2,2,2
