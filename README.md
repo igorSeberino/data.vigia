@@ -196,7 +196,25 @@ trabalho futuro na seção 3.5.
 
 #### 2.3.1 Modelagem dimensional (esquema estrela em SQLite)
 <!-- RESPONSÁVEL: @igorSeberino · T2 -->
-_Em construção._
+Além do modelo preditivo (seção 2.3.2), o grupo construiu um **modelo de dados analítico**:
+um **esquema estrela** (KIMBALL; ROSS, 2013), forma usual de organizar dados de sensores de chão
+de fábrica para consultas de BI. A técnica separa os **fatos** (medições de cada evento) das
+**dimensões** (atributos descritivos pelos quais os fatos são agrupados).
+
+- **Grão.** A tabela fato `fato_ciclo` tem 1 linha por ciclo de processo (`udi`).
+- **Dimensão degenerada.** `id_produto` é único por ciclo (10.000 valores); uma tabela de produto
+  teria 1 linha por fato, sem ganho, então o código fica na própria fato.
+- **Dimensão de tipo.** `dim_tipo_produto` guarda a qualidade (L, M, H), a participação nominal e
+  o **limite de esforço** de cada tipo (11, 12 e 13 mil min·N·m). Conhecimento de engenharia vira
+  atributo de dimensão e permite perguntar "quais ciclos passaram do limite do seu tipo".
+- **Dimensão de faixas** (*band dimension*). `dim_faixa_desgaste` agrupa o desgaste da ferramenta
+  em faixas de 50 min (0–49, 50–99, 100–149, 150–199 e 200+).
+- **Tabela ponte.** Um ciclo pode ter mais de um modo de falha, uma relação N:N entre fato e
+  `dim_modo_falha`; a ponte `ponte_ciclo_modo` guarda um par (ciclo, modo) por linha.
+- **Sem dimensão de tempo.** O dataset não tem data nem hora, o que impede analisar tendência ao
+  longo do turno ou da semana.
+- **SQLite.** Banco embutido na biblioteca padrão do Python (`sqlite3`), sem servidor nem
+  instalação, com chaves estrangeiras ligadas (`PRAGMA foreign_keys = ON`).
 
 #### 2.3.2 Modelagem preditiva (aprendizado supervisionado)
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
@@ -219,7 +237,94 @@ _Em construção._
 ### 3.1 Implementação dos modelos de dados
 #### 3.1.1 Modelo dimensional
 <!-- RESPONSÁVEL: @igorSeberino · T2 -->
-_Em construção._
+O modelo está em `src/manutencao/modelo_dados.py` e é executado no
+[notebook 02](notebooks/02_modelo_de_dados_sql.ipynb). `construir_banco()` apaga e recria
+`data/processed/industria40.db` a cada execução a partir do DataFrame preparado do notebook 01;
+assim o banco nunca fica defasado em relação ao código e não precisa ser versionado (está no
+`.gitignore`).
+
+```mermaid
+erDiagram
+    dim_tipo_produto ||--o{ fato_ciclo : "classifica"
+    dim_faixa_desgaste ||--o{ fato_ciclo : "agrupa"
+    fato_ciclo ||--o{ ponte_ciclo_modo : "registra"
+    dim_modo_falha ||--o{ ponte_ciclo_modo : "descreve"
+    dim_tipo_produto {
+        INTEGER id_tipo PK
+        TEXT codigo "L, M, H"
+        TEXT descricao
+        REAL participacao_nominal
+        REAL limite_esforco_min_nm
+    }
+    dim_faixa_desgaste {
+        INTEGER id_faixa PK
+        TEXT rotulo
+        INTEGER minimo_min
+        INTEGER maximo_min
+    }
+    dim_modo_falha {
+        INTEGER id_modo PK
+        TEXT sigla "TWF HDF PWF OSF RNF"
+        TEXT nome
+        TEXT regra
+    }
+    fato_ciclo {
+        INTEGER udi PK
+        TEXT id_produto "dimensão degenerada"
+        INTEGER id_tipo FK
+        INTEGER id_faixa FK
+        REAL temp_ar_k
+        REAL temp_processo_k
+        INTEGER rotacao_rpm
+        REAL torque_nm
+        INTEGER desgaste_ferramenta_min
+        REAL dif_temperatura_k
+        REAL potencia_w
+        REAL esforco_ferramenta_min_nm
+        INTEGER falha
+    }
+    ponte_ciclo_modo {
+        INTEGER udi PK, FK
+        INTEGER id_modo PK, FK
+    }
+```
+
+**Dicionário das tabelas.**
+
+| Tabela | Coluna | Tipo | Descrição | Origem |
+|---|---|---|---|---|
+| `dim_tipo_produto` | `id_tipo` | INTEGER PK | chave substituta (1, 2, 3) | gerada |
+| | `codigo` | TEXT | L, M ou H | coluna `tipo` |
+| | `descricao` | TEXT | baixa, média ou alta qualidade | documentação da UCI |
+| | `participacao_nominal` | REAL | 0,5 / 0,3 / 0,2 da produção | documentação da UCI |
+| | `limite_esforco_min_nm` | REAL | limite de desgaste × torque do tipo (11/12/13 mil) | regra do OSF (UCI) |
+| `dim_faixa_desgaste` | `id_faixa` | INTEGER PK | chave substituta (1 a 5) | gerada |
+| | `rotulo`, `minimo_min`, `maximo_min` | TEXT, INTEGER | faixa de desgaste em min (`maximo_min` nulo = sem teto) | definida pelo grupo |
+| `dim_modo_falha` | `id_modo` | INTEGER PK | chave substituta (1 a 5) | gerada |
+| | `sigla`, `nome`, `regra` | TEXT | modo de falha e a regra que o gera | documentação da UCI |
+| `fato_ciclo` | `udi` | INTEGER PK | identificador do ciclo | coluna `udi` |
+| | `id_produto` | TEXT | dimensão degenerada | coluna `id_produto` |
+| | `id_tipo`, `id_faixa` | INTEGER FK | ligação com as dimensões | derivadas na carga |
+| | 5 sensores e 3 derivadas | REAL/INTEGER | medições do ciclo | DataFrame preparado (seção 2.2) |
+| | `falha` | INTEGER | alvo binário | coluna `falha` |
+| `ponte_ciclo_modo` | `udi`, `id_modo` | INTEGER PK/FK | um par por modo marcado no ciclo | colunas `falha_twf` … `falha_rnf` |
+
+**Volume e integridade.** O banco tem 3 tipos, 5 faixas, 5 modos, 10.000 ciclos na fato e 373
+linhas na ponte ([`02_volume_tabelas.csv`](reports/tables/02_volume_tabelas.csv)).
+`verificar_integridade()` compara o banco com o DataFrame de origem, e as 6 verificações passam
+([`02_integridade.csv`](reports/tables/02_integridade.csv)):
+
+| Verificação | Esperado | Obtido |
+|---|---:|---:|
+| linhas na fato = linhas do DataFrame | 10.000 | 10.000 |
+| falhas na fato = soma do alvo | 339 | 339 |
+| linhas na ponte = soma dos 5 modos | 373 | 373 |
+| violações de chave estrangeira | 0 | 0 |
+| ciclos sem tipo | 0 | 0 |
+| soma do torque confere | 399.869,1 | 399.869,1 |
+
+As 7 verificações automatizadas de `tests/test_modelo_dados.py` repetem essas contagens e os
+resultados das consultas a cada execução do CI.
 
 #### 3.1.2 Modelos preditivos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
@@ -232,7 +337,46 @@ _Em construção._
 
 #### 3.2.2 Consultas analíticas no modelo dimensional
 <!-- RESPONSÁVEL: @igorSeberino · T2 -->
-_Em construção._
+`CONSULTAS` reúne 8 consultas SQL; cada resultado é gravado em `reports/tables/02_<nome>.csv`.
+
+| Consulta | Pergunta de negócio |
+|---|---|
+| `taxa_falha_por_tipo` | A qualidade do produto muda a chance de falha? |
+| `falhas_por_modo` | Quais modos de falha mais ocorrem? |
+| `coocorrencia_modos` | Quais modos aparecem juntos no mesmo ciclo? |
+| `taxa_falha_por_faixa_desgaste` | A partir de quanto desgaste a ferramenta passa a falhar mais? |
+| `taxa_falha_por_tipo_e_faixa` | O efeito do desgaste é igual para todos os tipos? |
+| `perfil_sensores_por_modo` | O que os sensores mostram de diferente em cada modo? |
+| `esforco_acima_do_limite` | O limite de esforço do tipo explica a sobrecarga (OSF)? |
+| `inconsistencias_rotulo` | O banco preserva as inconsistências de rótulo da seção 2.2? |
+
+**Achados.**
+
+1. **O desgaste age como um degrau, não como uma rampa.** Até 199 min a taxa de falha fica entre
+   2,21 % e 2,66 %; na faixa 200+ min salta para **15,36 %** (123 falhas em 801 ciclos)
+   ([`02_taxa_falha_por_faixa_desgaste.csv`](reports/tables/02_taxa_falha_por_faixa_desgaste.csv)).
+   No tipo L essa faixa chega a **18,29 %**; em M e H fica em 10,31 % e 10,67 %
+   ([`02_taxa_falha_por_tipo_e_faixa.csv`](reports/tables/02_taxa_falha_por_tipo_e_faixa.csv)).
+2. **A qualidade do produto reduz a falha:** L 3,92 %, M 2,77 % e H 2,09 %
+   ([`02_taxa_falha_por_tipo.csv`](reports/tables/02_taxa_falha_por_tipo.csv)).
+3. **Dissipação de calor (HDF) é o modo mais frequente**, com 115 ocorrências (33,92 % das
+   falhas), seguido de sobrecarga (98), potência (95), desgaste (46) e aleatória (19)
+   ([`02_falhas_por_modo.csv`](reports/tables/02_falhas_por_modo.csv)). As porcentagens somam
+   mais de 100 % porque **24 ciclos** têm mais de um modo; o par mais comum é PWF + OSF, com 12
+   ciclos ([`02_coocorrencia_modos.csv`](reports/tables/02_coocorrencia_modos.csv)).
+4. **O limite de esforço da dimensão de tipo explica 100 % da sobrecarga:** os 98 ciclos acima do
+   limite do seu tipo (87 L, 9 M, 2 H) são exatamente os 98 com OSF
+   ([`02_esforco_acima_do_limite.csv`](reports/tables/02_esforco_acima_do_limite.csv)).
+5. **Cada modo tem uma assinatura de sensores.** TWF e OSF ocorrem com desgaste médio de 216 e
+   208 min, contra 107 min nos ciclos sem falha; HDF ocorre com diferença de temperatura média de
+   8,23 K e rotação de 1.337 rpm, contra 10,02 K e 1.540 rpm sem falha
+   ([`02_perfil_sensores_por_modo.csv`](reports/tables/02_perfil_sensores_por_modo.csv)).
+6. **O banco preserva os dados:** as mesmas 9 falhas sem modo e 18 modos sem falha da seção 2.2
+   ([`02_inconsistencias_rotulo.csv`](reports/tables/02_inconsistencias_rotulo.csv)).
+
+![Taxa de falha por faixa de desgaste](reports/figures/02_taxa_falha_por_faixa_desgaste.png)
+
+![Taxa de falha por tipo e faixa de desgaste](reports/figures/02_heatmap_tipo_faixa.png)
 
 #### 3.2.3 Desempenho dos modelos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
