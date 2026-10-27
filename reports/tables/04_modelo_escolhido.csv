@@ -1,0 +1,2 @@
+modelo,conjunto,parametros,pr_auc_cv
+gradient_boosting,engenharia,"{'modelo__min_samples_leaf': 10, 'modelo__max_leaf_nodes': 63, 'modelo__max_iter': 400, 'modelo__learning_rate': 0.03, 'modelo__l2_regularization': 1.0}",0.8948903240525766

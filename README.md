@@ -218,7 +218,36 @@ de fábrica para consultas de BI. A técnica separa os **fatos** (medições de 
 
 #### 2.3.2 Modelagem preditiva (aprendizado supervisionado)
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
-_Em construção._
+A previsão de falha é um problema de **aprendizado supervisionado** de **classificação
+binária**: a partir das leituras de um ciclo, o modelo estima a probabilidade de `falha = 1`. Os
+rótulos já existem no histórico, e o modelo aprende a relação entre leituras e rótulo.
+
+**Modelos comparados** (todos do scikit-learn; PEDREGOSA *et al.*, 2011), escolhidos para cobrir
+famílias diferentes, do mais simples ao mais flexível:
+
+| Modelo | Papel na comparação |
+|---|---|
+| Dummy (prevê a prevalência) | piso: um modelo útil precisa superá-lo |
+| Regressão Logística | modelo linear, com padronização dos atributos numéricos |
+| Árvore de Decisão (profundidade 6) | regras legíveis, fáceis de explicar na fábrica |
+| Random Forest (BREIMAN, 2001) | média de 300 árvores, menos variância que a árvore única |
+| HistGradientBoosting (FRIEDMAN, 2001) | árvores em sequência, cada uma corrigindo os erros das anteriores |
+
+**Dois conjuntos de atributos** (ablação), para medir quanto o conhecimento do domínio vale:
+`bruto` (tipo + 5 leituras de sensor, 6 atributos) e `engenharia` (`bruto` + diferença de
+temperatura, potência e esforço da ferramenta, 9 atributos; seção 2.2). Identificadores e modos
+de falha nunca entram como atributo (`separar_x_y()` recusa).
+
+**Desbalanceamento.** Com 3,39 % de falhas, um modelo que nunca prevê falha acerta quase todos
+os ciclos sem detectar nenhuma falha; por isso a acurácia simples não é usada como métrica. Os
+modelos usam `class_weight="balanced"`, que dá mais peso aos erros na classe rara durante o
+treino. Não usamos reamostragem sintética: é mais simples e não cria risco de vazar informação
+entre as dobras da validação.
+
+**Pipelines.** Cada modelo é um `Pipeline` do scikit-learn: `tipo` vira ordinal (L < M < H) e,
+só na regressão logística, as numéricas são padronizadas. Como o pré-processamento faz parte do
+pipeline, ele é reajustado dentro de cada dobra da validação cruzada só com os dados de treino
+daquela dobra, sem vazamento de informação da dobra de validação.
 
 ### 2.4 Métodos de análise de dados
 #### 2.4.1 Análise exploratória e testes estatísticos
@@ -246,7 +275,42 @@ descritiva: nenhuma escolha de modelo sai dela olhando o conjunto de teste.
 
 #### 2.4.2 Validação e métricas dos modelos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
-_Em construção._
+**Validação.** Sobre a divisão única da seção 2.2 (80/20, estratificada, `SEED = 42`):
+
+1. **Comparação** dos 5 modelos × 2 conjuntos de atributos por **validação cruzada estratificada
+   de 5 dobras** no treino (8.000 ciclos), embaralhada com `SEED = 42`. Cada dobra mantém a
+   proporção de falhas; o resultado é a média e o desvio padrão das 5 dobras.
+2. **Ajuste de hiperparâmetros** só do modelo de maior PR-AUC média com `engenharia`, por busca
+   aleatória (`RandomizedSearchCV`) com 15 combinações, PR-AUC e a mesma validação.
+3. **Probabilidades *out-of-fold*** do modelo escolhido no treino: cada ciclo recebe a
+   probabilidade de um modelo que não o viu. São elas que o notebook 05 usa para escolher o
+   limiar de decisão pelo custo (decisão D11), sem tocar no teste.
+4. **Avaliação final no teste** (2.000 ciclos), **uma única vez**, com modelo, hiperparâmetros e
+   atributos congelados. Se o teste ajudasse a escolher qualquer coisa, a métrica final ficaria
+   otimista.
+
+**Métricas.** As de ranqueamento usam a probabilidade; as de decisão usam o limiar padrão 0,5
+(o limiar por custo fica para a seção 2.4.3).
+
+| Métrica | O que mede |
+|---|---|
+| **PR-AUC** (*average precision*) — **principal** | área sob a curva precisão × recall; o piso é a prevalência (0,034) |
+| ROC-AUC | probabilidade de uma falha receber nota maior que um ciclo sem falha; o piso é 0,5 |
+| Recall | fração das falhas detectadas |
+| Precisão | fração dos alarmes que são falha de verdade |
+| F1 | média harmônica de precisão e recall |
+| MCC | correlação entre previsto e real, de −1 a 1, usa as 4 células da matriz de confusão |
+| Acurácia balanceada | média do recall das duas classes |
+
+**Por que PR-AUC.** Com classe rara, a ROC-AUC fica alta mesmo com muitos alarmes falsos,
+porque a taxa de falsos positivos é dividida pelos milhares de ciclos sem falha; a curva
+precisão-recall olha só para a classe positiva e mostra o custo dos alarmes (SAITO; REHMSMEIER,
+2015). O MCC complementa no limiar escolhido, porque não é inflado pela classe majoritária como a
+acurácia e o F1 (CHICCO; JURMAN, 2020).
+
+**Interpretação do modelo.** Importância por permutação no teste (queda da PR-AUC ao embaralhar
+cada atributo, 10 repetições) e uma árvore de decisão de profundidade 3 treinada no treino, só
+para ler os limiares aprendidos e compará-los com as regras de geração da UCI.
 
 #### 2.4.3 Análise de custo e estratégias de manutenção
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->
@@ -347,7 +411,32 @@ resultados das consultas a cada execução do CI.
 
 #### 3.1.2 Modelos preditivos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
-_Em construção._
+O código está em `src/manutencao/modelagem.py`, testado em `tests/test_modelagem.py` e executado
+no [notebook 04](notebooks/04_modelagem_preditiva.ipynb).
+
+| Função | O que faz |
+|---|---|
+| `validacao()` | `StratifiedKFold` de 5 dobras com `SEED`, usado em todas as etapas |
+| `preprocessador()` | `ColumnTransformer`: `tipo` → ordinal L < M < H; numéricas padronizadas ou não |
+| `modelos_candidatos()` | os 5 estimadores e se cada um precisa de padronização |
+| `montar_pipeline()` | `Pipeline` pré-processamento + modelo |
+| `avaliar_cv()` | validação cruzada com as 7 métricas; média e desvio de cada uma |
+| `comparar_modelos()` | `avaliar_cv()` para cada modelo × conjunto de atributos, ordenado por PR-AUC |
+| `ajustar_hiperparametros()` | `RandomizedSearchCV` (15 combinações, PR-AUC) e reajuste no treino todo |
+| `probabilidades_oof()` | probabilidades *out-of-fold* no treino (`cross_val_predict`) |
+| `metricas_teste()` | métricas de ranqueamento e de decisão para um limiar |
+| `recall_por_modo()` | ciclos do teste e fração detectada em cada modo de falha |
+
+**Modelo escolhido** ([`04_modelo_escolhido.csv`](reports/tables/04_modelo_escolhido.csv)):
+HistGradientBoosting com os atributos de `engenharia`, taxa de aprendizado 0,03, 400 iterações,
+até 63 folhas por árvore, mínimo de 10 ciclos por folha e regularização L2 = 1,0; PR-AUC média de
+0,8949 na validação cruzada. As 10 melhores combinações da busca estão em
+[`04_busca_hiperparametros.csv`](reports/tables/04_busca_hiperparametros.csv).
+
+O modelo não é serializado: o notebook o retreina de forma determinística (`SEED = 42`), e o que
+os passos seguintes consomem são as probabilidades, gravadas em
+[`04_oof_treino.csv`](reports/tables/04_oof_treino.csv) (8.000 ciclos do treino) e
+[`04_predicoes_teste.csv`](reports/tables/04_predicoes_teste.csv) (2.000 ciclos do teste).
 
 ### 3.2 Análise dos resultados
 #### 3.2.1 O que a exploração mostrou
@@ -432,7 +521,78 @@ _Em construção._
 
 #### 3.2.3 Desempenho dos modelos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
-_Em construção._
+**Comparação na validação cruzada** (treino, 5 dobras; recall, precisão e MCC no limiar 0,5;
+[`04_comparacao_cv.csv`](reports/tables/04_comparacao_cv.csv)):
+
+| Modelo | Atributos | PR-AUC (média ± dp) | ROC-AUC | Recall | Precisão | MCC |
+|---|---|---:|---:|---:|---:|---:|
+| HistGradientBoosting | `engenharia` | 0,890 ± 0,017 | 0,975 | 0,830 | 0,912 | 0,865 |
+| Random Forest | `engenharia` | 0,889 ± 0,032 | 0,971 | 0,760 | 0,962 | 0,850 |
+| HistGradientBoosting | `bruto` | 0,799 ± 0,033 | 0,972 | 0,782 | 0,699 | 0,729 |
+| Árvore de Decisão | `engenharia` | 0,794 ± 0,053 | 0,917 | 0,886 | 0,403 | 0,578 |
+| Random Forest | `bruto` | 0,766 ± 0,030 | 0,969 | 0,454 | 0,930 | 0,641 |
+| Árvore de Decisão | `bruto` | 0,535 ± 0,060 | 0,843 | 0,793 | 0,317 | 0,476 |
+| Regressão Logística | `engenharia` | 0,458 ± 0,041 | 0,923 | 0,845 | 0,162 | 0,328 |
+| Regressão Logística | `bruto` | 0,443 ± 0,027 | 0,897 | 0,801 | 0,136 | 0,281 |
+| Dummy | `bruto` | 0,034 ± 0,000 | 0,500 | 0,000 | 0,000 | 0,000 |
+| Dummy | `engenharia` | 0,034 ± 0,000 | 0,500 | 0,000 | 0,000 | 0,000 |
+
+![PR-AUC por modelo e conjunto de atributos](reports/figures/04_comparacao_modelos.png)
+
+- Os atributos de `engenharia` melhoram todos os modelos; o ganho vai de 0,015 na regressão
+  logística a 0,259 na árvore de decisão (0,535 → 0,794).
+- A ROC-AUC esconde a diferença: o HistGradientBoosting tem ROC-AUC 0,972 com `bruto` e 0,975
+  com `engenharia`, mas PR-AUC 0,799 e 0,890. A regressão logística com `engenharia` tem
+  ROC-AUC 0,923 e precisão de só 0,162.
+- HistGradientBoosting e Random Forest com `engenharia` empatam na prática (0,890 e 0,889, com
+  desvios de 0,017 e 0,032). O HistGradientBoosting, de maior média, segue para o ajuste, que
+  leva a PR-AUC a 0,8949, ganho menor que o desvio entre dobras.
+
+**Avaliação final no teste** (2.000 ciclos, 68 falhas, limiar 0,5;
+[`04_metricas_teste.csv`](reports/tables/04_metricas_teste.csv)):
+
+| PR-AUC | ROC-AUC | Recall | Precisão | F1 | MCC | Acurácia balanceada |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0,8976 | 0,9842 | 0,8382 | 0,9194 | 0,8769 | 0,8738 | 0,9178 |
+
+![Matriz de confusão, curva precisão-recall e curva ROC no teste](reports/figures/04_avaliacao_teste.png)
+
+O modelo detecta 57 das 68 falhas e dá 5 alarmes falsos em 1.932 ciclos sem falha. A PR-AUC no
+teste (0,8976) fica próxima da média da validação cruzada (0,8949).
+
+**Recall por modo de falha** no teste ([`04_recall_por_modo.csv`](reports/tables/04_recall_por_modo.csv);
+um ciclo pode ter mais de um modo):
+
+| Modo | Ciclos no teste | Detectados | Recall |
+|---|---:|---:|---:|
+| TWF | 10 | 1 | 0,10 |
+| HDF | 29 | 29 | 1,00 |
+| PWF | 13 | 13 | 1,00 |
+| OSF | 16 | 16 | 1,00 |
+| RNF | 4 | 0 | 0,00 |
+| SEM MODO | 2 | 0 | 0,00 |
+
+As 11 falhas não detectadas são 9 de TWF sozinho e 2 sem modo. Os 4 ciclos com RNF no teste têm
+todos `falha = 0` (inconsistências de rótulo da seção 2.2), então prever "sem falha" neles está
+correto pelo alvo publicado.
+
+**O que o modelo usa** ([`04_importancia_permutacao.csv`](reports/tables/04_importancia_permutacao.csv)):
+a PR-AUC no teste cai 0,4888 ao embaralhar a rotação, 0,3842 com a diferença de temperatura,
+0,1403 com o esforço da ferramenta e 0,1296 com a potência. As temperaturas do ar e do processo
+ficam perto de zero (−0,0032 e −0,0054): a informação delas chega ao modelo pela diferença.
+
+![Importância por permutação no teste](reports/figures/04_importancia_permutacao.png)
+
+**Árvore rasa** (profundidade 3, treino;
+[`04_regras_arvore_rasa.txt`](reports/tables/04_regras_arvore_rasa.txt),
+[`04_folhas_arvore_rasa.csv`](reports/tables/04_folhas_arvore_rasa.csv)): sem receber nenhuma
+regra, a árvore reencontra os limiares de geração documentados pela UCI (MATZKA, 2020) —
+rotação ≤ 1386,50 rpm e ΔT ≤ 8,65 K para HDF (regra: < 1380 rpm e < 8,6 K), potência
+≤ 3496,14 W para PWF (regra: < 3500 W) e esforço > 11013,60 e > 10972,10 min·N·m para OSF
+(regra do tipo L: > 11.000). Para TWF, ela separa a zona de desgaste > 204,50 min, mas só 33
+dos 368 ciclos do treino nessa zona falham (9,0 %).
+
+![Árvore de decisão rasa](reports/figures/04_arvore_rasa.png)
 
 #### 3.2.4 Impacto financeiro
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->
@@ -441,7 +601,47 @@ _Em construção._
 ### 3.3 Discussão sobre a eficácia das soluções propostas
 #### 3.3.1 Eficácia técnica e limitações do modelo
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
-_Em construção._
+**O modelo resolve o problema técnico.** No teste, nunca usado em nenhuma escolha, o
+HistGradientBoosting tem PR-AUC 0,8976, contra 0,034 do piso, e detecta 57 das 68 falhas com 5
+alarmes falsos no limiar 0,5. O resultado bate com a validação cruzada (0,8949) e com as
+predições *out-of-fold* do treino: não há sinal de sobreajuste nem de vazamento, que
+apareceriam como um teste muito acima da validação.
+
+**O que mais pesa é o conhecimento do domínio.** Os três atributos físicos melhoram todos os
+modelos, e dois deles estão entre os quatro mais importantes. O ajuste de hiperparâmetros
+acrescentou menos que o desvio entre dobras. Para uma fábrica, a lição é que medir as grandezas
+certas (potência, dissipação de calor, esforço da ferramenta) vale mais que trocar de algoritmo.
+
+**O que escapa, e por que é esperado.** HDF, PWF e OSF são 100 % detectados porque são regras
+determinísticas sobre as leituras do ciclo (seção 2.2; gráficos das regras na seção 3.2.1), e a
+árvore rasa reencontra os limiares dessas regras. As falhas que escapam são de outra natureza:
+TWF é a troca ou falha da ferramenta sorteada quando o desgaste está entre cerca de 200 e 240 min
+(UCI MACHINE LEARNING REPOSITORY, 2020). A leitura do ciclo mostra que a ferramenta está na zona
+de risco, mas não **qual** ciclo vai falhar, e só 9,0 % dos ciclos do treino nessa zona falham.
+As falhas sem modo não seguem regra nenhuma. O teto de recall realista é dado por essa parcela,
+não pelo algoritmo.
+
+**Limitações.**
+
+- **Dataset sintético.** Os dados foram gerados pelas regras documentadas (MATZKA, 2020). O
+  desempenho perto do teto mede quanto o modelo reaprende essas regras, e **não se transfere
+  automaticamente** para uma máquina real, onde as falhas não seguem limiares exatos, os sensores
+  têm ruído e deriva, e os modos se misturam.
+- **Sem série temporal.** Cada ciclo é tratado como independente: não há identificação da
+  máquina nem da ferramenta ao longo do tempo. O modelo responde "este ciclo tende a falhar?",
+  mas não estima a vida útil restante da ferramenta.
+- **Ruído de rótulo.** 27 linhas têm rótulo inconsistente (9 falhas sem modo e 18 ciclos com RNF
+  e sem falha;
+  [`01_inconsistencias_rotulo.csv`](reports/tables/01_inconsistencias_rotulo.csv)); mantidas como
+  publicadas (D5), elas limitam o que qualquer modelo pode acertar.
+- **Limiar padrão.** As métricas de decisão usam 0,5, que não considera o custo de cada erro. O
+  limiar por custo é escolhido no notebook 05 (seção 2.4.3).
+
+**Com dados reais, faríamos diferente:** coletar a série de leituras por máquina e por
+ferramenta, para modelar o desgaste ao longo do tempo e estimar a vida útil restante; validar
+de forma temporal (treinar no passado e testar no futuro) em vez de uma divisão aleatória;
+recalibrar o limiar com os custos reais da fábrica; e monitorar a deriva dos sensores depois da
+implantação.
 
 #### 3.3.2 Eficácia para o negócio
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->

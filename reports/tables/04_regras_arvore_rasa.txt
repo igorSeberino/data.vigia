@@ -1,0 +1,22 @@
+|--- rotacao_rpm <= 1386.50
+|   |--- dif_temperatura_k <= 8.65
+|   |   |--- temp_processo_k <= 312.05
+|   |   |   |--- class: 1
+|   |   |--- temp_processo_k >  312.05
+|   |   |   |--- class: 0
+|   |--- dif_temperatura_k >  8.65
+|   |   |--- esforco_ferramenta_min_nm <= 11013.60
+|   |   |   |--- class: 0
+|   |   |--- esforco_ferramenta_min_nm >  11013.60
+|   |   |   |--- class: 1
+|--- rotacao_rpm >  1386.50
+|   |--- desgaste_ferramenta_min <= 204.50
+|   |   |--- potencia_w <= 3496.14
+|   |   |   |--- class: 1
+|   |   |--- potencia_w >  3496.14
+|   |   |   |--- class: 0
+|   |--- desgaste_ferramenta_min >  204.50
+|   |   |--- esforco_ferramenta_min_nm <= 10972.10
+|   |   |   |--- class: 1
+|   |   |--- esforco_ferramenta_min_nm >  10972.10
+|   |   |   |--- class: 1

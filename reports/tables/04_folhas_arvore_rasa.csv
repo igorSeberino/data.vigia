@@ -1,0 +1,9 @@
+folha,classe_prevista,ciclos,falhas,taxa_falha_pct,regra
+3,1,106,89,84.0,rotacao_rpm <= 1386.50 e dif_temperatura_k <= 8.65 e temp_processo_k <= 312.05
+4,0,4,0,0.0,rotacao_rpm <= 1386.50 e dif_temperatura_k <= 8.65 e temp_processo_k > 312.05
+6,0,1040,32,3.1,rotacao_rpm <= 1386.50 e dif_temperatura_k > 8.65 e esforco_ferramenta_min_nm <= 11013.60
+7,1,70,57,81.4,rotacao_rpm <= 1386.50 e dif_temperatura_k > 8.65 e esforco_ferramenta_min_nm > 11013.60
+10,1,24,24,100.0,rotacao_rpm > 1386.50 e desgaste_ferramenta_min <= 204.50 e potencia_w <= 3496.14
+11,0,6371,22,0.3,rotacao_rpm > 1386.50 e desgaste_ferramenta_min <= 204.50 e potencia_w > 3496.14
+13,1,368,33,9.0,rotacao_rpm > 1386.50 e desgaste_ferramenta_min > 204.50 e esforco_ferramenta_min_nm <= 10972.10
+14,1,17,14,82.4,rotacao_rpm > 1386.50 e desgaste_ferramenta_min > 204.50 e esforco_ferramenta_min_nm > 10972.10
