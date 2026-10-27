@@ -711,7 +711,69 @@ deriva dos sensores e o custo realizado depois da implantação.
 
 ### 3.4 Implementação em Python
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
-_Em construção._
+Toda a lógica fica em um pacote Python, `src/manutencao/`, e os notebooks só o chamam e
+mostram o resultado. Assim o mesmo código é testado pelo pytest e executado pelos notebooks,
+sem trechos copiados de um notebook para outro.
+
+```text
+data.vigia/
+├── data/raw/ai4i2020.csv      # CSV original versionado (SHA-256 conferido)
+├── src/manutencao/            # pacote do projeto (8 módulos)
+├── notebooks/01…05_*.ipynb    # um por etapa, commitados já executados
+├── reports/figures/           # figuras NN_*.png citadas neste README
+├── reports/tables/            # tabelas NN_*.csv: origem de todo número do relatório
+├── tests/                     # testes automatizados (pytest)
+└── .github/workflows/ci.yml   # lint + testes + execução dos 5 notebooks
+```
+
+| Módulo | Responsabilidade | Autor |
+|---|---|---|
+| `config.py` | caminhos, `SEED`, SHA-256 do CSV, nomes de colunas, colunas proibidas e conjuntos de atributos | @igorSeberino |
+| `util.py` | estilo dos gráficos e gravação padronizada de figuras e tabelas em `reports/` | @igorSeberino |
+| `dados.py` | download com conferência de hash, leitura, 14 verificações de qualidade, inconsistências de rótulo | @igorSeberino |
+| `preparacao.py` | renomeação, tipagem, atributos físicos e a divisão treino/teste única | @igorSeberino |
+| `modelo_dados.py` | esquema estrela em SQLite, carga, verificação de integridade e as 8 consultas | @igorSeberino |
+| `eda.py` | resumos, Mann-Whitney, qui-quadrado com V de Cramér e gráficos da exploração | @adrian-cesar |
+| `modelagem.py` | pipelines dos 5 modelos, validação cruzada, busca de hiperparâmetros, OOF e métricas | @rcolinneto |
+| `custo.py` | custo por matriz de confusão, limiar ótimo, estratégias de manutenção e sensibilidade | @gabrielcarvallho |
+
+Os arquivos que passam de um notebook para outro têm colunas fixas: o notebook 04 grava as
+probabilidades em `04_oof_treino.csv` e `04_predicoes_teste.csv`, e o notebook 05 as lê, sem
+retreinar o modelo.
+
+**Como executar localmente** (Python 3.12 e [uv](https://docs.astral.sh/uv/)):
+
+```bash
+git clone https://github.com/igorSeberino/data.vigia.git
+cd data.vigia
+uv venv --python 3.12 .venv
+source .venv/bin/activate          # Windows (Git Bash): source .venv/Scripts/activate
+uv pip install -r requirements.txt
+pytest -q                          # testes
+for nb in notebooks/0*.ipynb; do jupyter nbconvert --to notebook --execute --inplace "$nb"; done
+```
+
+Os notebooks rodam na ordem 01 → 05 (o 05 lê as probabilidades gravadas pelo 04). O 02 grava o
+banco em `data/processed/industria40.db`, que fica fora do git e é recriado a cada execução.
+
+**Reprodutibilidade.**
+
+- O CSV original está no repositório; se faltar, `baixar_csv()` baixa o arquivo da UCI e só o
+  aceita se o SHA-256 bater com `SHA256_CSV`.
+- Uma semente única (`SEED = 42`) em toda divisão, validação cruzada e modelo, e uma única
+  divisão treino/teste no projeto, feita só por `dividir_treino_teste()`.
+- Os parâmetros de decisão (hiperparâmetros, limiar, limite de desgaste) são escolhidos no
+  treino; o teste só mede.
+- Na integração final os cinco notebooks foram reexecutados do zero e todas as tabelas de
+  `reports/tables/` saíram iguais às commitadas; a única diferença foi a coluna de tempo de
+  ajuste de `04_comparacao_cv.csv`, que mede segundos de relógio e não entra no relatório.
+
+**Qualidade.** 38 testes automatizados (`pytest -q`): preparação (8), modelo dimensional (7),
+modelagem (7), dados (5), exploração (5), custo (5) e estrutura do repositório (1).
+O `ruff` padroniza lint e formatação. O CI do GitHub Actions roda `ruff check`,
+`ruff format --check`, `pytest` e executa os cinco notebooks de ponta a ponta em todo PR e em
+todo push na `main`; a `main` é protegida e só recebe código por PR com CI verde e aprovação de
+outro integrante.
 
 ### 3.5 Considerações finais
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
