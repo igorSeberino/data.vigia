@@ -314,7 +314,27 @@ para ler os limiares aprendidos e compará-los com as regras de geração da UCI
 
 #### 2.4.3 Análise de custo e estratégias de manutenção
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->
-_Em construção._
+O módulo é `src/manutencao/custo.py` e a análise roda no
+[notebook 05](notebooks/05_impacto_no_negocio.ipynb). Cada ciclo recebe uma decisão (alerta ou
+não) e o custo vem da matriz de confusão:
+
+| Situação | O que acontece | Custo |
+|---|---|---|
+| Alerta e o ciclo ia falhar (VP) | intervenção planejada evita a falha | `intervencao` |
+| Alerta e o ciclo não ia falhar (FP) | intervenção desnecessária | `intervencao` |
+| Sem alerta e o ciclo falha (FN) | parada não planejada, reparo, refugo | `falha` |
+| Sem alerta e sem falha (VN) | nada | 0 |
+
+**Os valores são hipóteses do grupo, não custos reais.** O dataset não traz custos; adotamos
+`intervencao` = R$ 500 e `falha` = R$ 5.000 (razão 10). Só a razão falha/intervenção altera as
+decisões, por isso há uma análise de sensibilidade com as razões 2, 5, 10, 20 e 50.
+
+Três estratégias são comparadas, todas com parâmetros escolhidos **no treino** e medidas **no
+teste**: a **corretiva** nunca intervém; a **preventiva** intervém quando o desgaste da
+ferramenta atinge um limite `L`, escolhido numa grade de 0 a 255 min (passo 5); a **preditiva**
+intervém quando a probabilidade do modelo atinge um limiar `t`, escolhido nas predições
+*out-of-fold* do treino. O teste só mede, para que nenhum parâmetro de decisão seja ajustado a
+ele.
 
 ## 3. Desenvolvimento
 ### 3.1 Implementação dos modelos de dados
@@ -596,7 +616,29 @@ dos 368 ciclos do treino nessa zona falham (9,0 %).
 
 #### 3.2.4 Impacto financeiro
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->
-_Em construção._
+No teste (2.000 ciclos, 68 falhas), com intervenção de R$ 500 e falha de R$ 5.000 (hipóteses;
+fonte: `reports/tables/05_estrategias_teste.csv`):
+
+| Estratégia | Parâmetro (escolhido no treino) | Intervenções | Falhas evitadas | Falhas não evitadas | Custo por 1.000 ciclos (R$) | Economia vs. corretiva |
+|---|---|---|---|---|---|---|
+| Corretiva | - | 0 | 0 | 68 | 170.000 | - |
+| Preventiva | desgaste ≥ 205 min | 125 | 18 | 50 | 156.250 | 8,1 % |
+| Preditiva | proba ≥ 0,23 | 70 | 57 | 11 | 45.000 | 73,5 % |
+
+A preditiva custa 71,2 % menos que a preventiva. O limiar 0,23 detecta as mesmas 57 falhas que o
+0,5 do notebook 04, mas com 13 alarmes falsos em vez de 5: R$ 90.000 contra R$ 86.000 no teste.
+Nesta amostra o limiar escolhido no treino ficou um pouco pior que 0,5; ele não foi
+reajustado, porque isso seria escolher parâmetro olhando o teste.
+
+![Comparação das estratégias](reports/figures/05_comparacao_estrategias.png)
+
+Na sensibilidade (`reports/tables/05_sensibilidade.csv`), a preditiva é a mais barata em todas
+as razões: R$ 20.000 por 1.000 ciclos na razão 2 (contra R$ 34.000 das outras duas) e R$ 122.250
+na razão 50 (contra R$ 500.000 da preventiva e R$ 850.000 da corretiva). O limiar escolhido cai
+de 0,91 (razão 2) para 0,01 (razão 50): quanto mais cara a falha, mais vale aceitar alarmes
+falsos.
+
+![Sensibilidade à razão de custos](reports/figures/05_sensibilidade.png)
 
 ### 3.3 Discussão sobre a eficácia das soluções propostas
 #### 3.3.1 Eficácia técnica e limitações do modelo
@@ -645,7 +687,27 @@ implantação.
 
 #### 3.3.2 Eficácia para o negócio
 <!-- RESPONSÁVEL: @gabrielcarvallho · T6 -->
-_Em construção._
+**A solução reduz o custo, e a vantagem não depende do valor exato adotado.** Na razão 10, a
+preditiva custa R$ 45.000 por 1.000 ciclos contra R$ 170.000 da corretiva; e continua à frente
+nas razões 2, 5, 20 e 50. Quanto maior a razão, maior a economia relativa. Em razão baixa
+(2), a preventiva ótima converge para não intervir nunca e iguala a corretiva; na razão 50 ocorre o oposto (limite de 0 min, intervenção em todos os 2.000 ciclos).
+
+**A preventiva por desgaste pega pouco.** Com limite de 205 min, evita 18 das 68 falhas e faz
+125 intervenções. HDF, PWF e OSF não dependem do desgaste da ferramenta; só o TWF depende, e
+mesmo ele falha de forma estocástica na zona de desgaste alto. O modelo preditivo detecta
+100 % de HDF, PWF e OSF no teste (`04_recall_por_modo.csv`) porque combina temperatura,
+rotação, torque e esforço.
+
+**Riscos e limites.** Os custos são hipotéticos; o dataset é sintético; a avaliação usa uma
+única divisão treino/teste com 68 falhas, então diferenças pequenas entre limiares (como
+0,23 e 0,5) estão dentro do ruído. Sobram 11 falhas não evitadas no teste; pelo recall por modo
+(`04_recall_por_modo.csv`), o modelo perde sobretudo TWF e RNF (este último é aleatório por
+construção), além de falhas sem modo registrado. Um ciclo pode ter mais de um modo, então as
+contagens por modo não somam as 11.
+
+**O que seria preciso para implantar.** Levantar os custos reais de intervenção e de parada;
+recalibrar o limiar com eles; rodar um piloto em uma máquina antes de expandir; e monitorar a
+deriva dos sensores e o custo realizado depois da implantação.
 
 ### 3.4 Implementação em Python
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->

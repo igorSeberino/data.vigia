@@ -1,0 +1,16 @@
+razao_falha_intervencao,estrategia,parametro,vp,fp,fn,vn,intervencoes,falhas_evitadas,falhas_nao_evitadas,custo_total,custo_por_1000_ciclos
+2,corretiva,-,0,0,68,1932,0,0,68,68000.0,34000.0
+2,preventiva,desgaste >= 250 min,0,0,68,1932,0,0,68,68000.0,34000.0
+2,preditiva,proba >= 0.91,57,1,11,1931,58,57,11,40000.0,20000.0
+5,corretiva,-,0,0,68,1932,0,0,68,170000.0,85000.0
+5,preventiva,desgaste >= 225 min,4,14,64,1918,18,4,64,169000.0,84500.0
+5,preditiva,proba >= 0.64,57,2,11,1930,59,57,11,57000.0,28500.0
+10,corretiva,-,0,0,68,1932,0,0,68,340000.0,170000.0
+10,preventiva,desgaste >= 205 min,18,107,50,1825,125,18,50,312500.0,156250.0
+10,preditiva,proba >= 0.23,57,13,11,1919,70,57,11,90000.0,45000.0
+20,corretiva,-,0,0,68,1932,0,0,68,680000.0,340000.0
+20,preventiva,desgaste >= 200 min,26,149,42,1783,175,26,42,507500.0,253750.0
+20,preditiva,proba >= 0.06,58,36,10,1896,94,58,10,147000.0,73500.0
+50,corretiva,-,0,0,68,1932,0,0,68,1700000.0,850000.0
+50,preventiva,desgaste >= 0 min,68,1932,0,0,2000,68,0,1000000.0,500000.0
+50,preditiva,proba >= 0.01,61,78,7,1854,139,61,7,244500.0,122250.0

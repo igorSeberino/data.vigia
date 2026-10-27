@@ -1,0 +1,4 @@
+estrategia,parametro,vp,fp,fn,vn,intervencoes,falhas_evitadas,falhas_nao_evitadas,custo_total,custo_por_1000_ciclos,economia_vs_corretiva_pct,economia_vs_preventiva_pct
+corretiva,-,0,0,68,1932,0,0,68,340000.0,170000.0,0.0,-8.800000000000008
+preventiva,desgaste >= 205 min,18,107,50,1825,125,18,50,312500.0,156250.0,8.088235294117652,0.0
+preditiva,proba >= 0.23,57,13,11,1919,70,57,11,90000.0,45000.0,73.52941176470588,71.2
