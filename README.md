@@ -701,9 +701,8 @@ rotação, torque e esforço.
 **Riscos e limites.** Os custos são hipotéticos; o dataset é sintético; a avaliação usa uma
 única divisão treino/teste com 68 falhas, então diferenças pequenas entre limiares (como
 0,23 e 0,5) estão dentro do ruído. Sobram 11 falhas não evitadas no teste; pelo recall por modo
-(`04_recall_por_modo.csv`), o modelo perde sobretudo TWF e RNF (este último é aleatório por
-construção), além de falhas sem modo registrado. Um ciclo pode ter mais de um modo, então as
-contagens por modo não somam as 11.
+(`04_recall_por_modo.csv`), são 9 de TWF e 2 sem modo registrado. Os 4 ciclos com RNF no teste
+têm `falha = 0` (inconsistências de rótulo da seção 2.2), então não entram nessa conta.
 
 **O que seria preciso para implantar.** Levantar os custos reais de intervenção e de parada;
 recalibrar o limiar com eles; rodar um piloto em uma máquina antes de expandir; e monitorar a
