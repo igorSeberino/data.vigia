@@ -690,7 +690,7 @@ implantação.
 **A solução reduz o custo, e a vantagem não depende do valor exato adotado.** Na razão 10, a
 preditiva custa R$ 45.000 por 1.000 ciclos contra R$ 170.000 da corretiva; e continua à frente
 nas razões 2, 5, 20 e 50. Quanto maior a razão, maior a economia relativa. Em razão baixa
-(2), a preventiva ótima converge para não intervir nunca e iguala a corretiva.
+(2), a preventiva ótima converge para não intervir nunca e iguala a corretiva; na razão 50 ocorre o oposto (limite de 0 min, intervenção em todos os 2.000 ciclos).
 
 **A preventiva por desgaste pega pouco.** Com limite de 205 min, evita 18 das 68 falhas e faz
 125 intervenções. HDF, PWF e OSF não dependem do desgaste da ferramenta; só o TWF depende, e
@@ -700,8 +700,10 @@ rotação, torque e esforço.
 
 **Riscos e limites.** Os custos são hipotéticos; o dataset é sintético; a avaliação usa uma
 única divisão treino/teste com 68 falhas, então diferenças pequenas entre limiares (como
-0,23 e 0,5) estão dentro do ruído. Sobram 11 falhas não evitadas, ligadas a TWF e RNF (este
-último é aleatório por construção) e a 2 falhas sem modo registrado.
+0,23 e 0,5) estão dentro do ruído. Sobram 11 falhas não evitadas no teste; pelo recall por modo
+(`04_recall_por_modo.csv`), o modelo perde sobretudo TWF e RNF (este último é aleatório por
+construção), além de falhas sem modo registrado. Um ciclo pode ter mais de um modo, então as
+contagens por modo não somam as 11.
 
 **O que seria preciso para implantar.** Levantar os custos reais de intervenção e de parada;
 recalibrar o limiar com eles; rodar um piloto em uma máquina antes de expandir; e monitorar a
