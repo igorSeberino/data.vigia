@@ -172,3 +172,122 @@ def construir_banco(df: pd.DataFrame, caminho: Path | str = CAMINHO_DB) -> Path 
         criar_schema(conn)
         carregar(conn, df)
     return caminho
+
+
+def consultar(conn: sqlite3.Connection, sql: str, params: tuple = ()) -> pd.DataFrame:
+    """Executa um SELECT e devolve DataFrame."""
+    return pd.read_sql_query(sql, conn, params=params)
+
+
+CONSULTAS: dict[str, str] = {
+    "taxa_falha_por_tipo": """
+        SELECT t.codigo AS tipo, t.descricao, COUNT(*) AS ciclos, SUM(f.falha) AS falhas,
+               ROUND(100.0 * SUM(f.falha) / COUNT(*), 2) AS taxa_falha_pct
+        FROM fato_ciclo f JOIN dim_tipo_produto t ON t.id_tipo = f.id_tipo
+        GROUP BY t.id_tipo ORDER BY t.id_tipo""",
+    "falhas_por_modo": """
+        SELECT m.sigla, m.nome, COUNT(*) AS ocorrencias,
+               ROUND(100.0 * COUNT(*) / (SELECT SUM(falha) FROM fato_ciclo), 2)
+                   AS pct_sobre_falhas
+        FROM ponte_ciclo_modo p JOIN dim_modo_falha m ON m.id_modo = p.id_modo
+        GROUP BY m.id_modo ORDER BY ocorrencias DESC""",
+    "coocorrencia_modos": """
+        SELECT a.sigla AS modo_a, b.sigla AS modo_b, COUNT(*) AS ciclos
+        FROM ponte_ciclo_modo pa
+        JOIN ponte_ciclo_modo pb ON pb.udi = pa.udi AND pb.id_modo > pa.id_modo
+        JOIN dim_modo_falha a ON a.id_modo = pa.id_modo
+        JOIN dim_modo_falha b ON b.id_modo = pb.id_modo
+        GROUP BY a.sigla, b.sigla ORDER BY ciclos DESC""",
+    "taxa_falha_por_faixa_desgaste": """
+        SELECT d.rotulo AS faixa_desgaste, COUNT(*) AS ciclos, SUM(f.falha) AS falhas,
+               ROUND(100.0 * SUM(f.falha) / COUNT(*), 2) AS taxa_falha_pct
+        FROM fato_ciclo f JOIN dim_faixa_desgaste d ON d.id_faixa = f.id_faixa
+        GROUP BY d.id_faixa ORDER BY d.id_faixa""",
+    "taxa_falha_por_tipo_e_faixa": """
+        SELECT t.codigo AS tipo, d.rotulo AS faixa_desgaste, COUNT(*) AS ciclos,
+               SUM(f.falha) AS falhas, ROUND(100.0 * SUM(f.falha) / COUNT(*), 2) AS taxa_falha_pct
+        FROM fato_ciclo f
+        JOIN dim_tipo_produto t ON t.id_tipo = f.id_tipo
+        JOIN dim_faixa_desgaste d ON d.id_faixa = f.id_faixa
+        GROUP BY t.id_tipo, d.id_faixa ORDER BY t.id_tipo, d.id_faixa""",
+    "perfil_sensores_por_modo": """
+        SELECT m.sigla, COUNT(*) AS ciclos,
+               ROUND(AVG(f.dif_temperatura_k), 2) AS dif_temp_media_k,
+               ROUND(AVG(f.rotacao_rpm), 0) AS rotacao_media_rpm,
+               ROUND(AVG(f.torque_nm), 1) AS torque_medio_nm,
+               ROUND(AVG(f.potencia_w), 0) AS potencia_media_w,
+               ROUND(AVG(f.desgaste_ferramenta_min), 0) AS desgaste_medio_min
+        FROM ponte_ciclo_modo p
+        JOIN fato_ciclo f ON f.udi = p.udi
+        JOIN dim_modo_falha m ON m.id_modo = p.id_modo
+        GROUP BY m.id_modo
+        UNION ALL
+        SELECT 'SEM FALHA', COUNT(*), ROUND(AVG(dif_temperatura_k), 2), ROUND(AVG(rotacao_rpm), 0),
+               ROUND(AVG(torque_nm), 1), ROUND(AVG(potencia_w), 0),
+               ROUND(AVG(desgaste_ferramenta_min), 0)
+        FROM fato_ciclo WHERE falha = 0""",
+    "esforco_acima_do_limite": """
+        SELECT t.codigo AS tipo, t.limite_esforco_min_nm,
+               SUM(f.esforco_ferramenta_min_nm > t.limite_esforco_min_nm) AS ciclos_acima,
+               SUM(CASE WHEN f.esforco_ferramenta_min_nm > t.limite_esforco_min_nm
+                        THEN f.falha ELSE 0 END) AS falhas_acima,
+               SUM(EXISTS (SELECT 1 FROM ponte_ciclo_modo p
+                           WHERE p.udi = f.udi AND p.id_modo = 4)) AS ciclos_com_osf
+        FROM fato_ciclo f JOIN dim_tipo_produto t ON t.id_tipo = f.id_tipo
+        GROUP BY t.id_tipo ORDER BY t.id_tipo""",
+    "inconsistencias_rotulo": """
+        SELECT 'falha sem modo' AS inconsistencia, COUNT(*) AS ciclos
+        FROM fato_ciclo f
+        WHERE f.falha = 1 AND NOT EXISTS (SELECT 1 FROM ponte_ciclo_modo p WHERE p.udi = f.udi)
+        UNION ALL
+        SELECT 'modo sem falha', COUNT(DISTINCT p.udi)
+        FROM ponte_ciclo_modo p JOIN fato_ciclo f ON f.udi = p.udi
+        WHERE f.falha = 0""",
+}
+
+
+def executar_consultas(conn: sqlite3.Connection) -> dict[str, pd.DataFrame]:
+    """Roda todas as consultas de ``CONSULTAS``."""
+    return {nome: consultar(conn, sql) for nome, sql in CONSULTAS.items()}
+
+
+def verificar_integridade(conn: sqlite3.Connection, df: pd.DataFrame) -> pd.DataFrame:
+    """Confere o banco contra o DataFrame de origem. Devolve ``verificacao, esperado, obtido, ok``."""
+
+    def um(sql: str) -> int:
+        return int(conn.execute(sql).fetchone()[0])
+
+    checagens = [
+        ("linhas na fato = linhas do DataFrame", len(df), um("SELECT COUNT(*) FROM fato_ciclo")),
+        (
+            "falhas na fato = soma do alvo",
+            int(df["falha"].sum()),
+            um("SELECT SUM(falha) FROM fato_ciclo"),
+        ),
+        (
+            "linhas na ponte = soma dos 5 modos",
+            int(df[["falha_twf", "falha_hdf", "falha_pwf", "falha_osf", "falha_rnf"]].sum().sum()),
+            um("SELECT COUNT(*) FROM ponte_ciclo_modo"),
+        ),
+        (
+            "violações de chave estrangeira",
+            0,
+            len(conn.execute("PRAGMA foreign_key_check").fetchall()),
+        ),
+        (
+            "ciclos sem tipo",
+            0,
+            um(
+                "SELECT COUNT(*) FROM fato_ciclo f LEFT JOIN dim_tipo_produto t USING (id_tipo) "
+                "WHERE t.id_tipo IS NULL"
+            ),
+        ),
+        (
+            "soma do torque confere",
+            round(float(df["torque_nm"].sum()), 4),
+            round(float(conn.execute("SELECT SUM(torque_nm) FROM fato_ciclo").fetchone()[0]), 4),
+        ),
+    ]
+    tabela = pd.DataFrame(checagens, columns=["verificacao", "esperado", "obtido"])
+    tabela["ok"] = tabela["esperado"] == tabela["obtido"]
+    return tabela
