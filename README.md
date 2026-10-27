@@ -777,7 +777,44 @@ outro integrante.
 
 ### 3.5 Considerações finais
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
-_Em construção._
+O trabalho aplicou o ciclo de ciência de dados a um problema de manutenção da Indústria 4.0 e
+chegou a uma política preditiva que, com as hipóteses de custo adotadas, custa menos que as
+manutenções corretiva e preventiva. Cada objetivo específico da seção 1.3:
+
+| Objetivo | Atingido? | Evidência |
+|---|---|---|
+| 1. Coletar, validar e preparar os dados | Sim | 14 verificações de qualidade aprovadas; 27 inconsistências de rótulo documentadas e mantidas (D5); divisão única 80/20 estratificada (seção 2.2) |
+| 2. Modelo dimensional para consultas analíticas | Sim | esquema estrela em SQLite com integridade conferida (10.000 ciclos, 339 falhas, 0 violações de chave) e 8 consultas respondendo perguntas de negócio (seções 3.1.1 e 3.2.2) |
+| 3. Caracterizar as variáveis associadas à falha | Sim | as 8 variáveis diferem entre as classes (Mann-Whitney com Bonferroni); torque, rotação e potência têm os maiores efeitos; o tipo de produto tem associação significativa, mas fraca (V de Cramér = 0,037) (seção 3.2.1) |
+| 4. Treinar e comparar modelos com validação adequada | Sim | 5 modelos × 2 conjuntos de atributos em validação cruzada estratificada com PR-AUC e MCC; o HistGradientBoosting chega a PR-AUC 0,8976 no teste, contra 0,034 do piso (seção 3.2.3) |
+| 5. Estimar o impacto financeiro | Sim, com custos hipotéticos | R$ 45.000 por 1.000 ciclos na preditiva, contra R$ 156.250 na preventiva e R$ 170.000 na corretiva; a preditiva é a mais barata em todas as razões de custo de 2 a 50 (seção 3.2.4) |
+| 6. Implementação em Python reprodutível | Sim | pacote `src/manutencao/` com 38 testes, CI que executa os 5 notebooks e reexecução sem mudança de resultado (seção 3.4) |
+
+O principal aprendizado é que o conhecimento do domínio pesou mais que o algoritmo: os três
+atributos físicos (diferença de temperatura, potência e esforço da ferramenta) melhoraram todos
+os modelos, e o ajuste de hiperparâmetros acrescentou menos que o desvio entre dobras
+(seção 3.3.1).
+
+**Limitações.**
+
+- **Dados sintéticos.** O AI4I 2020 foi gerado por regras; o desempenho mostra que o modelo
+  reaprende essas regras e não se transfere automaticamente para uma máquina real.
+- **Sem série temporal por máquina.** Cada ciclo é independente; não há como acompanhar uma
+  ferramenta ao longo do tempo nem estimar quanto ela ainda dura.
+- **Custos hipotéticos.** R$ 500 por intervenção e R$ 5.000 por falha são hipóteses do grupo;
+  a sensibilidade mostra que a conclusão se mantém, mas os valores em reais não.
+- **TWF e RNF são estocásticos.** A falha por desgaste é sorteada dentro da zona de desgaste
+  alto e a aleatória não depende das leituras, o que limita o recall de qualquer modelo; das
+  11 falhas não detectadas no teste, 9 são TWF.
+
+**Trabalhos futuros.**
+
+- Coletar dados reais de sensores em série temporal, por máquina e por ferramenta, e validar
+  de forma temporal (treinar no passado, testar no futuro).
+- Estimar a vida útil remanescente (RUL) da ferramenta em vez de classificar um ciclo isolado.
+- Monitorar a deriva (*drift*) dos sensores e do desempenho do modelo depois da implantação.
+- Implantar o modelo junto ao CLP/MES da linha, com alertas para a manutenção.
+- Retreinar o modelo periodicamente e recalibrar o limiar com os custos reais da fábrica.
 
 ## 4. Referências
 <!-- RESPONSÁVEL: @adrian-cesar · T5 (demais integrantes acrescentam as que citarem) -->
