@@ -27,7 +27,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder, StandardScaler
 from sklearn.tree import DecisionTreeClassifier
 
-from manutencao.config import COL_ALVO, COL_TIPO, ORDEM_TIPO, SEED
+from manutencao.config import COL_ALVO, COL_TIPO, COLS_MODOS, ORDEM_TIPO, SEED
 
 METRICAS = {
     "pr_auc": "average_precision",
@@ -185,3 +185,24 @@ def metricas_teste(y: pd.Series, proba: np.ndarray, limiar: float = 0.5) -> dict
         "acuracia_balanceada": float(balanced_accuracy_score(y, pred)),
         "limiar": limiar,
     }
+
+
+def recall_por_modo(teste: pd.DataFrame, pred: np.ndarray) -> pd.DataFrame:
+    """Para cada modo de falha: ciclos do teste com o modo e fração prevista como falha."""
+    mascaras = {
+        col.replace("falha_", "").upper(): (teste[col] == 1).to_numpy() for col in COLS_MODOS
+    }
+    mascaras["SEM MODO"] = (
+        (teste[COL_ALVO] == 1) & (teste[COLS_MODOS].sum(axis=1) == 0)
+    ).to_numpy()
+    return pd.DataFrame(
+        [
+            {
+                "modo": modo,
+                "ciclos_no_teste": int(m.sum()),
+                "detectados": int(pred[m].sum()),
+                "recall": float(pred[m].mean()) if m.any() else np.nan,
+            }
+            for modo, m in mascaras.items()
+        ]
+    )
