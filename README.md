@@ -205,7 +205,26 @@ _Em construção._
 ### 2.4 Métodos de análise de dados
 #### 2.4.1 Análise exploratória e testes estatísticos
 <!-- RESPONSÁVEL: @adrian-cesar · T3 -->
-_Em construção._
+As funções estão em `src/manutencao/eda.py` e são executadas no
+[notebook 03](notebooks/03_analise_exploratoria.ipynb), sobre os 10.000 ciclos. A EDA é
+descritiva: nenhuma escolha de modelo sai dela olhando o conjunto de teste.
+
+1. **Estatística descritiva** das 8 variáveis numéricas (5 brutas e 3 físicas): média, desvio,
+   quartis e assimetria ([`03_resumo_numerico.csv`](reports/tables/03_resumo_numerico.csv)).
+2. **Distribuições por classe**: histogramas com densidade normalizada por classe, para comparar
+   339 falhas com 9.661 ciclos sem falha na mesma escala.
+3. **Mann-Whitney U** bilateral, falha × sem falha, para cada variável (MANN; WHITNEY, 1947). Foi
+   escolhido em vez do teste t porque não supõe normalidade, algumas variáveis são assimétricas
+   (rotação com assimetria 1,99) e as classes têm tamanhos muito diferentes. Com 10.000 ciclos
+   quase tudo dá p pequeno, então o resultado é lido pelo **tamanho de efeito** rank-bisserial,
+   $r = 2U_1/(n_1 n_0) - 1$, que vai de −1 a 1 (positivo = valores maiores nas falhas). Os p-valores
+   são corrigidos por **Bonferroni** (× 8 testes).
+4. **Qui-quadrado de independência** entre tipo de produto e falha, com o **V de Cramér** como
+   tamanho de efeito (0 = sem associação, 1 = associação perfeita).
+5. **Correlação de Spearman**, que mede relações monotônicas e é robusta a outliers, entre as
+   variáveis e o alvo.
+6. **Validação visual das regras físicas** HDF, PWF e OSF: dispersão das variáveis envolvidas
+   com as fronteiras documentadas da UCI desenhadas por cima.
 
 #### 2.4.2 Validação e métricas dos modelos
 <!-- RESPONSÁVEL: @rcolinneto · T4 -->
@@ -228,7 +247,40 @@ _Em construção._
 ### 3.2 Análise dos resultados
 #### 3.2.1 O que a exploração mostrou
 <!-- RESPONSÁVEL: @adrian-cesar · T3 -->
-_Em construção._
+1. **O alvo é muito desbalanceado:** 339 falhas em 10.000 ciclos (3,39 %). Um modelo que sempre
+   diz "sem falha" acerta 96,61 %, por isso a acurácia não serve e a métrica principal é a PR-AUC.
+
+   ![Balanceamento do alvo](reports/figures/03_balanceamento.png)
+
+2. **Modos de falha:** HDF (115), OSF (98) e PWF (95) dominam; TWF (46) e RNF (19) são minoria.
+   A soma dos modos (373) passa de 339 porque 24 falhas têm mais de um modo, e 9 falhas não têm
+   modo ([`03_modos_falha.csv`](reports/tables/03_modos_falha.csv)).
+3. **Todas as 8 variáveis diferem entre as classes** após Bonferroni (maior p ajustado
+   5,2 × 10⁻⁴). Os maiores efeitos são do **torque** (r = +0,54; mediana 53,7 Nm nas falhas ×
+   39,9 Nm sem falha), da **rotação** (r = −0,53; 1365 × 1507 rpm) e da **potência** (r = +0,49).
+   A temperatura do processo tem o menor efeito (r = +0,13)
+   ([`03_mann_whitney.csv`](reports/tables/03_mann_whitney.csv)).
+
+   ![Distribuições por classe](reports/figures/03_distribuicoes.png)
+
+4. **Tipo de produto:** a taxa de falha cai de L (3,92 %) para M (2,77 %) e H (2,09 %). A
+   associação é significativa (χ² = 13,75; 2 g.l.; p = 0,001), mas fraca: **V de Cramér = 0,037**
+   ([`03_taxa_falha_por_tipo.csv`](reports/tables/03_taxa_falha_por_tipo.csv),
+   [`03_qui_quadrado_tipo.csv`](reports/tables/03_qui_quadrado_tipo.csv)). O tipo pesa
+   sobretudo porque define o limite de sobrecarga do OSF.
+5. **Correlações por construção** (Spearman): potência × torque ρ = 0,98, esforço × desgaste
+   ρ = 0,92, torque × rotação ρ = −0,92, temperatura do processo × do ar ρ = 0,86. Isso gera
+   multicolinearidade para a regressão logística, sem efeito para árvores. Nenhuma variável
+   isolada passa de |ρ| = 0,17 com a falha: ela depende de combinações de variáveis.
+6. **As regras físicas aparecem nos dados:** as falhas HDF ficam todas no canto de diferença de
+   temperatura < 8,6 K e rotação < 1380 rpm; as PWF, fora da faixa de 3500–9000 W; as OSF, acima
+   do limite de esforço do tipo. Isso justifica os atributos `dif_temperatura_k`, `potencia_w` e
+   `esforco_ferramenta_min_nm` na modelagem. TWF e RNF não têm região própria em um único ciclo,
+   o que limita o recall possível (seção 3.3.1).
+
+   ![Regra HDF](reports/figures/03_regra_hdf.png)
+   ![Regra PWF](reports/figures/03_regra_pwf.png)
+   ![Regra OSF](reports/figures/03_regra_osf.png)
 
 #### 3.2.2 Consultas analíticas no modelo dimensional
 <!-- RESPONSÁVEL: @igorSeberino · T2 -->
