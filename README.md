@@ -701,9 +701,8 @@ rotação, torque e esforço.
 **Riscos e limites.** Os custos são hipotéticos; o dataset é sintético; a avaliação usa uma
 única divisão treino/teste com 68 falhas, então diferenças pequenas entre limiares (como
 0,23 e 0,5) estão dentro do ruído. Sobram 11 falhas não evitadas no teste; pelo recall por modo
-(`04_recall_por_modo.csv`), o modelo perde sobretudo TWF e RNF (este último é aleatório por
-construção), além de falhas sem modo registrado. Um ciclo pode ter mais de um modo, então as
-contagens por modo não somam as 11.
+(`04_recall_por_modo.csv`), são 9 de TWF e 2 sem modo registrado. Os 4 ciclos com RNF no teste
+têm `falha = 0` (inconsistências de rótulo da seção 2.2), então não entram nessa conta.
 
 **O que seria preciso para implantar.** Levantar os custos reais de intervenção e de parada;
 recalibrar o limiar com eles; rodar um piloto em uma máquina antes de expandir; e monitorar a
@@ -711,11 +710,110 @@ deriva dos sensores e o custo realizado depois da implantação.
 
 ### 3.4 Implementação em Python
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
-_Em construção._
+Toda a lógica fica em um pacote Python, `src/manutencao/`, e os notebooks só o chamam e
+mostram o resultado. Assim o mesmo código é testado pelo pytest e executado pelos notebooks,
+sem trechos copiados de um notebook para outro.
+
+```text
+data.vigia/
+├── data/raw/ai4i2020.csv      # CSV original versionado (SHA-256 conferido)
+├── src/manutencao/            # pacote do projeto (8 módulos)
+├── notebooks/01…05_*.ipynb    # um por etapa, commitados já executados
+├── reports/figures/           # figuras NN_*.png citadas neste README
+├── reports/tables/            # tabelas NN_*.csv: origem de todo número do relatório
+├── tests/                     # testes automatizados (pytest)
+└── .github/workflows/ci.yml   # lint + testes + execução dos 5 notebooks
+```
+
+| Módulo | Responsabilidade | Autor |
+|---|---|---|
+| `config.py` | caminhos, `SEED`, SHA-256 do CSV, nomes de colunas, colunas proibidas e conjuntos de atributos | @igorSeberino |
+| `util.py` | estilo dos gráficos e gravação padronizada de figuras e tabelas em `reports/` | @igorSeberino |
+| `dados.py` | download com conferência de hash, leitura, 14 verificações de qualidade, inconsistências de rótulo | @igorSeberino |
+| `preparacao.py` | renomeação, tipagem, atributos físicos e a divisão treino/teste única | @igorSeberino |
+| `modelo_dados.py` | esquema estrela em SQLite, carga, verificação de integridade e as 8 consultas | @igorSeberino |
+| `eda.py` | resumos, Mann-Whitney, qui-quadrado com V de Cramér e gráficos da exploração | @adrian-cesar |
+| `modelagem.py` | pipelines dos 5 modelos, validação cruzada, busca de hiperparâmetros, OOF e métricas | @rcolinneto |
+| `custo.py` | custo por matriz de confusão, limiar ótimo, estratégias de manutenção e sensibilidade | @gabrielcarvallho |
+
+Os arquivos que passam de um notebook para outro têm colunas fixas: o notebook 04 grava as
+probabilidades em `04_oof_treino.csv` e `04_predicoes_teste.csv`, e o notebook 05 as lê, sem
+retreinar o modelo.
+
+**Como executar localmente** (Python 3.12 e [uv](https://docs.astral.sh/uv/)):
+
+```bash
+git clone https://github.com/igorSeberino/data.vigia.git
+cd data.vigia
+uv venv --python 3.12 .venv
+source .venv/bin/activate          # Windows (Git Bash): source .venv/Scripts/activate
+uv pip install -r requirements.txt
+pytest -q                          # testes
+for nb in notebooks/0*.ipynb; do jupyter nbconvert --to notebook --execute --inplace "$nb"; done
+```
+
+Os notebooks rodam na ordem 01 → 05 (o 05 lê as probabilidades gravadas pelo 04). O 02 grava o
+banco em `data/processed/industria40.db`, que fica fora do git e é recriado a cada execução.
+
+**Reprodutibilidade.**
+
+- O CSV original está no repositório; se faltar, `baixar_csv()` baixa o arquivo da UCI e só o
+  aceita se o SHA-256 bater com `SHA256_CSV`.
+- Uma semente única (`SEED = 42`) em toda divisão, validação cruzada e modelo, e uma única
+  divisão treino/teste no projeto, feita só por `dividir_treino_teste()`.
+- Os parâmetros de decisão (hiperparâmetros, limiar, limite de desgaste) são escolhidos no
+  treino; o teste só mede.
+- Na integração final os cinco notebooks foram reexecutados do zero e todas as tabelas de
+  `reports/tables/` saíram iguais às commitadas; a única diferença foi a coluna de tempo de
+  ajuste de `04_comparacao_cv.csv`, que mede segundos de relógio e não entra no relatório.
+
+**Qualidade.** 38 testes automatizados (`pytest -q`): preparação (8), modelo dimensional (7),
+modelagem (7), dados (5), exploração (5), custo (5) e estrutura do repositório (1).
+O `ruff` padroniza lint e formatação. O CI do GitHub Actions roda `ruff check`,
+`ruff format --check`, `pytest` e executa os cinco notebooks de ponta a ponta em todo PR e em
+todo push na `main`; a `main` é protegida e só recebe código por PR com CI verde e aprovação de
+outro integrante.
 
 ### 3.5 Considerações finais
 <!-- RESPONSÁVEL: @igorSeberino · T7 -->
-_Em construção._
+O trabalho aplicou o ciclo de ciência de dados a um problema de manutenção da Indústria 4.0 e
+chegou a uma política preditiva que, com as hipóteses de custo adotadas, custa menos que as
+manutenções corretiva e preventiva. Cada objetivo específico da seção 1.3:
+
+| Objetivo | Atingido? | Evidência |
+|---|---|---|
+| 1. Coletar, validar e preparar os dados | Sim | 14 verificações de qualidade aprovadas; 27 inconsistências de rótulo documentadas e mantidas (D5); divisão única 80/20 estratificada (seção 2.2) |
+| 2. Modelo dimensional para consultas analíticas | Sim | esquema estrela em SQLite com integridade conferida (10.000 ciclos, 339 falhas, 0 violações de chave) e 8 consultas respondendo perguntas de negócio (seções 3.1.1 e 3.2.2) |
+| 3. Caracterizar as variáveis associadas à falha | Sim | as 8 variáveis diferem entre as classes (Mann-Whitney com Bonferroni); torque, rotação e potência têm os maiores efeitos; o tipo de produto tem associação significativa, mas fraca (V de Cramér = 0,037) (seção 3.2.1) |
+| 4. Treinar e comparar modelos com validação adequada | Sim | 5 modelos × 2 conjuntos de atributos em validação cruzada estratificada com PR-AUC e MCC; o HistGradientBoosting chega a PR-AUC 0,8976 no teste, contra 0,034 do piso (seção 3.2.3) |
+| 5. Estimar o impacto financeiro | Sim, com custos hipotéticos | R$ 45.000 por 1.000 ciclos na preditiva, contra R$ 156.250 na preventiva e R$ 170.000 na corretiva; a preditiva é a mais barata em todas as razões de custo de 2 a 50 (seção 3.2.4) |
+| 6. Implementação em Python reprodutível | Sim | pacote `src/manutencao/` com 38 testes, CI que executa os 5 notebooks e reexecução sem mudança de resultado (seção 3.4) |
+
+O principal aprendizado é que o conhecimento do domínio pesou mais que o algoritmo: os três
+atributos físicos (diferença de temperatura, potência e esforço da ferramenta) melhoraram todos
+os modelos, e o ajuste de hiperparâmetros acrescentou menos que o desvio entre dobras
+(seção 3.3.1).
+
+**Limitações.**
+
+- **Dados sintéticos.** O AI4I 2020 foi gerado por regras; o desempenho mostra que o modelo
+  reaprende essas regras e não se transfere automaticamente para uma máquina real.
+- **Sem série temporal por máquina.** Cada ciclo é independente; não há como acompanhar uma
+  ferramenta ao longo do tempo nem estimar quanto ela ainda dura.
+- **Custos hipotéticos.** R$ 500 por intervenção e R$ 5.000 por falha são hipóteses do grupo;
+  a sensibilidade mostra que a conclusão se mantém, mas os valores em reais não.
+- **TWF e RNF são estocásticos.** A falha por desgaste é sorteada dentro da zona de desgaste
+  alto e a aleatória não depende das leituras, o que limita o recall de qualquer modelo; das
+  11 falhas não detectadas no teste, 9 são TWF.
+
+**Trabalhos futuros.**
+
+- Coletar dados reais de sensores em série temporal, por máquina e por ferramenta, e validar
+  de forma temporal (treinar no passado, testar no futuro).
+- Estimar a vida útil remanescente (RUL) da ferramenta em vez de classificar um ciclo isolado.
+- Monitorar a deriva (*drift*) dos sensores e do desempenho do modelo depois da implantação.
+- Implantar o modelo junto ao CLP/MES da linha, com alertas para a manutenção.
+- Retreinar o modelo periodicamente e recalibrar o limiar com os custos reais da fábrica.
 
 ## 4. Referências
 <!-- RESPONSÁVEL: @adrian-cesar · T5 (demais integrantes acrescentam as que citarem) -->
