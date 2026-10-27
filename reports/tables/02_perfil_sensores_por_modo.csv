@@ -1,0 +1,7 @@
+sigla,ciclos,dif_temp_media_k,rotacao_media_rpm,torque_medio_nm,potencia_media_w,desgaste_medio_min
+TWF,46,9.87,1566.0,37.8,6019.0,216.0
+HDF,115,8.23,1337.0,53.2,7433.0,107.0
+PWF,95,9.88,1764.0,48.5,7252.0,102.0
+OSF,98,10.03,1350.0,58.4,8230.0,208.0
+RNF,19,9.95,1485.0,43.7,6686.0,124.0
+SEM FALHA,9661,10.02,1540.0,39.6,6245.0,107.0

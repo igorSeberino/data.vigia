@@ -1,0 +1,4 @@
+tipo,descricao,ciclos,falhas,taxa_falha_pct
+L,Baixa qualidade,6000,235,3.92
+M,Média qualidade,2997,83,2.77
+H,Alta qualidade,1003,21,2.09

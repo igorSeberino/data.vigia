@@ -1,0 +1,6 @@
+tabela,linhas
+dim_tipo_produto,3
+dim_faixa_desgaste,5
+dim_modo_falha,5
+fato_ciclo,10000
+ponte_ciclo_modo,373
